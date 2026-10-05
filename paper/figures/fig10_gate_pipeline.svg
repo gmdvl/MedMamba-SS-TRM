@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 440" width="1080" height="440" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/>
+    </marker>
+    <marker id="a10r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b04a4a"/>
+    </marker>
+    <style>
+      .bx{stroke:#5a6472;stroke-width:1.1;rx:5}
+      .lb{font-size:10.4px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .sm{font-size:9px;fill:#5a6472;text-anchor:middle}
+      .sml{font-size:9.2px;fill:#5a6472}
+      .ti{font-size:13px;font-weight:600;fill:#1c2430}
+      .hd{font-size:11px;font-weight:600;fill:#1c2430}
+      .cn{stroke:#5a6472;stroke-width:1.2;fill:none;marker-end:url(#a10)}
+      .cr{stroke:#b04a4a;stroke-width:1.2;fill:none;marker-end:url(#a10r);stroke-dasharray:4 3}
+      .panel{fill:#fbfcfd;stroke:#c3ccd6;stroke-width:1;rx:8}
+    </style>
+  </defs>
+
+  <text class="ti" x="30" y="24">Validity gates: a failure aborts the run rather than annotating it</text>
+  <text class="sml" x="30" y="42">Every gate below is an inspectable artefact in the run directory, not an assertion in prose. Values in brackets are from the two runs of Section VII-B.</text>
+
+  <!-- stage band: before the model exists -->
+  <rect class="panel" x="30" y="58" width="1020" height="128"/>
+  <text class="hd" x="44" y="78">Before a model is constructed</text>
+
+  <rect class="bx" x="44" y="90" width="118" height="76" fill="#eef2f7"/>
+  <text class="lb" x="103" y="118">dataset</text>
+  <text class="lb" x="103" y="132">on disk</text>
+
+  <rect class="bx" x="192" y="90" width="196" height="76" fill="#e6eefa"/>
+  <text class="lb" x="290" y="110">manifest check</text>
+  <text class="sm" x="290" y="127">per-file shape, dtype, size</text>
+  <text class="sm" x="290" y="140">and SHA-256 against the</text>
+  <text class="sm" x="290" y="153">manifest written at prep time</text>
+
+  <rect class="bx" x="418" y="90" width="196" height="76" fill="#e6eefa"/>
+  <text class="lb" x="516" y="110">leakage check</text>
+  <text class="sm" x="516" y="127">patient- and slide-level</text>
+  <text class="sm" x="516" y="140">intersections enumerated</text>
+  <text class="sm" x="516" y="153">[35 / 5 / 5 patients, all empty]</text>
+
+  <rect class="bx" x="644" y="90" width="196" height="76" fill="#e6eefa"/>
+  <text class="lb" x="742" y="110">class coverage</text>
+  <text class="sm" x="742" y="127">refuses to start if a split</text>
+  <text class="sm" x="742" y="140">is missing a class, unless</text>
+  <text class="sm" x="742" y="153">explicitly allowed</text>
+
+  <rect class="bx" x="870" y="90" width="166" height="76" fill="#fbfcfd"/>
+  <text class="sml" x="882" y="110">Arrays are validated before</text>
+  <text class="sml" x="882" y="124">being memory-mapped, so a</text>
+  <text class="sml" x="882" y="138">corrupt file is a typed error,</text>
+  <text class="sml" x="882" y="152">not a SIGBUS in a worker.</text>
+
+  <path class="cn" d="M162,128 L188,128"/>
+  <path class="cn" d="M388,128 L414,128"/>
+  <path class="cn" d="M614,128 L640,128"/>
+
+  <!-- stage band: model constructed, preflight -->
+  <rect class="panel" x="30" y="200" width="1020" height="112"/>
+  <text class="hd" x="44" y="220">Model constructed — preflight, before the first optimizer step</text>
+
+  <rect class="bx" x="44" y="232" width="118" height="66" fill="#eef2f7"/>
+  <text class="lb" x="103" y="262">construct</text>
+  <text class="lb" x="103" y="276">model</text>
+
+  <rect class="bx" x="192" y="232" width="252" height="66" fill="#f7e6d0"/>
+  <text class="lb" x="318" y="252">G1 / G2 / G9 — representation sensitivity</text>
+  <text class="sm" x="318" y="269">stem responds to perturbation · logit spread is</text>
+  <text class="sm" x="318" y="282">non-degenerate · disjoint batches differ</text>
+  <text class="sm" x="318" y="294">[0.503 / 0.484 against a 0.05 floor]</text>
+
+  <rect class="bx" x="474" y="232" width="252" height="66" fill="#f7e6d0"/>
+  <text class="lb" x="600" y="252">G8 — post-normalization split drift</text>
+  <text class="sm" x="600" y="269">training statistics applied to every split, then</text>
+  <text class="sm" x="600" y="282">post-normalization moments compared</text>
+  <text class="sm" x="600" y="294">[both runs pass]</text>
+
+  <rect class="bx" x="756" y="232" width="280" height="66" fill="#f7e6d0"/>
+  <text class="lb" x="896" y="252">G7 — reconstruction gradient reaches the core</text>
+  <text class="sm" x="896" y="269">fails the run if the decoder ever reads a detached</text>
+  <text class="sm" x="896" y="282">feature map again</text>
+  <text class="sm" x="896" y="294">[null in both runs — the decoder is off]</text>
+
+  <path class="cn" d="M162,265 L188,265"/>
+  <path class="cn" d="M444,265 L470,265"/>
+  <path class="cn" d="M726,265 L752,265"/>
+
+  <!-- stage band: during and after training -->
+  <rect class="panel" x="30" y="326" width="1020" height="100"/>
+  <text class="hd" x="44" y="346">During and after training</text>
+
+  <rect class="bx" x="44" y="356" width="236" height="58" fill="#e6eefa"/>
+  <text class="lb" x="162" y="376">per-epoch gradient health</text>
+  <text class="sm" x="162" y="392">valid vs skipped updates, non-finite losses</text>
+  <text class="sm" x="162" y="405">and gradients, norm range, verdict</text>
+
+  <rect class="bx" x="310" y="356" width="236" height="58" fill="#f7e6d0"/>
+  <text class="lb" x="428" y="376">G5 — checkpoint reproducibility</text>
+  <text class="sm" x="428" y="392">recompute the selection metric from the</text>
+  <text class="sm" x="428" y="405">saved file, tolerance 1e-6 [delta 0.0, both]</text>
+
+  <rect class="bx" x="576" y="356" width="236" height="58" fill="#f7e6d0"/>
+  <text class="lb" x="694" y="376">G6 — test-loader construction</text>
+  <text class="sm" x="694" y="392">the evaluation loader matches the</text>
+  <text class="sm" x="694" y="405">training-time contract [pass, both]</text>
+
+  <rect class="bx" x="842" y="356" width="194" height="58" fill="#eef2f7"/>
+  <text class="lb" x="939" y="376">reports</text>
+  <text class="sm" x="939" y="392">per-patient, per-capture,</text>
+  <text class="sm" x="939" y="405">per-class, calibration</text>
+
+  <path class="cn" d="M280,385 L306,385"/>
+  <path class="cn" d="M546,385 L572,385"/>
+  <path class="cn" d="M812,385 L838,385"/>
+
+  <path class="cr" d="M103,166 L103,196"/>
+  <path class="cr" d="M103,298 L103,322"/>
+</svg>

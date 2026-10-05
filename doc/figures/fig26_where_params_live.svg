@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 450" width="1040" height="450" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="450" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">C is gone. And it barely dented the model.</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">Everything Part 2 spent five minutes on is the thin sliver at the top.</text>
+<text x="700" y="110" class="tsb" style="text-anchor:middle">share of MedMamba-SS</text>
+<text x="30" y="166" class="t" style="text-anchor:start">the spectral front end — all of Part 2</text>
+<rect x="30" y="180" width="700" height="42" rx="5" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="1"/>
+<rect x="30" y="180" width="4.0" height="42" rx="5" fill="#fbeee3" stroke="#c2703a" stroke-width="1.6"/>
+<text x="748" y="200" class="tb" style="text-anchor:start;font-size:17px">38,724</text>
+<text x="748" y="220" class="ts" style="text-anchor:start">0.1 %</text>
+<text x="30" y="272" class="t" style="text-anchor:start">everything else — backbone, fusion, heads</text>
+<rect x="30" y="286" width="700" height="42" rx="5" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="1"/>
+<rect x="30" y="286" width="700.0" height="42" rx="5" fill="#dbe0e6" stroke="#5a6472" stroke-width="1.6"/>
+<text x="748" y="306" class="tb" style="text-anchor:start;font-size:17px">27,391,276</text>
+<text x="748" y="326" class="ts" style="text-anchor:start">99.9 %</text>
+<rect x="30" y="348" width="980" height="46" rx="7" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="520.0" y="376.5" class="tb" style="text-anchor:middle;fill:#1c2430">So: can a backbone REUSE the same weights instead of storing twelve sets?</text>
+<text x="520" y="424" class="ts" style="text-anchor:middle">That has an answer in a paper from October 2025 — and a bigger one than we went looking for.</text>
+</svg>

@@ -1,0 +1,36 @@
+{
+    "dataset": "/data/dante_data/documents/Masters/courses/Thesis/medmamba-original/MedMamba/data/PAD-UFES-20-paper",
+    "classes": [
+        "ACK",
+        "BCC",
+        "MEL",
+        "NEV",
+        "SCC",
+        "SEK"
+    ],
+    "num_classes": 6,
+    "train_images": 1378,
+    "validation_images": 229,
+    "test_images": 691,
+    "epochs_requested": 150,
+    "epochs_completed": 57,
+    "stopped_early": true,
+    "model_variant": "t",
+    "batch_size": 64,
+    "best_validation_accuracy": 0.5458515283842795,
+    "test_metrics": {
+        "loss": 2.299475009465528,
+        "accuracy": 0.4717800289435601,
+        "balanced_accuracy": 0.33873453463338404,
+        "macro_f1": 0.3353168706060359,
+        "weighted_f1": 0.4600222611251899,
+        "macro_precision": 0.3445985841950862,
+        "macro_recall": 0.33873453463338404,
+        "macro_specificity": 0.8790830117868728,
+        "macro_auc": 0.7144919248313624
+    },
+    "total_training_seconds": 1005.635125671979,
+    "total_training_minutes": 16.760585427866317,
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti"
+}

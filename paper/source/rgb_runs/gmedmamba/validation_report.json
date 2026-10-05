@@ -1,0 +1,426 @@
+{
+  "n_epochs_checked": 150,
+  "n_issues_total": 38,
+  "issue_counts_by_type": {
+    "class_never_predicted": 28,
+    "constant_metric": 10
+  },
+  "issues_by_epoch": {
+    "1": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 1,
+        "classes": [
+          2,
+          5
+        ],
+        "message": "Classes [2, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "2": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 2,
+        "classes": [
+          0,
+          2,
+          3
+        ],
+        "message": "Classes [0, 2, 3] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "3": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 3,
+        "classes": [
+          0,
+          1,
+          3,
+          5
+        ],
+        "message": "Classes [0, 1, 3, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "4": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 4,
+        "classes": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "message": "Classes [0, 1, 3, 4] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "5": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 5,
+        "classes": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "message": "Classes [1, 2, 3, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "6": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 6,
+        "classes": [
+          0,
+          1,
+          3,
+          4,
+          5
+        ],
+        "message": "Classes [0, 1, 3, 4, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "7": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 7,
+        "classes": [
+          0,
+          3,
+          4,
+          5
+        ],
+        "message": "Classes [0, 3, 4, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "8": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 8,
+        "classes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "message": "Classes [0, 1, 2, 3] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "9": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 9,
+        "classes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "message": "Classes [2, 3, 4, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "10": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 10,
+        "classes": [
+          0,
+          1,
+          2,
+          5
+        ],
+        "message": "Classes [0, 1, 2, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "11": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 11,
+        "classes": [
+          1,
+          2,
+          3
+        ],
+        "message": "Classes [1, 2, 3] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "12": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 12,
+        "classes": [
+          0,
+          1,
+          2,
+          5
+        ],
+        "message": "Classes [0, 1, 2, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "13": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 13,
+        "classes": [
+          0,
+          1,
+          3
+        ],
+        "message": "Classes [0, 1, 3] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "14": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 14,
+        "classes": [
+          0,
+          1,
+          2,
+          4,
+          5
+        ],
+        "message": "Classes [0, 1, 2, 4, 5] were never predicted this epoch (possible class collapse)."
+      },
+      {
+        "type": "constant_metric",
+        "metric": "accuracy",
+        "epoch": 14,
+        "value": 0.10975609756097561,
+        "class_collapse_concurrent": true,
+        "message": "'accuracy' has been constant (0.1098) for 3 epochs in a row - the model produced the same prediction for every validation sample."
+      }
+    ],
+    "15": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 15,
+        "classes": [
+          1,
+          3,
+          5
+        ],
+        "message": "Classes [1, 3, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "16": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 16,
+        "classes": [
+          0,
+          1,
+          3
+        ],
+        "message": "Classes [0, 1, 3] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "17": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 17,
+        "classes": [
+          3,
+          4,
+          5
+        ],
+        "message": "Classes [3, 4, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "18": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 18,
+        "classes": [
+          0,
+          1
+        ],
+        "message": "Classes [0, 1] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "19": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 19,
+        "classes": [
+          4
+        ],
+        "message": "Classes [4] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "20": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 20,
+        "classes": [
+          0,
+          3,
+          4,
+          5
+        ],
+        "message": "Classes [0, 3, 4, 5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "22": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 22,
+        "classes": [
+          0
+        ],
+        "message": "Classes [0] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "24": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 24,
+        "classes": [
+          0,
+          1
+        ],
+        "message": "Classes [0, 1] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "25": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 25,
+        "classes": [
+          5
+        ],
+        "message": "Classes [5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "30": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 30,
+        "classes": [
+          5
+        ],
+        "message": "Classes [5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "34": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 34,
+        "classes": [
+          1
+        ],
+        "message": "Classes [1] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "37": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 37,
+        "classes": [
+          1
+        ],
+        "message": "Classes [1] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "41": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 41,
+        "classes": [
+          1
+        ],
+        "message": "Classes [1] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "45": [
+      {
+        "type": "class_never_predicted",
+        "epoch": 45,
+        "classes": [
+          5
+        ],
+        "message": "Classes [5] were never predicted this epoch (possible class collapse)."
+      }
+    ],
+    "148": [
+      {
+        "type": "constant_metric",
+        "metric": "recall_macro",
+        "epoch": 148,
+        "value": 0.3757610855693452,
+        "class_collapse_concurrent": false,
+        "message": "'recall_macro' has been constant (0.3758) for 3 epochs in a row - verify the metric is actually being recomputed each epoch."
+      },
+      {
+        "type": "constant_metric",
+        "metric": "balanced_accuracy",
+        "epoch": 148,
+        "value": 0.3757610855693452,
+        "class_collapse_concurrent": false,
+        "message": "'balanced_accuracy' has been constant (0.3758) for 3 epochs in a row - verify the metric is actually being recomputed each epoch."
+      },
+      {
+        "type": "constant_metric",
+        "metric": "accuracy",
+        "epoch": 148,
+        "value": 0.3628048780487805,
+        "class_collapse_concurrent": false,
+        "message": "'accuracy' has been constant (0.3628) for 3 epochs in a row - verify the metric is actually being recomputed each epoch."
+      }
+    ],
+    "149": [
+      {
+        "type": "constant_metric",
+        "metric": "recall_macro",
+        "epoch": 149,
+        "value": 0.3757610855693452,
+        "class_collapse_concurrent": false,
+        "message": "'recall_macro' has been constant (0.3758) for 3 epochs in a row - verify the metric is actually being recomputed each epoch."
+      },
+      {
+        "type": "constant_metric",
+        "metric": "balanced_accuracy",
+        "epoch": 149,
+        "value": 0.3757610855693452,
+        "class_collapse_concurrent": false,
+        "message": "'balanced_accuracy' has been constant (0.3758) for 3 epochs in a row - verify the metric is actually being recomputed each epoch."
+      },
+      {
+        "type": "constant_metric",
+        "metric": "accuracy",
+        "epoch": 149,
+        "value": 0.3628048780487805,
+        "class_collapse_concurrent": false,
+        "message": "'accuracy' has been constant (0.3628) for 3 epochs in a row - verify the metric is actually being recomputed each epoch."
+      }
+    ],
+    "150": [
+      {
+        "type": "constant_metric",
+        "metric": "recall_macro",
+        "epoch": 150,
+        "value": 0.3757610855693452,
+        "class_collapse_concurrent": false,
+        "message": "'recall_macro' has been constant (0.3758) for 3 epochs in a row - verify the metric is actually being recomputed each epoch."
+      },
+      {
+        "type": "constant_metric",
+        "metric": "balanced_accuracy",
+        "epoch": 150,
+        "value": 0.3757610855693452,
+        "class_collapse_concurrent": false,
+        "message": "'balanced_accuracy' has been constant (0.3758) for 3 epochs in a row - verify the metric is actually being recomputed each epoch."
+      },
+      {
+        "type": "constant_metric",
+        "metric": "accuracy",
+        "epoch": 150,
+        "value": 0.3628048780487805,
+        "class_collapse_concurrent": false,
+        "message": "'accuracy' has been constant (0.3628) for 3 epochs in a row - verify the metric is actually being recomputed each epoch."
+      }
+    ]
+  }
+}

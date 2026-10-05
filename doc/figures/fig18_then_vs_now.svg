@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1240" width="2000" height="1240" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3a4654"/></marker>
+<marker id="kp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a4fa0"/></marker>
+<marker id="ko" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="kg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3f7a46"/></marker>
+<marker id="kr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<linearGradient id="ttl" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#b9cfe8"/></linearGradient>
+    <linearGradient id="ttr" x1="0" x2="1"><stop offset="0" stop-color="#b9cfe8"/>
+      <stop offset="1" stop-color="#ffffff"/></linearGradient>
+    <style>
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .tb{font-size:15px;font-weight:700;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#6b7684;text-anchor:middle}
+      .tn{font-size:13px;fill:#1c2430;text-anchor:middle}
+      .sh{font-size:16px;fill:#1c2430;text-anchor:middle}
+      .pt{font-size:22px;font-weight:700;font-style:italic;fill:#1a3c6e}
+      .ph{font-size:17px;font-weight:700;font-style:italic;fill:#1a3c6e}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .a {stroke:#3a4654;stroke-width:2;fill:none;marker-end:url(#k)}
+      .ap{stroke:#6a4fa0;stroke-width:2;fill:none;marker-end:url(#kp)}
+      .ao{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#ko)}
+      .ag{stroke:#3f7a46;stroke-width:2;fill:none;marker-end:url(#kg)}
+      .pl{stroke:#3a4654;stroke-width:2;fill:none}
+    </style></defs>
+<rect width="2000" height="1240" fill="#ffffff"/>
+<rect x="370" y="42" width="440" height="26" fill="url(#ttl)"/>
+<rect x="1190" y="42" width="440" height="26" fill="url(#ttr)"/>
+<text x="1000" y="68" text-anchor="middle" font-size="42" font-weight="700" font-style="italic" fill="#1a3c6e">Then  vs  Now</text>
+<text x="1000" y="96" class="ts" style="text-anchor:middle;font-size:16px">the earlier GMedMamba diagram against what gmedmamba.py actually contains  —  every row checked in the source</text>
+<rect x="30" y="126" width="950" height="104" rx="12" fill="#fdf4ec" stroke="#c2703a" stroke-width="2.2"/>
+<text x="60" y="158" class="ts" style="text-anchor:start;font-size:18px;fill:#c2703a;font-style:italic">THEN   —   proposed two-branch design</text>
+<text x="60" y="192" class="ts" style="text-anchor:start;font-size:15px;fill:#1c2430">2 patch embeddings  ·  Color Branch + Spatial Branch  ·  SSI-Conv-SSM</text>
+<text x="60" y="216" class="ts" style="text-anchor:start;font-size:15px;fill:#1c2430">3D-Conv  ·  Spectral Pooling  ·  Inter-channel Attention  ·  Multi-modal Fusion</text>
+<rect x="1020" y="126" width="950" height="104" rx="12" fill="#f0f7f2" stroke="#3f7a46" stroke-width="2.2"/>
+<text x="1050" y="158" class="ts" style="text-anchor:start;font-size:18px;fill:#3f7a46;font-style:italic">NOW   —   gmedmamba.py, one path</text>
+<text x="1050" y="192" class="ts" style="text-anchor:start;font-size:15px;fill:#1c2430">1 spectral pathway  ·  no branches  ·  GBlock (hierarchical) or RecursiveMambaBlock</text>
+<text x="1050" y="216" class="ts" style="text-anchor:start;font-size:15px;fill:#1c2430">Conv1d over bands  ·  mean over bands  ·  BandGate  ·  FiLM inside every block</text>
+<polygon points="984,160 1016,178 984,196" fill="#7b8794"/>
+<text x="58" y="256" class="ts" style="text-anchor:start;font-size:14px;fill:#6b7684;font-style:italic">component in the earlier diagram</text>
+<text x="640" y="256" class="ts" style="text-anchor:start;font-size:14px;fill:#6b7684;font-style:italic">what that diagram showed</text>
+<text x="1180" y="256" class="ts" style="text-anchor:start;font-size:14px;fill:#6b7684;font-style:italic">what gmedmamba.py does</text>
+<text x="1930" y="256" class="ts" style="text-anchor:end;font-size:14px;fill:#6b7684;font-style:italic">status</text>
+<rect x="30" y="268" width="1940" height="76" rx="7" fill="#ffffff" stroke="#dde3ea" stroke-width="1.2"/>
+<text x="58" y="302" class="ts" style="text-anchor:start;font-size:15.5px;fill:#1c2430">Two parallel branches</text>
+<text x="640" y="298" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">Color Branch (HSI) + Spatial Branch (Morphology),</text>
+<text x="640" y="318" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">two separate Patch Embeddings</text>
+<text x="1180" y="298" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">ONE path: SpectralPathway → stem → backbone.</text>
+<text x="1180" y="318" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">`forward_features` has no branch at all</text>
+<rect x="1782" y="290" width="168" height="32" rx="16" fill="#fbdcd4" stroke="#b4553f" stroke-width="1.6"/>
+<text x="1866" y="311" text-anchor="middle" font-size="13.5" font-weight="600" fill="#b4553f">not built</text>
+<rect x="30" y="350" width="1940" height="76" rx="7" fill="#f7f9fc" stroke="#dde3ea" stroke-width="1.2"/>
+<text x="58" y="384" class="ts" style="text-anchor:start;font-size:15.5px;fill:#1c2430">SSI-Conv-SSM block</text>
+<text x="640" y="380" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">a spectral–spatial interaction block</text>
+<text x="1180" y="380" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">no such class exists. GBlock (hierarchical) /</text>
+<text x="1180" y="400" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">RecursiveMambaBlock (recursive)</text>
+<rect x="1782" y="372" width="168" height="32" rx="16" fill="#fbdcd4" stroke="#b4553f" stroke-width="1.6"/>
+<text x="1866" y="393" text-anchor="middle" font-size="13.5" font-weight="600" fill="#b4553f">not built</text>
+<rect x="30" y="432" width="1940" height="76" rx="7" fill="#ffffff" stroke="#dde3ea" stroke-width="1.2"/>
+<text x="58" y="466" class="ts" style="text-anchor:start;font-size:15.5px;fill:#1c2430">3D-Conv  K = 3×3×3</text>
+<text x="640" y="462" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">dense 3-D convolution over the cube</text>
+<text x="1180" y="462" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">Conv1d along the BAND axis, shared across bands.</text>
+<text x="1180" y="482" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">"this codebase never had a dense Conv3D"</text>
+<rect x="1782" y="454" width="168" height="32" rx="16" fill="#fbdcd4" stroke="#b4553f" stroke-width="1.6"/>
+<text x="1866" y="475" text-anchor="middle" font-size="13.5" font-weight="600" fill="#b4553f">not built</text>
+<rect x="30" y="514" width="1940" height="76" rx="7" fill="#f7f9fc" stroke="#dde3ea" stroke-width="1.2"/>
+<text x="58" y="548" class="ts" style="text-anchor:start;font-size:15.5px;fill:#1c2430">Spectral Pooling</text>
+<text x="640" y="544" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">a pooling stage inside the block</text>
+<text x="1180" y="544" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">plain mean over the band axis — this is the step</text>
+<text x="1180" y="564" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">that makes the output size independent of C</text>
+<rect x="1782" y="536" width="168" height="32" rx="16" fill="#fdf2cd" stroke="#b3860b" stroke-width="1.6"/>
+<text x="1866" y="557" text-anchor="middle" font-size="13.5" font-weight="600" fill="#b3860b">built differently</text>
+<rect x="30" y="596" width="1940" height="76" rx="7" fill="#ffffff" stroke="#dde3ea" stroke-width="1.2"/>
+<text x="58" y="630" class="ts" style="text-anchor:start;font-size:15.5px;fill:#1c2430">Spectral Inter-channel Attention</text>
+<text x="640" y="626" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">attention across spectral channels</text>
+<text x="1180" y="626" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">BandGate: σ(Linear(32→1)) per band, plus a</text>
+<text x="1180" y="646" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">per-stage SE-style StageBandSelector</text>
+<rect x="1782" y="618" width="168" height="32" rx="16" fill="#fdf2cd" stroke="#b3860b" stroke-width="1.6"/>
+<text x="1866" y="639" text-anchor="middle" font-size="13.5" font-weight="600" fill="#b3860b">built differently</text>
+<rect x="30" y="678" width="1940" height="76" rx="7" fill="#f7f9fc" stroke="#dde3ea" stroke-width="1.2"/>
+<text x="58" y="712" class="ts" style="text-anchor:start;font-size:15.5px;fill:#1c2430">Multi-modal Fusion block</text>
+<text x="640" y="708" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">F_Color ⊗ F_Spatial → Linear → LayerNorm</text>
+<text x="640" y="728" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">→ Final Projection, once at the end</text>
+<text x="1180" y="708" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">FiLM inside EVERY block instead of once at the end;</text>
+<text x="1180" y="728" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">5 fusion types selectable, 4 never trained</text>
+<rect x="1782" y="700" width="168" height="32" rx="16" fill="#fdf2cd" stroke="#b3860b" stroke-width="1.6"/>
+<text x="1866" y="721" text-anchor="middle" font-size="13.5" font-weight="600" fill="#b3860b">built differently</text>
+<rect x="30" y="760" width="1940" height="76" rx="7" fill="#ffffff" stroke="#dde3ea" stroke-width="1.2"/>
+<text x="58" y="794" class="ts" style="text-anchor:start;font-size:15.5px;fill:#1c2430">Spectral–Spatial Fusion node</text>
+<text x="640" y="790" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">a single fusion stage between the branches</text>
+<text x="1180" y="790" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">per-stage fusion + a SpectralContextUpdater that</text>
+<text x="1180" y="810" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">feeds spatial features back into the spectral map</text>
+<rect x="1782" y="782" width="168" height="32" rx="16" fill="#fdf2cd" stroke="#b3860b" stroke-width="1.6"/>
+<text x="1866" y="803" text-anchor="middle" font-size="13.5" font-weight="600" fill="#b3860b">built differently</text>
+<rect x="30" y="842" width="1940" height="76" rx="7" fill="#f7f9fc" stroke="#dde3ea" stroke-width="1.2"/>
+<text x="58" y="876" class="ts" style="text-anchor:start;font-size:15.5px;fill:#1c2430">Patch Merging ×2</text>
+<text x="640" y="872" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">downsampling between stages</text>
+<text x="1180" y="872" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">hierarchical variant only. The recursive variant has</text>
+<text x="1180" y="892" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">NO downsampling — width 128 start to finish</text>
+<rect x="1782" y="864" width="168" height="32" rx="16" fill="#fdf2cd" stroke="#b3860b" stroke-width="1.6"/>
+<text x="1866" y="885" text-anchor="middle" font-size="13.5" font-weight="600" fill="#b3860b">built differently</text>
+<rect x="30" y="924" width="1940" height="76" rx="7" fill="#ffffff" stroke="#dde3ea" stroke-width="1.2"/>
+<text x="58" y="958" class="ts" style="text-anchor:start;font-size:15.5px;fill:#1c2430">Auxiliary Spectral Decoder</text>
+<text x="640" y="954" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">reconstruct the HSI cube for validation</text>
+<text x="1180" y="954" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">BUILT — LatentReconstructionDecoderV2, gated by G7.</text>
+<text x="1180" y="974" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">OFF in every reported run</text>
+<rect x="1782" y="946" width="168" height="32" rx="16" fill="#d7ead7" stroke="#3f7a46" stroke-width="1.6"/>
+<text x="1866" y="967" text-anchor="middle" font-size="13.5" font-weight="600" fill="#3f7a46">built as drawn</text>
+<rect x="30" y="1006" width="1940" height="76" rx="7" fill="#f7f9fc" stroke="#dde3ea" stroke-width="1.2"/>
+<text x="58" y="1040" class="ts" style="text-anchor:start;font-size:15.5px;fill:#1c2430">Classifier</text>
+<text x="640" y="1036" class="ts" style="text-anchor:start;font-size:13.5px;fill:#6b7684">concatenate both branches → GAP → classifier</text>
+<text x="1180" y="1036" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">RecursiveHead: RMSNorm → GAP → Linear, plus an</text>
+<text x="1180" y="1056" class="ts" style="text-anchor:start;font-size:13.5px;fill:#1c2430">inert q_halt head</text>
+<rect x="1782" y="1028" width="168" height="32" rx="16" fill="#fdf2cd" stroke="#b3860b" stroke-width="1.6"/>
+<text x="1866" y="1049" text-anchor="middle" font-size="13.5" font-weight="600" fill="#b3860b">built differently</text>
+<rect x="30" y="1100" width="1940" height="96" rx="12" fill="#f4f2fb" stroke="#6a4fa0" stroke-width="2.2"/>
+<text x="60" y="1134" class="ts" style="text-anchor:start;font-size:17px;fill:#6a4fa0;font-style:italic">The earlier figure is a DESIGN PROPOSAL, not a description of the code.</text>
+<text x="60" y="1162" class="ts" style="text-anchor:start;font-size:15px;fill:#1c2430">What was actually built is simpler and narrower: one spectral front end, one backbone, one fusion mechanism applied everywhere.</text>
+<text x="60" y="1184" class="ts" style="text-anchor:start;font-size:15px;fill:#b4553f">Anything drawn there but marked "not built" above should not be described as implemented.</text>
+</svg>

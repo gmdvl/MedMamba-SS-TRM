@@ -1,0 +1,19 @@
+{
+  "manifest_path": "data/pad_optimal-undersample/_progress.json",
+  "n_train_patients": 961,
+  "n_validation_patients": 206,
+  "n_test_patients": 206,
+  "patient_overlaps": {
+    "train_validation": [],
+    "train_test": [],
+    "validation_test": []
+  },
+  "slide_overlaps": {
+    "train_validation": [],
+    "train_test": [],
+    "validation_test": []
+  },
+  "patient_level_leakage": false,
+  "slide_level_leakage": false,
+  "leakage_detected": false
+}

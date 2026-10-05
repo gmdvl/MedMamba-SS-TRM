@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 470" width="1040" height="470" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<rect width="1040" height="470" fill="#ffffff"/>
+<defs><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker></defs>
+<style>
+  .t  {font-size:15px;fill:#1c2430;text-anchor:middle}
+  .tb {font-size:15.5px;font-weight:600;fill:#1c2430;text-anchor:middle}
+  .ts {font-size:12.5px;fill:#7b8794;text-anchor:middle}
+  .ti {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .cap{font-size:13.5px;fill:#7b8794}
+  .cp {stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+</style>
+
+<text x="34" y="40" class="ti">TRM, as solving a maze in pencil</text>
+<text x="34" y="65" class="tsub">One person, one pencil, one eraser — used over and over.</text>
+<rect x="44" y="106" width="236" height="236" fill="#fcfbf8" stroke="#e6e3db" stroke-width="1.4" rx="5"/>
+<path d="M78 112 L274 112 L274 308" stroke="#5a6472" stroke-width="2.2" fill="none"/>
+<path d="M50 112 L50 336 L246 336" stroke="#5a6472" stroke-width="2.2" fill="none"/>
+<line x1="50" y1="140" x2="78" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="78" y1="140" x2="106" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="106" y1="140" x2="134" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="134" y1="140" x2="162" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="190" y1="112" x2="190" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="78" y1="168" x2="106" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="106" y1="168" x2="134" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="162" y1="140" x2="162" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="190" y1="140" x2="190" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="218" y1="140" x2="218" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="246" y1="140" x2="246" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="246" y1="168" x2="274" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="78" y1="168" x2="78" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="134" y1="168" x2="134" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="106" y1="196" x2="134" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="162" y1="168" x2="162" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="190" y1="168" x2="190" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="218" y1="168" x2="218" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="190" y1="196" x2="218" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="218" y1="196" x2="246" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="78" y1="196" x2="78" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="106" y1="196" x2="106" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="162" y1="196" x2="162" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="134" y1="224" x2="162" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="162" y1="224" x2="190" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="190" y1="224" x2="218" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="218" y1="224" x2="246" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="78" y1="224" x2="78" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="78" y1="252" x2="106" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="134" y1="224" x2="134" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="162" y1="224" x2="162" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="190" y1="252" x2="218" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="218" y1="252" x2="246" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="246" y1="252" x2="274" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="50" y1="280" x2="78" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="106" y1="252" x2="106" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="106" y1="280" x2="134" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="162" y1="252" x2="162" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="134" y1="280" x2="162" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="162" y1="280" x2="190" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="218" y1="252" x2="218" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="218" y1="280" x2="246" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="106" y1="280" x2="106" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="78" y1="308" x2="106" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="162" y1="280" x2="162" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="218" y1="280" x2="218" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="190" y1="308" x2="218" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="134" y1="308" x2="134" y2="336" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="246" y1="308" x2="246" y2="336" stroke="#5a6472" stroke-width="1.5"/>
+<circle cx="64.0" cy="126.0" r="5.6000000000000005" fill="#4e8c6a"/>
+<circle cx="260.0" cy="322.0" r="5.6000000000000005" fill="#b4553f"/>
+<text x="162.0" y="92" class="tb">x — the maze</text>
+<text x="162.0" y="364" class="ts">looked at once. never changes.</text>
+<rect x="402" y="106" width="236" height="236" fill="#fcfbf8" stroke="#e6e3db" stroke-width="1.4" rx="5"/>
+<path d="M436 112 L632 112 L632 308" stroke="#5a6472" stroke-width="2.2" fill="none"/>
+<path d="M408 112 L408 336 L604 336" stroke="#5a6472" stroke-width="2.2" fill="none"/>
+<line x1="408" y1="140" x2="436" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="436" y1="140" x2="464" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="464" y1="140" x2="492" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="492" y1="140" x2="520" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="548" y1="112" x2="548" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="436" y1="168" x2="464" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="464" y1="168" x2="492" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="520" y1="140" x2="520" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="548" y1="140" x2="548" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="576" y1="140" x2="576" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="604" y1="140" x2="604" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="604" y1="168" x2="632" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="436" y1="168" x2="436" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="492" y1="168" x2="492" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="464" y1="196" x2="492" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="520" y1="168" x2="520" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="548" y1="168" x2="548" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="576" y1="168" x2="576" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="548" y1="196" x2="576" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="576" y1="196" x2="604" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="436" y1="196" x2="436" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="464" y1="196" x2="464" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="520" y1="196" x2="520" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="492" y1="224" x2="520" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="520" y1="224" x2="548" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="548" y1="224" x2="576" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="576" y1="224" x2="604" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="436" y1="224" x2="436" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="436" y1="252" x2="464" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="492" y1="224" x2="492" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="520" y1="224" x2="520" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="548" y1="252" x2="576" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="576" y1="252" x2="604" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="604" y1="252" x2="632" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="408" y1="280" x2="436" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="464" y1="252" x2="464" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="464" y1="280" x2="492" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="520" y1="252" x2="520" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="492" y1="280" x2="520" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="520" y1="280" x2="548" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="576" y1="252" x2="576" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="576" y1="280" x2="604" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="464" y1="280" x2="464" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="436" y1="308" x2="464" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="520" y1="280" x2="520" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="576" y1="280" x2="576" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="548" y1="308" x2="576" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="492" y1="308" x2="492" y2="336" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="604" y1="308" x2="604" y2="336" stroke="#5a6472" stroke-width="1.5"/>
+<polyline points="618.0,210.0 618.0,182.0 590.0,182.0 590.0,154.0 590.0,126.0" fill="none" stroke="#c3c7cd" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" stroke-dasharray="1 6"/>
+<polyline points="422.0,126.0 450.0,126.0 478.0,126.0 506.0,126.0 534.0,126.0 534.0,154.0 534.0,182.0 534.0,210.0 562.0,210.0 590.0,210.0 618.0,210.0 618.0,238.0 590.0,238.0 562.0,238.0 534.0,238.0 534.0,266.0 562.0,266.0 562.0,294.0 534.0,294.0 534.0,322.0 506.0,322.0 506.0,294.0 478.0,294.0 478.0,322.0" fill="none" stroke="#6a5a92" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+<circle cx="422.0" cy="126.0" r="5.6000000000000005" fill="#4e8c6a"/>
+<circle cx="618.0" cy="322.0" r="5.6000000000000005" fill="#b4553f"/>
+<text x="520.0" y="92" class="tb">y — the path so far</text>
+<text x="520.0" y="364" class="ts">pencil. rubbed out, redrawn.</text>
+<rect x="760" y="106" width="236" height="236" fill="#fcfbf8" stroke="#e6e3db" stroke-width="1.4" rx="5"/>
+<path d="M794 112 L990 112 L990 308" stroke="#5a6472" stroke-width="2.2" fill="none"/>
+<path d="M766 112 L766 336 L962 336" stroke="#5a6472" stroke-width="2.2" fill="none"/>
+<line x1="766" y1="140" x2="794" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="794" y1="140" x2="822" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="822" y1="140" x2="850" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="850" y1="140" x2="878" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="906" y1="112" x2="906" y2="140" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="794" y1="168" x2="822" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="822" y1="168" x2="850" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="878" y1="140" x2="878" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="906" y1="140" x2="906" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="934" y1="140" x2="934" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="962" y1="140" x2="962" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="962" y1="168" x2="990" y2="168" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="794" y1="168" x2="794" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="850" y1="168" x2="850" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="822" y1="196" x2="850" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="878" y1="168" x2="878" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="906" y1="168" x2="906" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="934" y1="168" x2="934" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="906" y1="196" x2="934" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="934" y1="196" x2="962" y2="196" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="794" y1="196" x2="794" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="822" y1="196" x2="822" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="878" y1="196" x2="878" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="850" y1="224" x2="878" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="878" y1="224" x2="906" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="906" y1="224" x2="934" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="934" y1="224" x2="962" y2="224" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="794" y1="224" x2="794" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="794" y1="252" x2="822" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="850" y1="224" x2="850" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="878" y1="224" x2="878" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="906" y1="252" x2="934" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="934" y1="252" x2="962" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="962" y1="252" x2="990" y2="252" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="766" y1="280" x2="794" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="822" y1="252" x2="822" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="822" y1="280" x2="850" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="878" y1="252" x2="878" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="850" y1="280" x2="878" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="878" y1="280" x2="906" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="934" y1="252" x2="934" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="934" y1="280" x2="962" y2="280" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="822" y1="280" x2="822" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="794" y1="308" x2="822" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="878" y1="280" x2="878" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="934" y1="280" x2="934" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="906" y1="308" x2="934" y2="308" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="850" y1="308" x2="850" y2="336" stroke="#5a6472" stroke-width="1.5"/>
+<line x1="962" y1="308" x2="962" y2="336" stroke="#5a6472" stroke-width="1.5"/>
+<polyline points="780.0,126.0 808.0,126.0 836.0,126.0 864.0,126.0 892.0,126.0 892.0,154.0 892.0,182.0 892.0,210.0 920.0,210.0 948.0,210.0 976.0,210.0 976.0,238.0 948.0,238.0 920.0,238.0 892.0,238.0 892.0,266.0 920.0,266.0 920.0,294.0 892.0,294.0 892.0,322.0 920.0,322.0 948.0,322.0 948.0,294.0 976.0,294.0 976.0,322.0" fill="none" stroke="#4e8c6a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+<circle cx="780.0" cy="126.0" r="5.6000000000000005" fill="#4e8c6a"/>
+<circle cx="976.0" cy="322.0" r="5.6000000000000005" fill="#b4553f"/>
+<text x="878.0" y="92" class="tb">y — when it is done</text>
+<text x="878.0" y="364" class="ts">the same line, a few passes later.</text>
+<circle cx="341" cy="224.0" r="27" fill="#efecf6" stroke="#6a5a92" stroke-width="1.8"/>
+<text x="341" y="230.0" class="tb" fill="#6a5a92">f</text>
+<text x="341" y="276.0" class="ts">you</text>
+<text x="341" y="292.0" class="ts">one brain</text>
+<text x="341" y="308.0" class="ts">21 passes</text>
+<path d="M284,224.0 L309,224.0" class="cp"/>
+<path d="M373,224.0 L396,224.0" class="cp"/>
+<path d="M642,224.0 L754,224.0" class="cp"/>
+<text x="699.0" y="212.0" class="ts">repeat</text>
+<text x="58" y="418" class="cap">
+<tspan x="58" dy="0"><tspan font-weight="600" fill="#1c2430">Six scribbles of thinking, then one stroke of the pencil.</tspan> That is one round. The scribbles are <tspan font-weight="600" fill="#1c2430">z</tspan> — dead ends you now remember, bits you are</tspan>
+<tspan x="58" dy="20">unsure of — and they are never shown to anyone. The pencil line is <tspan font-weight="600" fill="#1c2430">y</tspan> , and it is the only thing anyone ever sees.</tspan>
+<tspan x="58" dy="20"><tspan fill="#b4553f">Illustration of the idea, not model output.</tspan></tspan>
+</text>
+</svg>

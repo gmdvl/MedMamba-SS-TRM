@@ -1,0 +1,38 @@
+{
+  "gate": "G8",
+  "mode": "global_zscore",
+  "n_patches_requested": 8000,
+  "splits": {
+    "train": {
+      "n_sampled": 234,
+      "raw_mean": 0.5418289875627583,
+      "post_norm_mean": 0.04922175779938698,
+      "post_norm_std": 1.0084389448165894,
+      "frac_below_train_p1": 0.009823597574713646,
+      "mean_sigma_vs_train": 0.0,
+      "std_ratio_vs_train": 1.0,
+      "passed": true
+    },
+    "validation": {
+      "n_sampled": 328,
+      "raw_mean": 0.5531299947420272,
+      "post_norm_mean": 0.1280703842639923,
+      "post_norm_std": 1.0176199674606323,
+      "frac_below_train_p1": 0.007415442358345777,
+      "mean_sigma_vs_train": 0.07818879553381984,
+      "std_ratio_vs_train": 1.0091041928628737,
+      "passed": true
+    },
+    "test": {
+      "n_sampled": 344,
+      "raw_mean": 0.5569657032746215,
+      "post_norm_mean": 0.15502429008483887,
+      "post_norm_std": 0.9992873668670654,
+      "frac_below_train_p1": 0.006709618576718478,
+      "mean_sigma_vs_train": 0.10491714231117365,
+      "std_ratio_vs_train": 0.9909250054288726,
+      "passed": true
+    }
+  },
+  "passed": true
+}

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 430" width="1040" height="430" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker>
+<marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<style>
+      .bx{stroke-width:1.6;rx:7}
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#7b8794;text-anchor:middle}
+      .tb{font-size:15px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .ti{font-size:21px;font-weight:600;fill:#1c2430}
+      .tsub{font-size:14px;fill:#7b8794}
+      .cap{font-size:13.5px;fill:#7b8794}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .c {stroke:#5a6472;stroke-width:1.8;fill:none;marker-end:url(#ar)}
+      .co{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#aro)}
+      .cg{stroke:#4e8c6a;stroke-width:2;fill:none;marker-end:url(#arg)}
+      .cp{stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+      .cr{stroke:#b4553f;stroke-width:2;fill:none;marker-end:url(#arr)}
+      .plain{stroke:#5a6472;stroke-width:1.6;fill:none}
+    </style>
+</defs>
+<rect width="1040" height="430" fill="#ffffff"/>
+<text x="30" y="38" class="ti">One experiment, one variable</text>
+<text x="30" y="60" class="tsub">Same tissue, same patients, same 348,894 test patches, same recipe. Only the channel count differs.</text>
+<text x="150" y="110" class="tb" style="text-anchor:start">overall</text>
+<text x="150" y="134" class="ts" style="text-anchor:start">balanced accuracy</text>
+<rect x="150" y="140" width="272.2" height="26" rx="4" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="432.19" y="159" class="t" style="text-anchor:start">0.9073</text>
+<text x="140" y="159" class="ts" style="text-anchor:end">32-band</text>
+<rect x="150" y="172" width="227.1" height="26" rx="4" fill="#f2f4f7" stroke="#7b8794" stroke-width="1.6"/>
+<text x="387.13" y="191" class="t" style="text-anchor:start">0.7571</text>
+<text x="140" y="191" class="ts" style="text-anchor:end">RGB</text>
+<text x="150" y="226" class="ts" style="text-anchor:start">macro-F1</text>
+<rect x="150" y="232" width="257.4" height="26" rx="4" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="417.4" y="251" class="t" style="text-anchor:start">0.8580</text>
+<text x="140" y="251" class="ts" style="text-anchor:end">32-band</text>
+<rect x="150" y="264" width="218.5" height="26" rx="4" fill="#f2f4f7" stroke="#7b8794" stroke-width="1.6"/>
+<text x="378.46" y="283" class="t" style="text-anchor:start">0.7282</text>
+<text x="140" y="283" class="ts" style="text-anchor:end">RGB</text>
+<line x1="620" y1="100" x2="620" y2="300" stroke="#5a6472" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="680" y="110" class="tb" style="text-anchor:start">per class  (F1)</text>
+<text x="760" y="154" class="t" style="text-anchor:end">healthy</text>
+<rect x="770" y="140" width="130.7" height="18" rx="3" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.4"/>
+<rect x="770" y="162" width="111.3" height="18" rx="3" fill="#f2f4f7" stroke="#7b8794" stroke-width="1.4"/>
+<text x="930" y="153" class="ts" style="text-anchor:start">0.871</text>
+<text x="930" y="175" class="ts" style="text-anchor:start">0.742</text>
+<text x="760" y="174" class="ts" style="text-anchor:end">24% of test</text>
+<text x="760" y="210" class="t" style="text-anchor:end">DCIS</text>
+<rect x="770" y="196" width="105.6" height="18" rx="3" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.4"/>
+<rect x="770" y="218" width="66.5" height="18" rx="3" fill="#f2f4f7" stroke="#7b8794" stroke-width="1.4"/>
+<text x="930" y="209" class="ts" style="text-anchor:start">0.704</text>
+<text x="930" y="231" class="ts" style="text-anchor:start">0.443</text>
+<text x="760" y="230" class="ts" style="text-anchor:end">7% — the hard call</text>
+<text x="760" y="266" class="t" style="text-anchor:end">IDC</text>
+<rect x="770" y="252" width="149.8" height="18" rx="3" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.4"/>
+<rect x="770" y="274" width="149.8" height="18" rx="3" fill="#f2f4f7" stroke="#7b8794" stroke-width="1.4"/>
+<text x="930" y="265" class="ts" style="text-anchor:start">0.999</text>
+<text x="930" y="287" class="ts" style="text-anchor:start">0.999</text>
+<text x="760" y="286" class="ts" style="text-anchor:end">69% of test</text>
+<rect class="bx" x="30" y="318" width="980" height="44" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="520.0" y="344.5" class="t">Both models completely solve IDC — 69% of the test set says nothing about which is better.</text>
+<rect class="bx" x="30" y="368" width="980" height="44" fill="#e8f3ed" stroke="#4e8c6a"/>
+<text x="520.0" y="394.5" class="t">The whole margin is the healthy / DCIS boundary — which is the clinically consequential one.</text>
+<rect x="680" y="292" width="14" height="14" rx="3" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.4"/><text x="702" y="304" class="ts" style="text-anchor:start">32-band</text><rect x="790" y="292" width="14" height="14" rx="3" fill="#f2f4f7" stroke="#7b8794" stroke-width="1.4"/><text x="812" y="304" class="ts" style="text-anchor:start">RGB</text>
+</svg>

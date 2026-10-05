@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 420" width="1040" height="420" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="420" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">Three questions you are entitled to ask</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">Volunteering these costs a minute and turns the three hardest questions into things we said first.</text>
+<rect x="30" y="96" width="250" height="86" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="155" y="132" class="tb" style="text-anchor:middle;font-size:14px">Does the recursion help</text>
+<text x="155" y="154" class="tb" style="text-anchor:middle;font-size:14px">YOUR model?</text>
+<line x1="288" y1="139" x2="314" y2="139" stroke="#b4553f" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="322" y="96" width="688" height="86" rx="7" fill="#ffffff" stroke="#b4553f" stroke-width="1.6"/>
+<text x="342" y="124" class="tb" style="text-anchor:start;fill:#b4553f;font-size:17px">We don’t know.</text>
+<text x="516" y="120" class="ts" style="text-anchor:start">No depth ablation. No hierarchical-versus-recursive</text>
+<text x="516" y="140" class="ts" style="text-anchor:start">run under matched conditions. It is one flag away</text>
+<text x="516" y="160" class="ts" style="text-anchor:start">and has never been run.</text>
+<rect x="30" y="196" width="250" height="86" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="155" y="232" class="tb" style="text-anchor:middle;font-size:14px">Do you inherit</text>
+<text x="155" y="254" class="tb" style="text-anchor:middle;font-size:14px">TRM’s results?</text>
+<line x1="288" y1="239" x2="314" y2="239" stroke="#b4553f" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="322" y="196" width="688" height="86" rx="7" fill="#ffffff" stroke="#b4553f" stroke-width="1.6"/>
+<text x="342" y="224" class="tb" style="text-anchor:start;fill:#b4553f;font-size:17px">No.</text>
+<text x="516" y="220" class="ts" style="text-anchor:start">Theirs are puzzle grids with a verifiable answer and</text>
+<text x="516" y="240" class="ts" style="text-anchor:start">1000× augmentation. We inherited the recursion</text>
+<text x="516" y="260" class="ts" style="text-anchor:start">SCHEDULE, not the evidence.</text>
+<rect x="30" y="296" width="250" height="86" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="155" y="332" class="tb" style="text-anchor:middle;font-size:14px">Why a convolution</text>
+<text x="155" y="354" class="tb" style="text-anchor:middle;font-size:14px">and not SS2D?</text>
+<line x1="288" y1="339" x2="314" y2="339" stroke="#c2703a" stroke-width="1.8" fill="none" marker-end="url(#aro)"/>
+<rect x="322" y="296" width="688" height="86" rx="7" fill="#ffffff" stroke="#c2703a" stroke-width="1.6"/>
+<text x="342" y="324" class="tb" style="text-anchor:start;fill:#c2703a;font-size:17px">Speed.</text>
+<text x="516" y="320" class="ts" style="text-anchor:start">Our selective scan is a pure-PyTorch loop — about</text>
+<text x="516" y="340" class="ts" style="text-anchor:start">39× slower at dataset scale. ss2d is implemented</text>
+<text x="516" y="360" class="ts" style="text-anchor:start">and has never been used in a real run.</text>
+<rect x="30" y="388" width="980" height="32" rx="7" fill="#f8e7e2" stroke="#b4553f" stroke-width="1.6"/>
+<text x="520.0" y="409.5" class="t" style="text-anchor:middle">Two standing weaknesses: every result is a SINGLE SEED, and five test patients.</text>
+</svg>

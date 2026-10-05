@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1010 440" width="1010" height="440" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <style>
+    .lb{font-size:11px;fill:#1c2430}
+    .sm{font-size:9.5px;fill:#5a6472}
+    .ti{font-size:13px;font-weight:600;fill:#1c2430}
+    .hd{font-size:11.5px;font-weight:600;fill:#1c2430}
+    .ax{stroke:#8b95a3;stroke-width:1}
+    .gr{stroke:#e2e7ee;stroke-width:1}
+  </style>
+
+  <text class="ti" x="30" y="24">Fig. 4 — The trade-off measured: parameters fall 6.2× on HSI and 61.4× on PAD, while arithmetic rises 22×</text>
+
+  <!-- left: parameters -->
+  <text class="hd" x="60" y="62">Trainable parameters (millions)</text>
+  <line class="ax" x1="60" y1="300" x2="440" y2="300"/>
+  <g class="gr">
+    <line x1="60" y1="250" x2="440" y2="250"/><line x1="60" y1="200" x2="440" y2="200"/>
+    <line x1="60" y1="150" x2="440" y2="150"/><line x1="60" y1="100" x2="440" y2="100"/>
+  </g>
+  <text class="sm" x="34" y="304">0</text><text class="sm" x="28" y="254">10</text>
+  <text class="sm" x="28" y="204">20</text><text class="sm" x="28" y="154">30</text>
+
+  <rect x="96" y="163" width="76" height="137" fill="#3a6ea5" rx="3"/>
+  <text class="lb" x="134" y="153" text-anchor="middle" font-weight="600">27.43</text>
+  <text class="sm" x="134" y="318" text-anchor="middle">MedMamba-SS</text>
+  <text class="sm" x="134" y="331" text-anchor="middle">hierarchical (RGB)</text>
+
+  <rect x="212" y="286" width="76" height="14" fill="#6a8fbd" rx="3"/>
+  <text class="lb" x="250" y="278" text-anchor="middle" font-weight="600">2.77</text>
+  <text class="sm" x="250" y="318" text-anchor="middle">MedMamba-SS</text>
+  <text class="sm" x="250" y="331" text-anchor="middle">HSI preset</text>
+
+  <rect x="328" y="298" width="76" height="2.4" fill="#c2703a" rx="1"/>
+  <text class="lb" x="366" y="290" text-anchor="middle" font-weight="600" fill="#a85c26">0.447</text>
+  <text class="sm" x="366" y="318" text-anchor="middle" fill="#a85c26">MedMamba-SS-TRM</text>
+  <text class="sm" x="366" y="331" text-anchor="middle" fill="#a85c26">recursive</text>
+
+  <!-- right: time -->
+  <text class="hd" x="580" y="62">Wall-clock per optimizer step (ms, log scale) — mixer benchmark</text>
+  <line class="ax" x1="580" y1="300" x2="960" y2="300"/>
+  <g class="gr">
+    <line x1="580" y1="250" x2="960" y2="250"/><line x1="580" y1="200" x2="960" y2="200"/>
+    <line x1="580" y1="150" x2="960" y2="150"/><line x1="580" y1="100" x2="960" y2="100"/>
+  </g>
+  <text class="sm" x="548" y="304">10</text><text class="sm" x="542" y="254">100</text>
+  <text class="sm" x="536" y="204">1 k</text><text class="sm" x="540" y="154">10 k</text><text class="sm" x="536" y="104">100 k</text>
+
+  <rect x="612" y="265" width="66" height="35" fill="#3a6ea5" rx="3"/>
+  <text class="lb" x="645" y="257" text-anchor="middle" font-weight="600">58</text>
+  <text class="sm" x="645" y="318" text-anchor="middle">hierarchical</text>
+
+  <rect x="708" y="200" width="66" height="100" fill="#c2703a" rx="3"/>
+  <text class="lb" x="741" y="192" text-anchor="middle" font-weight="600" fill="#a85c26">501</text>
+  <text class="sm" x="741" y="318" text-anchor="middle" fill="#a85c26">recursive</text>
+  <text class="sm" x="741" y="331" text-anchor="middle" fill="#a85c26">mlp mixer</text>
+
+  <rect x="804" y="106" width="66" height="194" fill="#9b3f3f" rx="3"/>
+  <text class="lb" x="837" y="98" text-anchor="middle" font-weight="600" fill="#8a3232">66,880</text>
+  <text class="sm" x="837" y="318" text-anchor="middle" fill="#8a3232">recursive</text>
+  <text class="sm" x="837" y="331" text-anchor="middle" fill="#8a3232">ss2d mixer</text>
+
+  <text class="sm" x="580" y="356">Bars 1–2 are like-for-like at the epoch level: ≈5 min vs ≈24 min per epoch over the same 740,800 samples.</text>
+  <text class="sm" x="580" y="370">Bar 3 is the recursive model with the mixer flag changed and no other fix applied (fp32, reconstruction on, batch 150):</text>
+  <text class="sm" x="580" y="384">a pure-Python selective scan called 168× per step, turning a 25-minute epoch into a measured 92-hour one.</text>
+  <text class="sm" x="580" y="398" font-style="italic">From a controlled single-run sweep; training wall-clock is not quoted, as those runs shared the card.</text>
+
+  <text class="sm" x="60" y="356" font-weight="600">Same task, measured: on 32-band 11×11 HSI the hierarchical model is 2.77 M parameters at 0.278 GFLOPs,</text>
+  <text class="sm" x="60" y="370" font-weight="600">the recursive one 0.446 M at 6.203 GFLOPs — 6.2× fewer parameters for 22.3× the arithmetic.</text>
+  <text class="sm" x="60" y="384">The 27.43 M bar is the PAD/RGB preset (6 classes, 224², stride 8), where the ratio is 61.4× and the FLOP gap 16.4×.</text>
+  <text class="sm" x="60" y="410" font-style="italic">Without checkpointing the 0.44 M-parameter model exhausts 16 GB of VRAM — the clearest single statement of what recursion costs.</text>
+</svg>

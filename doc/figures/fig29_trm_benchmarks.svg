@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 440" width="1040" height="440" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="440" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">Does it work? Yes — and here is the row that keeps you honest</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">7 M parameters, about 1000 training examples. Every number is the paper’s.</text>
+<text x="202" y="108" class="tb" style="text-anchor:middle">Sudoku-Extreme</text>
+<text x="184" y="150" class="ts" style="text-anchor:end">Deepseek R1  ·  671 B</text>
+<rect x="192" y="136" width="120" height="20" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="192" y="136" width="2.0" height="20" rx="3" fill="#dbe0e6" stroke="#5a6472" stroke-width="1.3"/>
+<text x="320" y="151" class="tsb" style="text-anchor:start">0.0</text>
+<text x="184" y="194" class="ts" style="text-anchor:end">HRM  ·  27 M</text>
+<rect x="192" y="180" width="120" height="20" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="192" y="180" width="66.0" height="20" rx="3" fill="#dbe0e6" stroke="#5a6472" stroke-width="1.3"/>
+<text x="320" y="195" class="tsb" style="text-anchor:start">55.0</text>
+<text x="184" y="238" class="ts" style="text-anchor:end">TRM  ·  7 M</text>
+<rect x="192" y="224" width="120" height="20" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="192" y="224" width="104.88" height="20" rx="3" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="320" y="239" class="tsb" style="text-anchor:start">87.4</text>
+<text x="184" y="282" class="ts" style="text-anchor:end">Grok-4-thinking  ·  1.7 T</text>
+<text x="196" y="282" class="ts" style="text-anchor:start">not reported</text>
+<text x="502" y="108" class="tb" style="text-anchor:middle">Maze-Hard</text>
+<text x="484" y="150" class="ts" style="text-anchor:end">Deepseek R1</text>
+<rect x="492" y="136" width="120" height="20" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="492" y="136" width="2.0" height="20" rx="3" fill="#dbe0e6" stroke="#5a6472" stroke-width="1.3"/>
+<text x="620" y="151" class="tsb" style="text-anchor:start">0.0</text>
+<text x="484" y="194" class="ts" style="text-anchor:end">HRM</text>
+<rect x="492" y="180" width="120" height="20" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="492" y="180" width="89.4" height="20" rx="3" fill="#dbe0e6" stroke="#5a6472" stroke-width="1.3"/>
+<text x="620" y="195" class="tsb" style="text-anchor:start">74.5</text>
+<text x="484" y="238" class="ts" style="text-anchor:end">TRM</text>
+<rect x="492" y="224" width="120" height="20" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="492" y="224" width="102.36" height="20" rx="3" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="620" y="239" class="tsb" style="text-anchor:start">85.3</text>
+<text x="484" y="282" class="ts" style="text-anchor:end">Grok-4-thinking</text>
+<text x="496" y="282" class="ts" style="text-anchor:start">not reported</text>
+<text x="802" y="108" class="tb" style="text-anchor:middle">ARC-AGI-1</text>
+<text x="784" y="150" class="ts" style="text-anchor:end">Deepseek R1</text>
+<rect x="792" y="136" width="120" height="20" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="792" y="136" width="18.96" height="20" rx="3" fill="#dbe0e6" stroke="#5a6472" stroke-width="1.3"/>
+<text x="920" y="151" class="tsb" style="text-anchor:start">15.8</text>
+<text x="784" y="194" class="ts" style="text-anchor:end">HRM</text>
+<rect x="792" y="180" width="120" height="20" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="792" y="180" width="48.36" height="20" rx="3" fill="#dbe0e6" stroke="#5a6472" stroke-width="1.3"/>
+<text x="920" y="195" class="tsb" style="text-anchor:start">40.3</text>
+<text x="784" y="238" class="ts" style="text-anchor:end">TRM</text>
+<rect x="792" y="224" width="120" height="20" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="792" y="224" width="53.52" height="20" rx="3" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="920" y="239" class="tsb" style="text-anchor:start">44.6</text>
+<text x="784" y="282" class="ts" style="text-anchor:end">Grok-4-thinking</text>
+<rect x="792" y="268" width="120" height="20" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="792" y="268" width="80.04" height="20" rx="3" fill="#f8e7e2" stroke="#b4553f" stroke-width="1.3"/>
+<text x="920" y="283" class="tsb" style="text-anchor:start">66.7</text>
+<rect x="30" y="316" width="486" height="44" rx="7" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="273.0" y="343.5" class="t" style="text-anchor:middle">On Sudoku and Maze every LLM here scores a flat 0.0.</text>
+<rect x="524" y="316" width="486" height="44" rx="7" fill="#f8e7e2" stroke="#b4553f" stroke-width="1.6"/>
+<text x="767.0" y="343.5" class="t" style="text-anchor:middle">Grok-4 beats it on ARC. The abstract says “most LLMs” and means it.</text>
+<text x="520" y="392" class="ts" style="text-anchor:middle">Not generative — one input, one deterministic answer.   And bigger is worse: 4 layers lose to 2, and the authors say they have no theory why.</text>
+<text x="520" y="416" class="tsb" style="text-anchor:middle">None of this is measured on medical images. We inherited the recursion, not the evidence.</text>
+</svg>

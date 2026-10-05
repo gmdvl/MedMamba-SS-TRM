@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 486" width="1040" height="486" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="486" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">Five things to take away</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">Number three is the one we would keep.</text>
+<rect x="30" y="92" width="980" height="62" rx="7" fill="#ffffff" stroke="#c2703a" stroke-width="1.6"/>
+<circle cx="62" cy="122" r="12" fill="#c2703a" stroke="#c2703a" stroke-width="1.6"/>
+<text x="62" y="126.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">1</text>
+<text x="90" y="120" class="tb" style="text-anchor:start;font-size:16px">Delete C from your weight shapes.</text>
+<text x="90" y="142" class="ts" style="text-anchor:start">A shared per-value projection plus a physical wavelength tag. One model then serves every sensor.</text>
+<rect x="30" y="162" width="980" height="62" rx="7" fill="#ffffff" stroke="#6a5a92" stroke-width="1.6"/>
+<circle cx="62" cy="192" r="12" fill="#6a5a92" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="62" y="196.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">2</text>
+<text x="90" y="190" class="tb" style="text-anchor:start;font-size:16px">TRM is two lines.</text>
+<text x="90" y="212" class="ts" style="text-anchor:start">z = f(z+y+x) six times, y = f(y+z) once, most of it under no_grad.</text>
+<rect x="30" y="232" width="980" height="76" rx="7" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.6"/>
+<circle cx="62" cy="262" r="12" fill="#4e8c6a" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="62" y="266.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">3</text>
+<text x="90" y="260" class="tb" style="text-anchor:start;font-size:16px">Refinement beats capacity.</text>
+<text x="90" y="282" class="ts" style="text-anchor:start">A model that only has to make an answer LESS WRONG can be far smaller than one that must be right in</text>
+<text x="90" y="300" class="ts" style="text-anchor:start">one shot. It borrows what it is missing from time.</text>
+<rect x="30" y="316" width="980" height="76" rx="7" fill="#ffffff" stroke="#b4553f" stroke-width="1.6"/>
+<circle cx="62" cy="346" r="12" fill="#b4553f" stroke="#b4553f" stroke-width="1.6"/>
+<text x="62" y="350.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">4</text>
+<text x="90" y="344" class="tb" style="text-anchor:start;font-size:16px">Weight sharing trades storage for compute — steeply.</text>
+<text x="90" y="366" class="ts" style="text-anchor:start">8× smaller, 191× more arithmetic, and gradient checkpointing became mandatory. Always report both</text>
+<text x="90" y="384" class="ts" style="text-anchor:start">numbers.</text>
+<rect x="30" y="400" width="980" height="62" rx="7" fill="#ffffff" stroke="#5a6472" stroke-width="1.6"/>
+<circle cx="62" cy="430" r="12" fill="#5a6472" stroke="#5a6472" stroke-width="1.6"/>
+<text x="62" y="434.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">5</text>
+<text x="90" y="428" class="tb" style="text-anchor:start;font-size:16px">Be precise about provenance.</text>
+<text x="90" y="450" class="ts" style="text-anchor:start">We implemented TRM’s RECURSION, not TRM’s BLOCKS.</text>
+</svg>

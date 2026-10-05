@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 380" width="1040" height="380" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="380" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">MedMamba-SS-TRM, end to end</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">Five boxes. Notice what is not here: no stages, no patch merging, no downsampling.</text>
+<rect x="36" y="116" width="120" height="96" rx="7" fill="#ffffff" stroke="#5a6472" stroke-width="1.6"/>
+<text x="96.0" y="158" class="tb" style="text-anchor:middle">H × W × C</text>
+<text x="96.0" y="180" class="ts" style="text-anchor:middle">any band count</text>
+<rect x="214" y="116" width="174" height="96" rx="7" fill="#fbeee3" stroke="#c2703a" stroke-width="1.6"/>
+<text x="301.0" y="158" class="tb" style="text-anchor:middle">Spectral Pathway</text>
+<text x="301.0" y="180" class="ts" style="text-anchor:middle">C disappears here</text>
+<rect x="420" y="116" width="130" height="96" rx="7" fill="#ffffff" stroke="#5a6472" stroke-width="1.6"/>
+<text x="485.0" y="158" class="tb" style="text-anchor:middle">Stem</text>
+<text x="485.0" y="180" class="ts" style="text-anchor:middle">Linear(64→98)</text>
+<rect x="582" y="116" width="186" height="96" rx="7" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="675.0" y="158" class="tb" style="text-anchor:middle">Recursive Core</text>
+<text x="675.0" y="180" class="ts" style="text-anchor:middle">2 layers, called 63×</text>
+<rect x="800" y="116" width="130" height="96" rx="7" fill="#ffffff" stroke="#5a6472" stroke-width="1.6"/>
+<text x="865.0" y="158" class="tb" style="text-anchor:middle">Head</text>
+<text x="865.0" y="180" class="ts" style="text-anchor:middle">norm → pool → linear</text>
+<line x1="156" y1="164" x2="206" y2="164" stroke="#5a6472" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+<line x1="392" y1="164" x2="412" y2="164" stroke="#5a6472" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+<line x1="554" y1="164" x2="574" y2="164" stroke="#5a6472" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+<line x1="772" y1="164" x2="792" y2="164" stroke="#5a6472" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+<line x1="946" y1="164" x2="990" y2="164" stroke="#5a6472" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+<text x="1004" y="168" class="tb" style="text-anchor:middle;font-size:17px">3</text>
+<text x="1004" y="190" class="ts" style="text-anchor:middle">classes</text>
+<text x="262" y="236" class="ts" style="text-anchor:start;fill:#c2703a">mean over the BAND axis</text>
+<line x1="300" y1="244" x2="300" y2="218" stroke="#c2703a" stroke-width="1.4" fill="none" marker-end="url(#aro)"/>
+<text x="608" y="236" class="ts" style="text-anchor:start;fill:#6a5a92">width 128 from the stem to the head</text>
+<line x1="672" y1="244" x2="672" y2="218" stroke="#6a5a92" stroke-width="1.4" fill="none" marker-end="url(#arp)"/>
+<rect x="36" y="264" width="468" height="42" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="270.0" y="290.5" class="t" style="text-anchor:middle">Same front end, same head, same trainer as the hierarchical version.</text>
+<rect x="524" y="264" width="486" height="42" rx="7" fill="#f8e7e2" stroke="#b4553f" stroke-width="1.6"/>
+<text x="767.0" y="290.5" class="t" style="text-anchor:middle">Every call to f is gradient-checkpointed — the only reason it fits on the card.</text>
+<text x="520" y="344" class="ts" style="text-anchor:middle">One config flag switches between the 12-block hierarchy and this. Everything else is byte-identical.</text>
+</svg>

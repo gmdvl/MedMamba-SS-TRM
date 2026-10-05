@@ -1,0 +1,9 @@
+              precision    recall  f1-score   support
+
+     healthy       0.83      0.88      0.85      9828
+        DCIS       0.34      0.29      0.31      2457
+         IDC       1.00      0.99      1.00     21167
+
+    accuracy                           0.91     33452
+   macro avg       0.72      0.72      0.72     33452
+weighted avg       0.90      0.91      0.90     33452

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 430" width="1040" height="430" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker>
+<marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<style>
+      .bx{stroke-width:1.6;rx:7}
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#7b8794;text-anchor:middle}
+      .tb{font-size:15px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .ti{font-size:21px;font-weight:600;fill:#1c2430}
+      .tsub{font-size:14px;fill:#7b8794}
+      .cap{font-size:13.5px;fill:#7b8794}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .c {stroke:#5a6472;stroke-width:1.8;fill:none;marker-end:url(#ar)}
+      .co{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#aro)}
+      .cg{stroke:#4e8c6a;stroke-width:2;fill:none;marker-end:url(#arg)}
+      .cp{stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+      .cr{stroke:#b4553f;stroke-width:2;fill:none;marker-end:url(#arr)}
+      .plain{stroke:#5a6472;stroke-width:1.6;fill:none}
+    </style>
+</defs>
+<rect width="1040" height="430" fill="#ffffff"/>
+<text x="30" y="38" class="ti">The fix: delete the stem</text>
+<text x="30" y="60" class="tsub">Everything else in Part 1 follows from this one change.</text>
+<text x="30" y="96" class="tb" style="text-anchor:start">MedMamba</text>
+<rect class="bx" x="30" y="108" width="190" height="60" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="125.0" y="133.0" class="t">image</text>
+<text x="125.0" y="152.0" class="t">[B, C, H, W]</text>
+<line class="c" x1="220" y1="138" x2="296" y2="138"/>
+<rect class="bx" x="300" y="108" width="250" height="60" fill="#fbe9e4" stroke="#b4553f"/>
+<text x="425.0" y="134.5" class="t">Conv2d(C → 96)</text>
+<text x="425.0" y="154.5" class="ts">C lives in this weight</text>
+<line class="c" x1="550" y1="138" x2="626" y2="138"/>
+<rect class="bx" x="630" y="108" width="210" height="60" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="735.0" y="142.5" class="t">spatial backbone</text>
+<text x="852" y="143" class="tb" style="text-anchor:start">✕ locked to one C</text>
+<line x1="30" y1="196" x2="1010" y2="196" stroke="#5a6472" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="232" class="tb" style="text-anchor:start">Ours</text>
+<rect class="bx" x="30" y="244" width="150" height="60" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="105.0" y="269.0" class="t">image</text>
+<text x="105.0" y="288.0" class="t">[B, C, H, W]</text>
+<line class="c" x1="180" y1="274" x2="214" y2="274"/>
+<rect class="bx" x="218" y="244" width="112" height="60" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="274.0" y="270.5" class="t">patchify</text>
+<text x="274.0" y="290.5" class="ts">avg-pool</text>
+<line class="c" x1="330" y1="274" x2="338" y2="274"/>
+<rect class="bx" x="344" y="244" width="112" height="60" fill="#fbeee3" stroke="#c2703a"/>
+<text x="400.0" y="270.5" class="t">tokenize</text>
+<text x="400.0" y="290.5" class="ts">Linear(1→32)</text>
+<line class="c" x1="456" y1="274" x2="464" y2="274"/>
+<rect class="bx" x="470" y="244" width="112" height="60" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="526.0" y="270.5" class="t">encode</text>
+<text x="526.0" y="290.5" class="ts">bands</text>
+<line class="c" x1="582" y1="274" x2="590" y2="274"/>
+<rect class="bx" x="596" y="244" width="112" height="60" fill="#fbeee3" stroke="#c2703a"/>
+<text x="652.0" y="270.5" class="t">mean</text>
+<text x="652.0" y="290.5" class="ts">over bands</text>
+<line class="c" x1="708" y1="274" x2="716" y2="274"/>
+<rect class="bx" x="722" y="244" width="112" height="60" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="778.0" y="270.5" class="t">compress</text>
+<text x="778.0" y="290.5" class="ts">→ 64</text>
+<line class="c" x1="834" y1="274" x2="858" y2="274"/>
+<rect class="bx" x="862" y="244" width="150" height="60" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="937.0" y="278.5" class="t">spatial backbone</text>
+<rect x="30" y="326" width="620" height="28" rx="6" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.4"/>
+<text x="42" y="345" class="t" style="text-anchor:start">✓  no C in any weight  →  446,409 parameters at C=32 AND at C=3</text>
+<text x="30" y="396" class="cap">The backbone no longer sees pixels. It sees a per-patch summary of the spectrum — which is the trade, and the next figure is why it works.</text>
+</svg>

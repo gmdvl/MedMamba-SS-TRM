@@ -1,0 +1,25 @@
+{
+  "ram": {
+    "total_mb": 32643.62,
+    "available_mb": 9518.62,
+    "used_mb": 23125.0,
+    "source": "/proc/meminfo",
+    "process_rss_mb": 694.73
+  },
+  "shm": {
+    "available": true,
+    "path": "/dev/shm",
+    "total_mb": 16321.81,
+    "used_mb": 743.12,
+    "free_mb": 15578.68
+  },
+  "gpu": {
+    "available": true,
+    "device_name": "NVIDIA GeForce RTX 5060 Ti",
+    "total_mb": 16660.43,
+    "allocated_mb": 0.0,
+    "reserved_mb": 0.0,
+    "peak_allocated_mb": 0.0
+  },
+  "label": "startup"
+}

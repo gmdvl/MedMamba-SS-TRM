@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 460" width="1040" height="460" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker>
+<marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<style>
+      .bx{stroke-width:1.6;rx:7}
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#7b8794;text-anchor:middle}
+      .tb{font-size:15px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .ti{font-size:21px;font-weight:600;fill:#1c2430}
+      .tsub{font-size:14px;fill:#7b8794}
+      .cap{font-size:13.5px;fill:#7b8794}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .c {stroke:#5a6472;stroke-width:1.8;fill:none;marker-end:url(#ar)}
+      .co{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#aro)}
+      .cg{stroke:#4e8c6a;stroke-width:2;fill:none;marker-end:url(#arg)}
+      .cp{stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+      .cr{stroke:#b4553f;stroke-width:2;fill:none;marker-end:url(#arr)}
+      .plain{stroke:#5a6472;stroke-width:1.6;fill:none}
+    </style>
+</defs>
+<rect width="1040" height="460" fill="#ffffff"/>
+<text x="30" y="38" class="ti">TRM, as an analogy</text>
+<text x="30" y="60" class="tsub">A student solving a hard problem with one brain and a scratchpad.</text>
+<rect class="bx" x="60" y="112" width="230" height="82" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="175.0" y="149.5" class="t">x   the question</text>
+<text x="175.0" y="169.5" class="ts">written once, never changes</text>
+<circle cx="520" cy="244" r="70" fill="#efecf6" stroke="#6a5a92" stroke-width="2"/>
+<text x="520" y="240" class="ti">f</text>
+<text x="520" y="266" class="ts">one brain, reused</text>
+<rect class="bx" x="60" y="302" width="230" height="82" fill="#fbeee3" stroke="#c2703a"/>
+<text x="175.0" y="339.5" class="t">z   the scratchpad</text>
+<text x="175.0" y="359.5" class="ts">rough working</text>
+<rect class="bx" x="752" y="204" width="228" height="82" fill="#e8f3ed" stroke="#4e8c6a"/>
+<text x="866.0" y="241.5" class="t">y   the answer</text>
+<text x="866.0" y="261.5" class="ts">current best guess</text>
+<line class="c" x1="290" y1="153" x2="452" y2="212"/>
+<line class="co" x1="290" y1="343" x2="456" y2="288"/>
+<line class="cg" x1="590" y1="250" x2="748" y2="246"/>
+<text x="670" y="238" class="ts">updates the answer</text>
+<path d="M840,204 C840,130 660,126 556,182" stroke="#4e8c6a" stroke-width="2" fill="none" marker-end="url(#arg)"/>
+<text x="700" y="122" class="ts">the answer feeds back in</text>
+<path d="M492,312 C440,400 300,410 178,392" stroke="#c2703a" stroke-width="2" fill="none" marker-end="url(#aro)"/>
+<text x="346" y="424" class="ts">updates the scratchpad — six times per round</text>
+<text x="660" y="336" class="cap">Then go back to the scratchpad and do it all again.</text>
+</svg>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 430" width="1040" height="430" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="430" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">Three models, three names</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">Two of them are ours. Each is the one before it with exactly one thing replaced.</text>
+<rect x="30" y="96" width="300" height="250" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="180" y="128" class="tb" style="text-anchor:middle;font-size:17px">MedMamba</text>
+<text x="180" y="149" class="ts" style="text-anchor:middle;fill:#5a6472">published baseline [1]</text>
+<circle cx="70" cy="179" r="3" fill="#5a6472" stroke="#5a6472" stroke-width="1.6"/>
+<text x="84" y="184" class="t" style="text-anchor:start">4-stage hierarchy</text>
+<circle cx="70" cy="207" r="3" fill="#5a6472" stroke="#5a6472" stroke-width="1.6"/>
+<text x="84" y="212" class="t" style="text-anchor:start">12 distinct blocks</text>
+<circle cx="70" cy="235" r="3" fill="#5a6472" stroke="#5a6472" stroke-width="1.6"/>
+<text x="84" y="240" class="t" style="text-anchor:start">RGB stem, C welded in</text>
+<rect x="70" y="282" width="220" height="44" rx="7" fill="#ffffff" stroke="#5a6472" stroke-width="1.6"/>
+<text x="180" y="302" class="tb" style="text-anchor:middle;fill:#5a6472;font-size:17px">≈ 3.65 M</text>
+<text x="180" y="320" class="ts" style="text-anchor:middle">trainable parameters</text>
+<rect x="370" y="96" width="300" height="250" rx="7" fill="#fbeee3" stroke="#c2703a" stroke-width="1.6"/>
+<text x="520" y="128" class="tb" style="text-anchor:middle;font-size:17px">MedMamba-SS</text>
+<text x="520" y="149" class="ts" style="text-anchor:middle;fill:#c2703a">our change ①</text>
+<circle cx="410" cy="179" r="3" fill="#c2703a" stroke="#c2703a" stroke-width="1.6"/>
+<text x="424" y="184" class="t" style="text-anchor:start">same hierarchy</text>
+<circle cx="410" cy="207" r="3" fill="#c2703a" stroke="#c2703a" stroke-width="1.6"/>
+<text x="424" y="212" class="t" style="text-anchor:start">+ spectral pathway</text>
+<circle cx="410" cy="235" r="3" fill="#c2703a" stroke="#c2703a" stroke-width="1.6"/>
+<text x="424" y="240" class="t" style="text-anchor:start">C is gone</text>
+<rect x="410" y="282" width="220" height="44" rx="7" fill="#ffffff" stroke="#c2703a" stroke-width="1.6"/>
+<text x="520" y="302" class="tb" style="text-anchor:middle;fill:#c2703a;font-size:17px">27.43 M</text>
+<text x="520" y="320" class="ts" style="text-anchor:middle">trainable parameters</text>
+<rect x="710" y="96" width="300" height="250" rx="7" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="860" y="128" class="tb" style="text-anchor:middle;font-size:17px">MedMamba-SS-TRM</text>
+<text x="860" y="149" class="ts" style="text-anchor:middle;fill:#6a5a92">our change ②</text>
+<circle cx="750" cy="179" r="3" fill="#6a5a92" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="764" y="184" class="t" style="text-anchor:start">hierarchy → one core</text>
+<circle cx="750" cy="207" r="3" fill="#6a5a92" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="764" y="212" class="t" style="text-anchor:start">2 blocks, called 63×</text>
+<circle cx="750" cy="235" r="3" fill="#6a5a92" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="764" y="240" class="t" style="text-anchor:start">C still gone</text>
+<rect x="750" y="282" width="220" height="44" rx="7" fill="#ffffff" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="860" y="302" class="tb" style="text-anchor:middle;fill:#6a5a92;font-size:17px">0.447 M</text>
+<text x="860" y="320" class="ts" style="text-anchor:middle">trainable parameters</text>
+<line x1="334" y1="221" x2="362" y2="221" stroke="#c2703a" stroke-width="1.8" fill="none" marker-end="url(#aro)"/>
+<text x="348" y="205" class="ts" style="text-anchor:middle">add</text>
+<line x1="674" y1="221" x2="702" y2="221" stroke="#6a5a92" stroke-width="1.8" fill="none" marker-end="url(#arp)"/>
+<text x="688" y="205" class="ts" style="text-anchor:middle">swap</text>
+<rect x="30" y="366" width="980" height="40" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="520.0" y="391.5" class="t" style="text-anchor:middle">Older diagrams call the third one G-MedMamba-R. Same model, earlier name.</text>
+</svg>

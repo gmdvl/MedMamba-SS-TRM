@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 380" width="1040" height="380" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker>
+<marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<style>
+      .bx{stroke-width:1.6;rx:7}
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#7b8794;text-anchor:middle}
+      .tb{font-size:15px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .ti{font-size:21px;font-weight:600;fill:#1c2430}
+      .tsub{font-size:14px;fill:#7b8794}
+      .cap{font-size:13.5px;fill:#7b8794}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .c {stroke:#5a6472;stroke-width:1.8;fill:none;marker-end:url(#ar)}
+      .co{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#aro)}
+      .cg{stroke:#4e8c6a;stroke-width:2;fill:none;marker-end:url(#arg)}
+      .cp{stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+      .cr{stroke:#b4553f;stroke-width:2;fill:none;marker-end:url(#arr)}
+      .plain{stroke:#5a6472;stroke-width:1.6;fill:none}
+    </style>
+</defs>
+<rect width="1040" height="380" fill="#ffffff"/>
+<text x="30" y="38" class="ti">Running it 60 times without paying for it</text>
+<text x="30" y="60" class="tsub">If you backprop through every round you store every round. So TRM does not backprop through most of them.</text>
+<text x="30" y="116" class="tb" style="text-anchor:start">ONE segment  =  3 rounds</text>
+<rect class="bx" x="60" y="136" width="250" height="96" fill="#ffffff" stroke="#7b8794" stroke-width="1.4" stroke-dasharray='6 4'/>
+<text x="185" y="172" class="tb">round 1</text>
+<text x="185" y="194" class="ts">z ×6,  then y ×1</text>
+<text x="185" y="216" class="ts">torch.no_grad()</text>
+<line class="cp" x1="310" y1="184" x2="356" y2="184"/>
+<rect class="bx" x="360" y="136" width="250" height="96" fill="#ffffff" stroke="#7b8794" stroke-width="1.4" stroke-dasharray='6 4'/>
+<text x="485" y="172" class="tb">round 2</text>
+<text x="485" y="194" class="ts">z ×6,  then y ×1</text>
+<text x="485" y="216" class="ts">torch.no_grad()</text>
+<line class="cp" x1="610" y1="184" x2="656" y2="184"/>
+<rect class="bx" x="660" y="136" width="250" height="96" fill="#efecf6" stroke="#6a5a92" stroke-width="2" />
+<text x="785" y="172" class="tb">round 3</text>
+<text x="785" y="194" class="ts">z ×6,  then y ×1</text>
+<text x="785" y="216" class="ts">gradient ✓</text>
+<text x="360" y="258" class="ts">these happen — they genuinely refine the answer — but store nothing</text>
+<rect class="bx" x="60" y="282" width="430" height="56" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="275.0" y="314.5" class="t">forward pass:  21 calls to f</text>
+<rect class="bx" x="520" y="282" width="430" height="56" fill="#e8f3ed" stroke="#4e8c6a"/>
+<text x="735.0" y="314.5" class="t">backward pass:  7 calls to f</text>
+</svg>

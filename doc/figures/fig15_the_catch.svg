@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 400" width="1040" height="400" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker>
+<marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<style>
+      .bx{stroke-width:1.6;rx:7}
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#7b8794;text-anchor:middle}
+      .tb{font-size:15px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .ti{font-size:21px;font-weight:600;fill:#1c2430}
+      .tsub{font-size:14px;fill:#7b8794}
+      .cap{font-size:13.5px;fill:#7b8794}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .c {stroke:#5a6472;stroke-width:1.8;fill:none;marker-end:url(#ar)}
+      .co{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#aro)}
+      .cg{stroke:#4e8c6a;stroke-width:2;fill:none;marker-end:url(#arg)}
+      .cp{stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+      .cr{stroke:#b4553f;stroke-width:2;fill:none;marker-end:url(#arr)}
+      .plain{stroke:#5a6472;stroke-width:1.6;fill:none}
+    </style>
+</defs>
+<rect width="1040" height="400" fill="#ffffff"/>
+<text x="30" y="38" class="ti">The catch</text>
+<text x="30" y="60" class="tsub">Weight sharing did not reduce the work. It multiplied it by the number of times you share.</text>
+<rect class="bx" x="40" y="104" width="300" height="128" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="2"/>
+<text x="190" y="132" class="tb">parameters</text>
+<text x="190" y="186" text-anchor="middle" font-size="40" font-weight="600" fill="#4e8c6a">▼ 0.12×</text>
+<text x="190" y="214" class="ts">0.446 M  vs  3.65 M</text>
+<rect class="bx" x="365" y="104" width="300" height="128" fill="#fbe9e4" stroke="#b4553f" stroke-width="2"/>
+<text x="515" y="132" class="tb">FLOPs (est.)</text>
+<text x="515" y="186" text-anchor="middle" font-size="40" font-weight="600" fill="#b4553f">▲ 191×</text>
+<text x="515" y="214" class="ts">6,203 M  vs  33 M</text>
+<rect class="bx" x="690" y="104" width="300" height="128" fill="#fbe9e4" stroke="#b4553f" stroke-width="2"/>
+<text x="840" y="132" class="tb">seconds / epoch</text>
+<text x="840" y="186" text-anchor="middle" font-size="40" font-weight="600" fill="#b4553f">▲ 4.4×</text>
+<text x="840" y="214" class="ts">679 s  vs  155 s</text>
+<rect class="bx" x="40" y="252" width="585" height="56" fill="#fbe9e4" stroke="#b4553f"/>
+<text x="332.5" y="284.5" class="t">without gradient checkpointing:  1,428 MB → 6,863 MB, and OOM at batch 64</text>
+<rect class="bx" x="645" y="252" width="355" height="56" fill="#fbe9e4" stroke="#b4553f"/>
+<text x="822.5" y="276.5" class="t">inference pays this too</text>
+<text x="822.5" y="296.5" class="ts">forward() runs the full recursion</text>
+<rect class="bx" x="40" y="324" width="960" height="48" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="520.0" y="352.5" class="tb">Parameter count in a recursive model measures STORAGE, and is close to an inverse indicator of COMPUTE.</text>
+</svg>

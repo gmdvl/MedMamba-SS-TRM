@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1010 500" width="1010" height="500" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/>
+    </marker>
+    <marker id="a6p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/>
+    </marker>
+    <style>
+      .bx{stroke:#5a6472;stroke-width:1.1;rx:5}
+      .lb{font-size:11px;fill:#1c2430;text-anchor:middle}
+      .sm{font-size:9.5px;fill:#5a6472;text-anchor:middle}
+      .ti{font-size:13px;font-weight:600;fill:#1c2430}
+      .cn{stroke:#5a6472;stroke-width:1.2;fill:none;marker-end:url(#a6)}
+      .cp{stroke:#6a5a92;stroke-width:1.4;fill:none;marker-end:url(#a6p);stroke-dasharray:5 3}
+      .panel{fill:#fbfcfd;stroke:#c3ccd6;stroke-width:1;rx:8}
+    </style>
+  </defs>
+
+  <text class="ti" x="30" y="24">Fig. 6 — Where this work sits: the Mamba lineage, the recursion branch, and the parameter scale of each</text>
+
+  <!-- lineage row -->
+  <rect class="bx" x="30" y="88" width="120" height="66" fill="#e8f2ea"/>
+  <text class="lb" x="90" y="112">Mamba (2023)</text>
+  <text class="sm" x="90" y="128">selective SSM</text><text class="sm" x="90" y="141">near-linear scaling</text>
+
+  <rect class="bx" x="196" y="56" width="132" height="60" fill="#dbe7f7"/>
+  <text class="lb" x="262" y="78">Vision Mamba</text>
+  <text class="sm" x="262" y="94">7 / 26 / 98 M</text><text class="sm" x="262" y="107">76.1–81.9 IN-1k</text>
+
+  <rect class="bx" x="196" y="128" width="132" height="60" fill="#dbe7f7"/>
+  <text class="lb" x="262" y="150">VMamba — SS2D</text>
+  <text class="sm" x="262" y="166">30 / 50 / 89 M</text><text class="sm" x="262" y="179">82.6–83.9 IN-1k</text>
+
+  <rect class="bx" x="374" y="92" width="140" height="60" fill="#c9dcf2"/>
+  <text class="lb" x="444" y="114">MedMamba (2024)</text>
+  <text class="sm" x="444" y="130">15.2 / 23.5 / 48.1 M</text><text class="sm" x="444" y="143">84.0 % avg OA, 16 sets</text>
+
+  <rect class="bx" x="560" y="92" width="150" height="60" fill="#f7e6d0"/>
+  <text class="lb" x="635" y="114">GMedMamba</text>
+  <text class="sm" x="635" y="130">27.4 M (RGB)</text><text class="sm" x="635" y="143">+ spectral pathway</text>
+
+  <rect class="bx" x="756" y="92" width="150" height="60" fill="#f2d9b8"/>
+  <text class="lb" x="831" y="114">GMedMamba-R</text>
+  <text class="sm" x="831" y="130">0.44 M</text><text class="sm" x="831" y="143">recursive core</text>
+
+  <g class="cn">
+    <path d="M150,110 H180 V86 H194"/>
+    <path d="M150,132 H180 V158 H194"/>
+    <path d="M328,86 H350 V120 H372"/>
+    <path d="M328,158 H350 V124 H372"/>
+    <path d="M514,122 H558"/>
+    <path d="M710,122 H754"/>
+  </g>
+
+  <!-- TRM branch -->
+  <rect class="bx" x="560" y="222" width="150" height="66" fill="#ece6f5"/>
+  <text class="lb" x="635" y="244">TRM (2025)</text>
+  <text class="sm" x="635" y="260">7 M · 2 layers</text>
+  <text class="sm" x="635" y="273">Sudoku 87.4 %, ARC-1 44.6 %</text>
+  <path class="cp" d="M690,220 V160"/>
+  <text class="sm" x="762" y="200" fill="#6a5a92" font-size="10">recursion, deep supervision, EMA</text>
+
+  <!-- scale bar -->
+  <rect class="panel" x="30" y="318" width="950" height="164"/>
+  <text class="ti" x="46" y="340" font-size="12">Parameter scale (log), same axis for every model above</text>
+  <line x1="80" y1="420" x2="940" y2="420" stroke="#8b95a3" stroke-width="1"/>
+  <g class="sm">
+    <text x="110" y="440">0.1 M</text><text x="290" y="440">1 M</text><text x="470" y="440">10 M</text>
+    <text x="650" y="440">100 M</text><text x="830" y="440">1 B</text>
+  </g>
+  <g stroke="#c3ccd6" stroke-width="1">
+    <line x1="110" y1="414" x2="110" y2="426"/><line x1="290" y1="414" x2="290" y2="426"/>
+    <line x1="470" y1="414" x2="470" y2="426"/><line x1="650" y1="414" x2="650" y2="426"/>
+    <line x1="830" y1="414" x2="830" y2="426"/>
+  </g>
+  <!-- markers: x = 110 + 180*log10(M/0.1) -->
+  <circle cx="226" cy="420" r="7" fill="#c2703a"/>
+  <text class="lb" x="226" y="402" fill="#a85c26" font-size="10">GMedMamba-R</text>
+  <text class="sm" x="226" y="464" fill="#a85c26">0.44 M</text>
+
+  <circle cx="370" cy="420" r="6" fill="#6a8fbd"/>
+  <text class="lb" x="370" y="402" font-size="10">GMedMamba HSI</text>
+  <text class="sm" x="370" y="464">2.77 M</text>
+
+  <circle cx="442" cy="420" r="6" fill="#6a5a92"/>
+  <text class="lb" x="436" y="380" font-size="10">TRM · Vim-Ti</text>
+  <line x1="442" y1="412" x2="442" y2="388" stroke="#c3ccd6"/>
+  <text class="sm" x="442" y="464">7 M</text>
+
+  <circle cx="503" cy="420" r="6" fill="#3a6ea5"/>
+  <text class="lb" x="503" y="402" font-size="10">MedMamba-T</text>
+  <text class="sm" x="503" y="464">15.2 M</text>
+
+  <circle cx="549" cy="420" r="7" fill="#c2703a"/>
+  <text class="lb" x="556" y="380" fill="#a85c26" font-size="10">GMedMamba</text>
+  <line x1="549" y1="412" x2="549" y2="388" stroke="#c3ccd6"/>
+  <text class="sm" x="549" y="464" fill="#a85c26">27.4 M</text>
+
+  <circle cx="593" cy="420" r="6" fill="#3a6ea5"/>
+  <text class="lb" x="620" y="402" font-size="10">MedMamba-B</text>
+  <text class="sm" x="593" y="478">48.1 M</text>
+
+  <circle cx="641" cy="420" r="6" fill="#6a8fbd"/>
+  <text class="lb" x="690" y="380" font-size="10">VMamba-B · Vim-B</text>
+  <line x1="641" y1="412" x2="641" y2="388" stroke="#c3ccd6"/>
+  <text class="sm" x="660" y="464">89–98 M</text>
+
+  <text class="sm" x="505" y="482" font-size="10" font-style="italic">GMedMamba-R is the smallest model on this axis by a factor of 16 against the smallest published Mamba-family vision backbone.</text>
+</svg>

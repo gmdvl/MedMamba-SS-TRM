@@ -1,0 +1,45 @@
+{
+  "split_level": {
+    "manifest_path": "data/hsi_v7-80_10_10_importance/_progress.json",
+    "n_train_patients": 35,
+    "n_validation_patients": 5,
+    "n_test_patients": 5,
+    "patient_overlaps": {
+      "train_validation": [],
+      "train_test": [],
+      "validation_test": []
+    },
+    "slide_overlaps": {
+      "train_validation": [],
+      "train_test": [],
+      "validation_test": []
+    },
+    "patient_level_leakage": false,
+    "slide_level_leakage": false,
+    "leakage_detected": false
+  },
+  "patch_level": {
+    "data_dir": "data/hsi_v7-80_10_10_importance/hsi",
+    "checked": true,
+    "splits_checked": [
+      "train",
+      "validation",
+      "test"
+    ],
+    "n_patches_hashed": {
+      "train": 50000,
+      "validation": 50000,
+      "test": 50000
+    },
+    "sample_stride": 1,
+    "max_patches_per_split": 50000,
+    "cross_split_duplicate_patches": {},
+    "within_split_duplicate_patch_groups": {
+      "train": 0,
+      "validation": 0,
+      "test": 0
+    },
+    "leakage_detected": false
+  },
+  "leakage_detected": false
+}

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 470" width="1040" height="470" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker>
+<marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<style>
+      .bx{stroke-width:1.6;rx:7}
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#7b8794;text-anchor:middle}
+      .tb{font-size:15px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .ti{font-size:21px;font-weight:600;fill:#1c2430}
+      .tsub{font-size:14px;fill:#7b8794}
+      .cap{font-size:13.5px;fill:#7b8794}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .c {stroke:#5a6472;stroke-width:1.8;fill:none;marker-end:url(#ar)}
+      .co{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#aro)}
+      .cg{stroke:#4e8c6a;stroke-width:2;fill:none;marker-end:url(#arg)}
+      .cp{stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+      .cr{stroke:#b4553f;stroke-width:2;fill:none;marker-end:url(#arr)}
+      .plain{stroke:#5a6472;stroke-width:1.6;fill:none}
+    </style>
+</defs>
+<rect width="1040" height="470" fill="#ffffff"/>
+<text x="30" y="38" class="ti">Why C vanishes</text>
+<text x="30" y="60" class="tsub">The same weights read 32 bands or 3 bands. Nothing is resized, padded or retrained.</text>
+<rect x="30" y="96" width="440" height="300" rx="9" fill="none" stroke="#5a6472" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="250" y="122" class="tb">Hyperspectral — C = 32</text>
+<rect class="bx" x="54" y="140" width="92" height="26" fill="#ffffff" stroke="#5a6472"/>
+<text x="100.0" y="157.5" class="mono">0.21</text>
+<line class="c" x1="148" y1="153" x2="206" y2="153"/>
+<rect class="bx" x="54" y="174" width="92" height="26" fill="#ffffff" stroke="#5a6472"/>
+<text x="100.0" y="191.5" class="mono">0.34</text>
+<line class="c" x1="148" y1="187" x2="206" y2="187"/>
+<rect class="bx" x="54" y="208" width="92" height="26" fill="#ffffff" stroke="#5a6472"/>
+<text x="100.0" y="225.5" class="mono">0.19</text>
+<line class="c" x1="148" y1="221" x2="206" y2="221"/>
+<text x="100" y="258" class="ts">⋮  32 values in total</text>
+<rect class="bx" x="210" y="150" width="150" height="108" fill="#fbeee3" stroke="#c2703a"/>
+<text x="285.0" y="200.5" class="t">Linear(1 → 32)</text>
+<text x="285.0" y="220.5" class="ts">ONE shared weight</text>
+<line class="c" x1="362" y1="204" x2="402" y2="204"/>
+<rect class="bx" x="366" y="152" width="84" height="104" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="408.0" y="191.0" class="t">32</text>
+<text x="408.0" y="210.0" class="t">tokens</text>
+<text x="408.0" y="230.0" class="ts">32-dim</text>
+<line class="c" x1="408" y1="258" x2="408" y2="292"/>
+<text x="222" y="290" class="ts" style="text-anchor:start">mean over bands</text>
+<rect class="bx" x="350" y="296" width="116" height="44" fill="#e8f3ed" stroke="#4e8c6a"/>
+<text x="408.0" y="322.5" class="mono">[ 32 ]</text>
+<rect x="570" y="96" width="440" height="300" rx="9" fill="none" stroke="#5a6472" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="790" y="122" class="tb">RGB — C = 3</text>
+<rect class="bx" x="594" y="140" width="92" height="26" fill="#ffffff" stroke="#5a6472"/>
+<text x="640.0" y="157.5" class="mono">0.62</text>
+<line class="c" x1="688" y1="153" x2="746" y2="153"/>
+<rect class="bx" x="594" y="174" width="92" height="26" fill="#ffffff" stroke="#5a6472"/>
+<text x="640.0" y="191.5" class="mono">0.48</text>
+<line class="c" x1="688" y1="187" x2="746" y2="187"/>
+<rect class="bx" x="594" y="208" width="92" height="26" fill="#ffffff" stroke="#5a6472"/>
+<text x="640.0" y="225.5" class="mono">0.55</text>
+<line class="c" x1="688" y1="221" x2="746" y2="221"/>
+<rect class="bx" x="750" y="150" width="150" height="108" fill="#fbeee3" stroke="#c2703a"/>
+<text x="825.0" y="200.5" class="t">Linear(1 → 32)</text>
+<text x="825.0" y="220.5" class="ts">ONE shared weight</text>
+<line class="c" x1="902" y1="204" x2="942" y2="204"/>
+<rect class="bx" x="906" y="152" width="84" height="104" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="948.0" y="191.0" class="t">3</text>
+<text x="948.0" y="210.0" class="t">tokens</text>
+<text x="948.0" y="230.0" class="ts">32-dim</text>
+<line class="c" x1="948" y1="258" x2="948" y2="292"/>
+<text x="762" y="290" class="ts" style="text-anchor:start">mean over bands</text>
+<rect class="bx" x="890" y="296" width="116" height="44" fill="#e8f3ed" stroke="#4e8c6a"/>
+<text x="948.0" y="322.5" class="mono">[ 32 ]</text>
+<path d="M470,204 C510,204 530,204 566,204" stroke="#c2703a" stroke-width="2" fill="none" stroke-dasharray="5 4"/>
+<text x="520" y="186" class="ts">identical</text>
+<text x="520" y="200" class="ts">weights</text>
+<rect class="bx" x="30" y="408" width="980" height="44" fill="#e8f3ed" stroke="#4e8c6a"/>
+<text x="520.0" y="434.5" class="t">The weight is [32, 1] — 32 numbers, whatever C is.   The output is [32] — whatever C is.</text>
+</svg>

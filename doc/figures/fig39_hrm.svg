@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 584" width="1040" height="584" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="584" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">HRM — the paper TRM starts from</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">Wang et al., 2025. You need one minute of it, because TRM is defined by what it deleted.</text>
+<rect x="30" y="92" width="470" height="168" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="265" y="118" class="tb" style="text-anchor:middle">What HRM does</text>
+<rect x="66" y="136" width="170" height="52" rx="7" fill="#ffffff" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="151" y="158" class="tb" style="text-anchor:middle;font-size:13.5px">slow network</text>
+<text x="151" y="178" class="ts" style="text-anchor:middle">updates rarely</text>
+<rect x="66" y="200" width="170" height="52" rx="7" fill="#ffffff" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="151" y="222" class="tb" style="text-anchor:middle;font-size:13.5px">fast network</text>
+<text x="151" y="242" class="ts" style="text-anchor:middle">updates often</text>
+<path d="M 240,162 C 280,162 280,226 244,226" stroke="#6a5a92" stroke-width="1.8" fill="none" marker-end="url(#arp)"/>
+<path d="M 244,214 C 284,214 284,150 244,150" stroke="#6a5a92" stroke-width="1.8" fill="none" marker-end="url(#arp)"/>
+<text x="330" y="168" class="ts" style="text-anchor:start">Two recurrent modules</text>
+<text x="330" y="186" class="ts" style="text-anchor:start">at two timescales, each</text>
+<text x="330" y="204" class="ts" style="text-anchor:start">4 layers. 27 M parameters.</text>
+<text x="330" y="230" class="tsb" style="text-anchor:start">It beat the LLMs on Sudoku,</text>
+<text x="330" y="248" class="tsb" style="text-anchor:start">mazes and ARC.</text>
+<rect x="540" y="92" width="470" height="168" rx="7" fill="#f8e7e2" stroke="#b4553f" stroke-width="1.6"/>
+<text x="775" y="118" class="tb" style="text-anchor:middle">What it justified the design with</text>
+<rect x="566" y="140" width="418" height="48" rx="7" fill="#ffffff" stroke="#b4553f" stroke-width="1.6"/>
+<text x="584" y="161" class="tb" style="text-anchor:start;font-size:13.5px">Biology</text>
+<text x="584" y="179" class="ts" style="text-anchor:start">arguments about timescales in the brain</text>
+<rect x="566" y="198" width="418" height="48" rx="7" fill="#ffffff" stroke="#b4553f" stroke-width="1.6"/>
+<text x="584" y="219" class="tb" style="text-anchor:start;font-size:13.5px">A fixed-point theorem</text>
+<text x="584" y="237" class="ts" style="text-anchor:start">assume the loop settles, then backpropagate 2 steps of 6</text>
+<text x="775" y="282" class="tsb" style="text-anchor:middle">TRM’s objection: the loop never actually settles — it just stops.</text>
+<text x="30" y="320" class="tsb" style="text-anchor:start">TRM IS HRM WITH THINGS DELETED — and every deletion made it better</text>
+<rect x="30" y="334" width="390" height="32" rx="5" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.2"/>
+<text x="225" y="355" class="ts" style="text-anchor:middle">two networks at two timescales</text>
+<line x1="428" y1="350" x2="456" y2="350" stroke="#6a5a92" stroke-width="1.5" fill="none" marker-end="url(#arp)"/>
+<rect x="464" y="334" width="390" height="32" rx="5" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.2"/>
+<text x="659" y="355" class="ts" style="text-anchor:middle">one network</text>
+<rect x="30" y="372" width="390" height="32" rx="5" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.2"/>
+<text x="225" y="393" class="ts" style="text-anchor:middle">4 layers each</text>
+<line x1="428" y1="388" x2="456" y2="388" stroke="#6a5a92" stroke-width="1.5" fill="none" marker-end="url(#arp)"/>
+<rect x="464" y="372" width="390" height="32" rx="5" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.2"/>
+<text x="659" y="393" class="ts" style="text-anchor:middle">2 layers</text>
+<rect x="30" y="410" width="390" height="32" rx="5" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.2"/>
+<text x="225" y="431" class="ts" style="text-anchor:middle">biology and a fixed-point theorem</text>
+<line x1="428" y1="426" x2="456" y2="426" stroke="#6a5a92" stroke-width="1.5" fill="none" marker-end="url(#arp)"/>
+<rect x="464" y="410" width="390" height="32" rx="5" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.2"/>
+<text x="659" y="431" class="ts" style="text-anchor:middle">y = the answer, z = the working</text>
+<rect x="30" y="448" width="390" height="32" rx="5" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.2"/>
+<text x="225" y="469" class="ts" style="text-anchor:middle">27 M parameters</text>
+<line x1="428" y1="464" x2="456" y2="464" stroke="#6a5a92" stroke-width="1.5" fill="none" marker-end="url(#arp)"/>
+<rect x="464" y="448" width="390" height="32" rx="5" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.2"/>
+<text x="659" y="469" class="ts" style="text-anchor:middle">7 M — and every benchmark goes UP</text>
+<rect x="30" y="494" width="980" height="40" rx="7" fill="#f8e7e2" stroke="#b4553f" stroke-width="1.6"/>
+<text x="520.0" y="519.5" class="t" style="text-anchor:middle">An independent audit found HRM’s recursion was worth almost nothing: 35.7 % → 39.0 %.</text>
+<text x="520" y="562" class="tsb" style="text-anchor:middle">TRM’s claim is not that the recursion was a weak idea. It is that it was implemented wrong.</text>
+</svg>

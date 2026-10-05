@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 792" width="1180" height="792" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/>
+    </marker>
+    <marker id="a2o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/>
+    </marker>
+    <marker id="a2g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/>
+    </marker>
+    <style>
+      .bx{stroke:#5a6472;stroke-width:1.1;rx:5}
+      .lb{font-size:11px;fill:#1c2430;text-anchor:middle}
+      .sm{font-size:9.3px;fill:#5a6472;text-anchor:middle}
+      .ti{font-size:13px;font-weight:600;fill:#1c2430}
+      .hd{font-size:11px;font-weight:600;text-anchor:middle}
+      .hd2{font-size:9.3px;fill:#5a6472;text-anchor:middle}
+      .cn{stroke:#5a6472;stroke-width:1.1;fill:none;marker-end:url(#a2)}
+      .co{stroke:#c2703a;stroke-width:1.2;fill:none;marker-end:url(#a2o)}
+      .cg{stroke:#4e8c6a;stroke-width:1.2;fill:none;marker-end:url(#a2g)}
+      .panel{fill:#fbfcfd;stroke:#c3ccd6;stroke-width:1;rx:8}
+    </style>
+  </defs>
+
+  <text class="ti" x="30" y="24">Fig. 2 — GMedMamba: spectral pathway conditioning a 4-stage spatial backbone (gmedmamba.py)</text>
+
+  <!-- ============ ROW A: spectral pathway ============ -->
+  <rect class="bx" x="30" y="142" width="84" height="72" fill="#eef2f7"/>
+  <text class="lb" x="72" y="166">Input cube</text>
+  <text class="sm" x="72" y="181">H×W×C</text>
+  <text class="sm" x="72" y="193">C = 3 (RGB) or</text>
+  <text class="sm" x="72" y="204">32+ (HSI), any</text>
+
+  <rect class="panel" x="126" y="50" width="610" height="180" fill="#fdf6ec" stroke="#ddb98e"/>
+  <text class="hd" x="431" y="70" fill="#a85c26">SpectralPathway — one shared tokenizer, any band count C</text>
+  <text class="hd2" x="431" y="84">avg-pool patchify (patch_size, default 4) → per-patch band vector [N=B·Hp·Wp, C], processed in chunks</text>
+
+  <rect class="bx" x="142" y="98" width="112" height="58" fill="#f7e6d0"/>
+  <text class="lb" x="198" y="118">Spectral</text><text class="lb" x="198" y="131">tokenizer</text>
+  <text class="sm" x="198" y="144">Linear(1→d)+λ-PE</text>
+  <text class="sm" x="198" y="154">fusion="add" default</text>
+
+  <rect class="bx" x="270" y="98" width="156" height="58" fill="#f7e6d0"/>
+  <text class="lb" x="348" y="118">Hierarchical spectral</text><text class="lb" x="348" y="131">encoder</text>
+  <text class="sm" x="348" y="144">ResBlock→SpectralMamba</text>
+  <text class="sm" x="348" y="154">→ResBlock (bi-dir scan)</text>
+
+  <rect class="bx" x="442" y="98" width="100" height="58" fill="#f7e6d0"/>
+  <text class="lb" x="492" y="122">Band gate</text>
+  <text class="sm" x="492" y="140">σ(logits)</text>
+  <text class="sm" x="492" y="151">soft / sparse</text>
+
+  <rect class="bx" x="558" y="98" width="160" height="58" fill="#f2d9b8"/>
+  <text class="lb" x="638" y="118">Mean-pool bands +</text><text class="lb" x="638" y="131">Progressive compressor</text>
+  <text class="sm" x="638" y="144">d_token → 128 → 64 → d_ctx</text>
+
+  <g class="co">
+    <path d="M254,127 H268"/>
+    <path d="M426,127 H440"/>
+    <path d="M542,127 H556"/>
+  </g>
+  <path class="co" d="M114,178 H128 V127 H140"/>
+
+  <rect class="bx" x="752" y="104" width="132" height="68" fill="#f2d9b8" stroke="#c2703a"/>
+  <text class="lb" x="818" y="126">Spectral context map</text>
+  <text class="sm" x="818" y="142">ctx: [B,Hp,Wp,d_ctx]</text>
+  <text class="sm" x="818" y="154">+ band_weights [B,Hp,Wp,C]</text>
+  <path class="co" d="M718,127 H750"/>
+
+  <!-- ============ ROW B: spatial backbone ============ -->
+  <rect class="panel" x="30" y="254" width="1120" height="190" fill="#f4f8fd" stroke="#a8c2e0"/>
+  <text class="hd" x="590" y="274" fill="#2f5c8a">GMedMambaBackbone — 4 × GStage, PatchMerging2D doubles channel width each transition</text>
+  <text class="hd2" x="590" y="288">each transition: channels ×2, H,W ×½ (PatchMerging2D); the spectral context map is avg-pooled ×½ to match</text>
+
+  <rect class="bx" x="46" y="294" width="84" height="58" fill="#e6eefa"/>
+  <text class="lb" x="88" y="317">Linear stem</text><text class="lb" x="88" y="330">+ norm</text>
+  <text class="sm" x="88" y="344">d_ctx→dims₀</text>
+
+  <rect class="bx" x="142" y="294" width="150" height="58" fill="#dbe7f7"/>
+  <text class="lb" x="217" y="318">GStage 1 · dim 96</text><text class="sm" x="217" y="336">GBlock ×2</text>
+
+  <rect class="bx" x="304" y="294" width="150" height="58" fill="#dbe7f7"/>
+  <text class="lb" x="379" y="318">GStage 2 · dim 192</text><text class="sm" x="379" y="336">GBlock ×2</text>
+
+  <rect class="bx" x="466" y="294" width="150" height="58" fill="#dbe7f7"/>
+  <text class="lb" x="541" y="318">GStage 3 · dim 384</text><text class="sm" x="541" y="336">GBlock ×4</text>
+
+  <rect class="bx" x="628" y="294" width="150" height="58" fill="#dbe7f7"/>
+  <text class="lb" x="703" y="318">GStage 4 · dim 768</text><text class="sm" x="703" y="336">GBlock ×2 (no merge)</text>
+
+  <rect class="bx" x="790" y="294" width="170" height="58" fill="#e8f2ea"/>
+  <text class="lb" x="875" y="314">concat: stage-pools</text><text class="lb" x="875" y="327">(all 4) + ctx summary</text>
+  <text class="sm" x="875" y="342">sum(dims)+d_ctx wide</text>
+
+  <rect class="bx" x="972" y="294" width="160" height="58" fill="#e8f2ea"/>
+  <text class="lb" x="1052" y="318">ClassificationHead</text>
+  <text class="sm" x="1052" y="336">norm → MLP → logits</text>
+
+  <g class="cn">
+    <path d="M130,323 H140"/>
+    <path d="M292,323 H302"/>
+    <path d="M454,323 H464"/>
+    <path d="M616,323 H626"/>
+    <path d="M778,323 H788"/>
+    <path d="M960,323 H970"/>
+  </g>
+
+  <!-- ctx lane -->
+  <rect class="bx" x="142" y="380" width="150" height="28" fill="#faf1e2" stroke="#ddb98e"/>
+  <text class="sm" x="217" y="398">ctx (aligned+gated)</text>
+  <rect class="bx" x="304" y="380" width="150" height="28" fill="#faf1e2" stroke="#ddb98e"/>
+  <text class="sm" x="379" y="398">ctx (updated, ↓2×2)</text>
+  <rect class="bx" x="466" y="380" width="150" height="28" fill="#faf1e2" stroke="#ddb98e"/>
+  <text class="sm" x="541" y="398">ctx (updated, ↓2×2)</text>
+  <rect class="bx" x="628" y="380" width="150" height="28" fill="#faf1e2" stroke="#ddb98e"/>
+  <text class="sm" x="703" y="398">ctx (updated, ↓2×2)</text>
+
+  <g class="co">
+    <path d="M217,380 V354"/>
+    <path d="M379,380 V354"/>
+    <path d="M541,380 V354"/>
+    <path d="M703,380 V354"/>
+  </g>
+  <text class="sm" x="217" y="371" fill="#a85c26">fuse (FiLM)</text>
+
+  <g class="cg">
+    <path d="M292,352 H298 V394 H302"/>
+    <path d="M454,352 H460 V394 H464"/>
+    <path d="M616,352 H622 V394 H626"/>
+    <path d="M778,352 H784 V394 H875 V354"/>
+  </g>
+  <text class="sm" x="298" y="418" fill="#3d7a5b">SpectralContextUpdater</text>
+  <text class="sm" x="895" y="370" fill="#3d7a5b">mean → "spectral_context"</text>
+
+  <!-- bus: spectral pathway ctx map feeds both stem and ctx-lane slot 1 -->
+  <path class="co" d="M818,172 V242 H36 V394"/>
+  <path class="co" d="M36,323 H44"/>
+  <path class="co" d="M36,394 H140"/>
+
+  <!-- ============ ROW C: GBlock detail ============ -->
+  <rect class="panel" x="30" y="470" width="1120" height="252" fill="#fbfcfd" stroke="#c3ccd6"/>
+  <text class="hd" x="590" y="490">Inside one GBlock (× depth per stage) — the SS-Conv-SSM dual-branch block</text>
+  <path d="M81,575 V504 H867 V512" stroke="#8a94a1" stroke-width="1" fill="none" stroke-dasharray="3 3" marker-end="url(#a2)"/>
+  <text class="sm" x="470" y="501" fill="#6b7482">residual bypasses fusion AND both branches — added back as the ORIGINAL, pre-fusion x_in</text>
+
+  <rect class="bx" x="46" y="575" width="70" height="50" fill="#eef2f7"/>
+  <text class="lb" x="81" y="597">x_in</text>
+  <text class="sm" x="81" y="611">(kept aside)</text>
+
+  <rect class="bx" x="146" y="575" width="120" height="50" fill="#f7e6d0"/>
+  <text class="lb" x="206" y="594">Fusion(x, ctxᵢ)</text>
+  <text class="sm" x="206" y="608">FiLM: x·(1+γ)+β</text>
+  <text class="sm" x="206" y="618">(default; 5 alt. types)</text>
+
+  <rect class="bx" x="306" y="512" width="54" height="46" fill="#dbe7f7"/>
+  <text class="lb" x="333" y="539">LN</text>
+  <rect class="bx" x="366" y="512" width="130" height="46" fill="#dbe7f7"/>
+  <text class="lb" x="431" y="532">SS2D</text>
+  <text class="sm" x="431" y="546">(or MultiScaleSS2D)</text>
+  <rect class="bx" x="502" y="512" width="110" height="46" fill="#dbe7f7"/>
+  <text class="lb" x="557" y="532">LayerScale</text>
+  <text class="sm" x="557" y="546">· DropPath</text>
+
+  <rect class="bx" x="306" y="642" width="306" height="46" fill="#e6e9ee"/>
+  <text class="lb" x="459" y="661">Conv branch (half channels)</text>
+  <text class="sm" x="459" y="675">BN→Conv3×3→BN→ReLU→Conv3×3→BN→ReLU→Conv1×1→ReLU</text>
+
+  <rect class="bx" x="628" y="512" width="76" height="176" fill="#fbfcfd"/>
+  <text class="lb" x="666" y="596">concat</text>
+  <text class="sm" x="666" y="610">(left, right+ss)</text>
+
+  <rect class="bx" x="718" y="512" width="90" height="176" fill="#fbfcfd"/>
+  <text class="lb" x="763" y="592">channel</text><text class="lb" x="763" y="605">shuffle</text>
+  <text class="sm" x="763" y="619">(groups=2)</text>
+
+  <rect class="bx" x="822" y="512" width="90" height="176" fill="#fbfcfd" stroke-dasharray="3 3"/>
+  <text class="lb" x="867" y="592">+ residual</text>
+  <text class="sm" x="867" y="606">(x_in, pre-fusion)</text>
+
+  <rect class="bx" x="926" y="512" width="150" height="176" fill="#f7f2e3"/>
+  <text class="lb" x="1001" y="586">optional FFN</text>
+  <text class="sm" x="1001" y="600">LN→GatedMLP(GEGLU)</text>
+  <text class="sm" x="1001" y="611">→LayerScale·DropPath→+</text>
+  <text class="sm" x="1001" y="625">(use_ffn=True default)</text>
+
+  <rect class="bx" x="1088" y="575" width="56" height="50" fill="#eef2f7"/>
+  <text class="lb" x="1116" y="600">x_out</text>
+
+  <g class="cn">
+    <path d="M116,600 H144"/>
+    <path d="M266,600 H286 V535 H304"/>
+    <path d="M266,600 H286 V665 H304"/>
+    <path d="M360,535 H366"/>
+    <path d="M496,535 H502"/>
+    <path d="M612,535 H626"/>
+    <path d="M612,665 H626"/>
+    <path d="M704,600 H716"/>
+    <path d="M808,600 H820"/>
+    <path d="M912,600 H924"/>
+    <path d="M1076,600 H1086"/>
+  </g>
+
+  <text class="sm" x="590" y="746" fill="#1c2430" font-size="10">Verified by running gmedmamba.py: 27.42 M params — gmedmamba_tiny (RGB, 6 classes, dims 96/192/384/768). 2.77 M — gmedmamba_hsi_small (patch_size=1, any C incl. 826 bands, 3 classes): C never appears in a parameter shape.</text>
+  <text class="sm" x="590" y="762" fill="#1c2430" font-size="10">Fusion type is selectable per stage (film default / gated / cross_attention / multiplicative / residual); dynamic band selection and stage-wise spectral↔spatial refinement are both on by default.</text>
+  <text class="sm" x="590" y="778" fill="#a85c26" font-size="10">Scope: this figure covers gmedmamba.py only (GMedMamba/GMedMambaBackbone + ClassificationHead). Reconstruction decoding and EMA weight averaging are separate modules attached by the training scripts, not part of this file.</text>
+</svg>

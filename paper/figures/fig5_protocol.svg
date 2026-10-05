@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1010 400" width="1010" height="400" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/>
+    </marker>
+    <style>
+      .bx{stroke:#5a6472;stroke-width:1.1;rx:5}
+      .lb{font-size:11px;fill:#1c2430;text-anchor:middle}
+      .sm{font-size:9.5px;fill:#5a6472;text-anchor:middle}
+      .ti{font-size:13px;font-weight:600;fill:#1c2430}
+      .hd{font-size:11px;font-weight:600;text-anchor:middle}
+      .cn{stroke:#5a6472;stroke-width:1.1;fill:none;marker-end:url(#a5)}
+      .panel{fill:#fbfcfd;stroke:#c3ccd6;stroke-width:1;rx:8}
+    </style>
+  </defs>
+
+  <text class="ti" x="30" y="24">Fig. 5 — The controlled comparison, as run</text>
+
+  <rect class="bx" x="30" y="130" width="150" height="90" fill="#eef2f7"/>
+  <text class="lb" x="105" y="160">One frozen</text><text class="lb" x="105" y="176">data pipeline</text>
+  <text class="sm" x="105" y="196">same split, preprocessing,</text><text class="sm" x="105" y="208">optimizer, schedule, metrics</text>
+
+  <rect class="bx" x="230" y="60" width="170" height="56" fill="#dbe7f7"/>
+  <text class="lb" x="315" y="82">MedMamba</text><text class="sm" x="315" y="98">official implementation</text>
+  <rect class="bx" x="230" y="140" width="170" height="56" fill="#e6eefa"/>
+  <text class="lb" x="315" y="160">MedMamba-SS</text><text class="sm" x="315" y="174">hierarchical, 2.77 M</text><text class="sm" x="315" y="186" fill="#a33">did not train (see §7)</text>
+  <rect class="bx" x="230" y="220" width="170" height="56" fill="#f7e6d0"/>
+  <text class="lb" x="315" y="242">MedMamba-SS-TRM</text><text class="sm" x="315" y="258">recursive, 0.446 M</text>
+
+  <g class="cn">
+    <path d="M180,160 H210 V88 H228"/>
+    <path d="M180,170 H228"/>
+    <path d="M180,190 H210 V248 H228"/>
+  </g>
+
+  <rect class="bx" x="450" y="140" width="150" height="76" fill="#e8f2ea"/>
+  <text class="lb" x="525" y="162">5 seeds, RQ0 pair</text><text class="sm" x="525" y="178">μ ± σ over 1, 7, 13, 23, 42</text><text class="sm" x="525" y="192">baselines remain 1 seed</text>
+  <path class="cn" d="M400,88 H426 V170 H448"/>
+  <path class="cn" d="M400,168 H448"/>
+  <path class="cn" d="M400,248 H426 V182 H448"/>
+
+  <rect class="bx" x="650" y="60" width="160" height="56" fill="#f7f2e3"/>
+  <text class="lb" x="730" y="80">No significance tests</text><text class="sm" x="730" y="96">5 seeds, 5 test patients</text>
+  <rect class="bx" x="650" y="140" width="160" height="56" fill="#f7f2e3"/>
+  <text class="lb" x="730" y="162">Efficiency panel</text><text class="sm" x="730" y="178">params · FLOPs measured · VRAM</text>
+  <rect class="bx" x="650" y="220" width="160" height="56" fill="#f7f2e3"/>
+  <text class="lb" x="730" y="242">Ablation ladder</text><text class="sm" x="730" y="258">depth · recon · encoding · band count</text>
+  <g class="cn">
+    <path d="M600,170 H626 V88 H648"/>
+    <path d="M600,168 H648"/>
+    <path d="M600,186 H626 V248 H648"/>
+  </g>
+
+  <rect class="bx" x="860" y="140" width="120" height="76" fill="#ece6f5"/>
+  <text class="lb" x="920" y="166">A defensible</text><text class="lb" x="920" y="182">comparative</text><text class="lb" x="920" y="198">claim</text>
+  <g class="cn"><path d="M810,88 H836 V170 H858"/><path d="M810,168 H858"/><path d="M810,248 H836 V186 H858"/></g>
+
+  <rect class="panel" x="30" y="306" width="950" height="70"/>
+  <text class="sm" x="505" y="330" font-size="11">All three columns have now been run. The efficiency panel is measured rather than estimated, and the ablation ladder is complete.</text>
+  <text class="sm" x="505" y="352" font-size="11">Two limits are stated rather than designed away: the hierarchical arm did not train under this recipe, and no significance test is performed anywhere.</text>
+</svg>

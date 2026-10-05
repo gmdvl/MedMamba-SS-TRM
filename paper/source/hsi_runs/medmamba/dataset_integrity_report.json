@@ -1,0 +1,116 @@
+{
+  "all_ok": true,
+  "level": "deep",
+  "files": {
+    "X_train": {
+      "path": "data/hsi_v7-80_10_10_importance/hsi/X_train.npy",
+      "exists": true,
+      "size_bytes": 37977908096,
+      "valid_header": true,
+      "dtype": "float32",
+      "shape": [
+        2452086,
+        11,
+        11,
+        32
+      ],
+      "n_samples": 2452086,
+      "expected_element_count": 9494476992,
+      "expected_byte_size": 37977907968,
+      "header_offset": 128,
+      "expected_file_size": 37977908096,
+      "readable_elements": 9494476992,
+      "status": "VALID",
+      "first_sample_ok": true,
+      "middle_sample_ok": true,
+      "last_sample_ok": true,
+      "random_sample_ok": true,
+      "finite_sample_values": true,
+      "sha256": null,
+      "errors": [],
+      "warnings": []
+    },
+    "y_train": {
+      "path": "data/hsi_v7-80_10_10_importance/hsi/y_train.npy",
+      "exists": true,
+      "size_bytes": 19616816,
+      "valid_header": true,
+      "dtype": "int64",
+      "shape": [
+        2452086
+      ],
+      "n_samples": 2452086,
+      "expected_element_count": 2452086,
+      "expected_byte_size": 19616688,
+      "header_offset": 128,
+      "expected_file_size": 19616816,
+      "readable_elements": 2452086,
+      "status": "VALID",
+      "first_sample_ok": true,
+      "middle_sample_ok": true,
+      "last_sample_ok": true,
+      "random_sample_ok": true,
+      "finite_sample_values": true,
+      "sha256": null,
+      "errors": [],
+      "warnings": []
+    },
+    "X_val": {
+      "path": "data/hsi_v7-80_10_10_importance/hsi/X_val.npy",
+      "exists": true,
+      "size_bytes": 5180983936,
+      "valid_header": true,
+      "dtype": "float32",
+      "shape": [
+        334516,
+        11,
+        11,
+        32
+      ],
+      "n_samples": 334516,
+      "expected_element_count": 1295245952,
+      "expected_byte_size": 5180983808,
+      "header_offset": 128,
+      "expected_file_size": 5180983936,
+      "readable_elements": 1295245952,
+      "status": "VALID",
+      "first_sample_ok": true,
+      "middle_sample_ok": true,
+      "last_sample_ok": true,
+      "random_sample_ok": true,
+      "finite_sample_values": true,
+      "sha256": null,
+      "errors": [],
+      "warnings": []
+    },
+    "y_val": {
+      "path": "data/hsi_v7-80_10_10_importance/hsi/y_val.npy",
+      "exists": true,
+      "size_bytes": 2676256,
+      "valid_header": true,
+      "dtype": "int64",
+      "shape": [
+        334516
+      ],
+      "n_samples": 334516,
+      "expected_element_count": 334516,
+      "expected_byte_size": 2676128,
+      "header_offset": 128,
+      "expected_file_size": 2676256,
+      "readable_elements": 334516,
+      "status": "VALID",
+      "first_sample_ok": true,
+      "middle_sample_ok": true,
+      "last_sample_ok": true,
+      "random_sample_ok": true,
+      "finite_sample_values": true,
+      "sha256": null,
+      "errors": [],
+      "warnings": []
+    }
+  },
+  "x_y_length_matches": {
+    "X_train/y_train": true,
+    "X_val/y_val": true
+  }
+}

@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 700" width="1180" height="700" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/>
+    </marker>
+    <marker id="a3p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/>
+    </marker>
+    <marker id="a3o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/>
+    </marker>
+    <style>
+      .bx{stroke:#5a6472;stroke-width:1.1;rx:5}
+      .lb{font-size:11px;fill:#1c2430;text-anchor:middle}
+      .sm{font-size:9.3px;fill:#5a6472;text-anchor:middle}
+      .ti{font-size:13px;font-weight:600;fill:#1c2430}
+      .hd{font-size:11px;font-weight:600;text-anchor:middle}
+      .hd2{font-size:9.3px;fill:#5a6472;text-anchor:middle}
+      .cn{stroke:#5a6472;stroke-width:1.1;fill:none;marker-end:url(#a3)}
+      .cp{stroke:#6a5a92;stroke-width:1.2;fill:none;marker-end:url(#a3p)}
+      .co{stroke:#c2703a;stroke-width:1.2;fill:none;marker-end:url(#a3o)}
+      .panel{fill:#fbfcfd;stroke:#c3ccd6;stroke-width:1;rx:8}
+    </style>
+  </defs>
+
+  <text class="ti" x="30" y="24">Fig. 3 — GMedMamba-R: the hierarchical backbone replaced by one weight-shared recursive core (gmedmamba.py)</text>
+
+  <!-- ============ front end ============ -->
+  <rect class="bx" x="30" y="90" width="84" height="60" fill="#eef2f7"/>
+  <text class="lb" x="72" y="114">Input</text>
+  <text class="sm" x="72" y="130">11×11×C</text>
+  <text class="sm" x="72" y="141">(patch_size=1)</text>
+
+  <rect class="bx" x="140" y="90" width="120" height="60" fill="#f7e6d0"/>
+  <text class="lb" x="200" y="114">Spectral pathway</text>
+  <text class="sm" x="200" y="130">(SpectralPathway,</text>
+  <text class="sm" x="200" y="141">reused verbatim)</text>
+
+  <rect class="bx" x="286" y="90" width="130" height="60" fill="#e6eefa"/>
+  <text class="lb" x="351" y="118">Linear stem + norm</text>
+  <text class="sm" x="351" y="134">d_ctx → trm_dim (128)</text>
+
+  <rect class="bx" x="442" y="90" width="118" height="60" fill="#e6eefa"/>
+  <text class="lb" x="501" y="112">+ fixed 2-D sin. PE</text>
+  <text class="sm" x="501" y="127">→ x_emb, fixed for the</text>
+  <text class="sm" x="501" y="138">whole forward pass</text>
+
+  <rect class="bx" x="286" y="172" width="130" height="46" fill="#eef2f7"/>
+  <text class="sm" x="351" y="192">learned init buffers</text>
+  <text class="sm" x="351" y="204">z_init, y_init (two-state)</text>
+
+  <g class="cn">
+    <path d="M114,120 H138"/>
+    <path d="M260,120 H284"/>
+    <path d="M416,120 H440"/>
+  </g>
+  <path class="co" d="M560,120 H592"/>
+  <path class="co" d="M416,195 H570 V150"/>
+
+  <!-- ============ the core ============ -->
+  <rect class="panel" x="572" y="54" width="330" height="250" fill="#f6f4fa" stroke="#c0b3d6"/>
+  <text class="hd" x="737" y="74" fill="#6a5a92">RecursiveCore.one_segment — one improvement step shown</text>
+
+  <rect class="bx" x="592" y="98" width="140" height="46" fill="#ece6f5"/>
+  <text class="lb" x="662" y="120">z ← f(z + y + x_emb)</text>
+  <text class="sm" x="662" y="134">repeat n_latent = 6×</text>
+
+  <rect class="bx" x="592" y="180" width="140" height="46" fill="#ddd3ee"/>
+  <text class="lb" x="662" y="202">y ← f(y + z)</text>
+  <text class="sm" x="662" y="216">answer-state update</text>
+
+  <rect x="756" y="118" width="126" height="90" rx="5" fill="#fff" stroke="#6a5a92" stroke-dasharray="4 3"/>
+  <text class="lb" x="819" y="138" font-size="10.5" font-weight="600">shared core f</text>
+  <text class="sm" x="819" y="154">trm_core_layers = 2 ×</text>
+  <text class="sm" x="819" y="167">RecursiveMambaBlock</text>
+  <text class="sm" x="819" y="182">mixer: SS2D default</text>
+  <text class="sm" x="819" y="195">(mlp / attention alt.)</text>
+
+  <g class="cp">
+    <path d="M732,116 H752 V150 H754"/>
+    <path d="M732,198 H752 V182 H754"/>
+    <path d="M662,144 V178"/>
+  </g>
+  <text class="sm" x="737" y="248" fill="#6a5a92">n_improve = 3 steps per segment; the first 2 run under torch.no_grad()</text>
+  <text class="sm" x="737" y="262" fill="#6a5a92">— only the last carries gradient (TRM's cheap deep recursion).</text>
+  <text class="sm" x="737" y="278" fill="#6a5a92">f is gradient-checkpointed during training (trm_checkpoint_core=True).</text>
+  <text class="sm" x="737" y="294" fill="#6a5a92">trm_two_state=True (default): both z and y carried; False → single state.</text>
+
+  <!-- right column: heads -->
+  <rect class="bx" x="932" y="96" width="120" height="50" fill="#e8f2ea"/>
+  <text class="lb" x="992" y="118">Classification</text><text class="lb" x="992" y="131">head (fc)</text>
+  <rect class="bx" x="932" y="164" width="120" height="50" fill="#f7f2e3"/>
+  <text class="lb" x="992" y="184">Halt head q</text>
+  <text class="sm" x="992" y="198">(ACT; OFF by default —</text>
+  <text class="sm" x="992" y="209">trm_halt_threshold=None)</text>
+  <path class="cn" d="M882,150 H900 V121 H930"/>
+  <path class="cn" d="M882,178 H900 V189 H930"/>
+
+  <!-- ============ deep supervision ============ -->
+  <rect class="panel" x="30" y="450" width="1120" height="150" fill="#f4f8fd" stroke="#a8c2e0"/>
+  <text class="hd" x="590" y="470" fill="#2f5c8a">GMedMambaRecursive.forward_deep_supervision — trm_deep_supervision_steps = 4 segments (default)</text>
+  <path class="cp" d="M737,304 V446"/>
+
+  <rect class="bx" x="46" y="486" width="140" height="50" fill="#dbe7f7"/>
+  <text class="lb" x="116" y="507">Segment 1</text><text class="sm" x="116" y="523">logits₁, q₁</text>
+  <rect class="bx" x="214" y="486" width="140" height="50" fill="#dbe7f7"/>
+  <text class="lb" x="284" y="507">Segment 2</text><text class="sm" x="284" y="523">logits₂, q₂</text>
+  <rect class="bx" x="382" y="486" width="140" height="50" fill="#dbe7f7"/>
+  <text class="lb" x="452" y="507">Segment 3</text><text class="sm" x="452" y="523">logits₃, q₃</text>
+  <rect class="bx" x="550" y="486" width="140" height="50" fill="#c9dcf2"/>
+  <text class="lb" x="620" y="507">Segment 4</text><text class="sm" x="620" y="523">logits₄, q₄</text>
+
+  <rect class="bx" x="728" y="486" width="170" height="50" fill="#e8f2ea"/>
+  <text class="lb" x="813" y="505">forward() returns</text>
+  <text class="sm" x="813" y="520">logits₄ only (eval path)</text>
+
+  <rect class="bx" x="936" y="486" width="212" height="50" fill="#f2f2f2" stroke-dasharray="3 3"/>
+  <text class="lb" x="1042" y="500" font-size="10">external trainer</text>
+  <text class="sm" x="1042" y="513">mean CE over 4 segments</text>
+  <text class="sm" x="1042" y="524">+ BCE halting loss</text>
+
+  <g class="cn">
+    <path d="M186,511 H212"/>
+    <path d="M354,511 H380"/>
+    <path d="M522,511 H548"/>
+    <path d="M690,511 H726"/>
+  </g>
+  <path d="M898,505 H934" stroke="#8a94a1" stroke-width="1" fill="none" stroke-dasharray="3 3" marker-end="url(#a3)"/>
+  <text class="sm" x="200" y="552">detach(y, z)</text>
+  <text class="sm" x="368" y="552">detach(y, z)</text>
+  <text class="sm" x="536" y="552">detach(y, z)</text>
+  <text class="sm" x="620" y="578" font-size="10">Every segment always runs (no early exit) because trm_halt_threshold is None by default; enabling ACT would stop once sigmoid(q) &gt; threshold for the whole batch.</text>
+
+  <text class="sm" x="590" y="626" fill="#1c2430" font-size="10">Verified by running gmedmamba.py (gmedmamba_trm(), default trm_mixer="ss2d"): 0.531 M params vs 27.42 M hierarchical tiny — 51.6× fewer. mlp mixer: 0.443 M (61.9×); attention: 0.373 M (73.5×).</text>
+  <text class="sm" x="590" y="642" fill="#1c2430" font-size="10">Core f is called (n_latent+1)×n_improve×segments = 7×3×4 = 84 times per forward pass; each call runs trm_core_layers=2 RecursiveMambaBlocks (mixer + GatedMLP, post-RMSNorm residuals).</text>
+  <text class="sm" x="590" y="658" fill="#a85c26" font-size="10">Scope: this figure covers gmedmamba.py only (GMedMambaRecursive/GMedMambaRecursiveBackbone + RecursiveHead). EMA weight averaging (trm_ema_rate is only a config field here) is applied by the external trainer, not by this file.</text>
+</svg>

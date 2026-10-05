@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 460" width="1040" height="460" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="460" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">Two things are carried between passes, and only one is readable</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">This is the whole state of the model. There is nothing else.</text>
+<rect x="30" y="92" width="470" height="268" rx="7" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="265" y="124" class="tb" style="text-anchor:middle;fill:#4e8c6a;font-size:17px">y  —  the answer</text>
+<text x="265" y="148" class="ts" style="text-anchor:middle">push it through the output head, any time you like</text>
+<rect x="120" y="168" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="134" y="188" class="monb" style="text-anchor:middle">5</text>
+<rect x="150" y="168" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="164" y="188" class="monb" style="text-anchor:middle">3</text>
+<rect x="180" y="168" width="28" height="28" rx="3" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.1"/>
+<rect x="120" y="198" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="134" y="218" class="monb" style="text-anchor:middle">6</text>
+<rect x="150" y="198" width="28" height="28" rx="3" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.1"/>
+<rect x="180" y="198" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="194" y="218" class="monb" style="text-anchor:middle">2</text>
+<rect x="120" y="228" width="28" height="28" rx="3" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.1"/>
+<rect x="150" y="228" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="164" y="248" class="monb" style="text-anchor:middle">9</text>
+<rect x="180" y="228" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="194" y="248" class="monb" style="text-anchor:middle">8</text>
+<line x1="228" y1="213" x2="268" y2="213" stroke="#4e8c6a" stroke-width="1.8" fill="none" marker-end="url(#arg)"/>
+<rect x="288" y="168" width="28" height="28" rx="3" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.1"/>
+<text x="302" y="188" class="monb" style="text-anchor:middle">5</text>
+<rect x="318" y="168" width="28" height="28" rx="3" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.1"/>
+<text x="332" y="188" class="monb" style="text-anchor:middle">3</text>
+<rect x="348" y="168" width="28" height="28" rx="3" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.1"/>
+<text x="362" y="188" class="monb" style="text-anchor:middle">4</text>
+<rect x="288" y="198" width="28" height="28" rx="3" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.1"/>
+<text x="302" y="218" class="monb" style="text-anchor:middle">6</text>
+<rect x="318" y="198" width="28" height="28" rx="3" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.1"/>
+<text x="332" y="218" class="monb" style="text-anchor:middle">7</text>
+<rect x="348" y="198" width="28" height="28" rx="3" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.1"/>
+<text x="362" y="218" class="monb" style="text-anchor:middle">2</text>
+<rect x="288" y="228" width="28" height="28" rx="3" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.1"/>
+<text x="302" y="248" class="monb" style="text-anchor:middle">1</text>
+<rect x="318" y="228" width="28" height="28" rx="3" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.1"/>
+<text x="332" y="248" class="monb" style="text-anchor:middle">9</text>
+<rect x="348" y="228" width="28" height="28" rx="3" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.1"/>
+<text x="362" y="248" class="monb" style="text-anchor:middle">8</text>
+<text x="174" y="285" class="ts" style="text-anchor:middle">mid-recursion</text>
+<text x="342" y="285" class="ts" style="text-anchor:middle">a few passes later</text>
+<rect x="60" y="302" width="410" height="40" rx="7" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="265.0" y="327.5" class="t" style="text-anchor:middle">A real, gradable Sudoku grid — getting better.</text>
+<rect x="540" y="92" width="470" height="268" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="775" y="124" class="tb" style="text-anchor:middle;fill:#5a6472;font-size:17px">z  —  the working</text>
+<text x="775" y="148" class="ts" style="text-anchor:middle">push it through the same head and you get…</text>
+<rect x="630" y="168" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="644" y="188" class="mono" style="text-anchor:middle">·</text>
+<rect x="660" y="168" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="674" y="188" class="mono" style="text-anchor:middle">?</text>
+<rect x="690" y="168" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="704" y="188" class="mono" style="text-anchor:middle">·</text>
+<rect x="630" y="198" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="644" y="218" class="mono" style="text-anchor:middle">·</text>
+<rect x="660" y="198" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="674" y="218" class="mono" style="text-anchor:middle">?</text>
+<rect x="690" y="198" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="704" y="218" class="mono" style="text-anchor:middle">?</text>
+<rect x="630" y="228" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="644" y="248" class="mono" style="text-anchor:middle">~</text>
+<rect x="660" y="228" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="674" y="248" class="mono" style="text-anchor:middle">~</text>
+<rect x="690" y="228" width="28" height="28" rx="3" fill="#ffffff" stroke="#5a6472" stroke-width="1.1"/>
+<text x="704" y="248" class="mono" style="text-anchor:middle">?</text>
+<line x1="738" y1="213" x2="778" y2="213" stroke="#5a6472" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+<text x="870" y="205" class="t" style="text-anchor:middle">nothing meaningful.</text>
+<text x="870" y="227" class="t" style="text-anchor:middle">It is not a solution.</text>
+<text x="775" y="285" class="ts" style="text-anchor:middle">nobody — not even the loss — ever looks at it</text>
+<rect x="570" y="302" width="410" height="40" rx="7" fill="#ffffff" stroke="#5a6472" stroke-width="1.6"/>
+<text x="775.0" y="327.5" class="t" style="text-anchor:middle">Scratch paper. And it is why the model can improve.</text>
+<text x="30" y="396" class="tsb" style="text-anchor:start">Why exactly two? The paper removed each one — Sudoku-Extreme accuracy:</text>
+<text x="340" y="416" class="ts" style="text-anchor:end">carry y and z  (as published)</text>
+<rect x="350" y="406" width="460" height="12" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="350" y="406" width="402.04" height="12" rx="3" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.2"/>
+<text x="820" y="416" class="tsb" style="text-anchor:start">87.4 %</text>
+<text x="340" y="432" class="ts" style="text-anchor:end">split z into 7 features</text>
+<rect x="350" y="422" width="460" height="12" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="350" y="422" width="356.96" height="12" rx="3" fill="#dbe0e6" stroke="#5a6472" stroke-width="1.2"/>
+<text x="820" y="432" class="tsb" style="text-anchor:start">77.6 %</text>
+<text x="340" y="448" class="ts" style="text-anchor:end">carry z only — no answer to build on</text>
+<rect x="350" y="438" width="460" height="12" rx="3" fill="#f2f4f7" stroke="#e3e6ea" stroke-width="0.8"/>
+<rect x="350" y="438" width="330.74" height="12" rx="3" fill="#f8e7e2" stroke="#b4553f" stroke-width="1.2"/>
+<text x="820" y="448" class="tsb" style="text-anchor:start">71.9 %</text>
+</svg>

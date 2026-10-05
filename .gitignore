@@ -1,0 +1,65 @@
+*.tar.gz
+*.zip
+data_hsi_breast-ds_30x30_v2-1/*
+data_hsi_v2/*
+data_hsi_v4/*
+data_hsi_v4-70,15,15/*
+data_hsi_v5/*
+data_pad_ufes_patches/*
+data_prep-v3/*
+data_v2/*
+gmedmambav6.5/training/__pycache__/*
+archive/*.tar.gz
+*.7z
+model/__pycache__/*
+training/__pycache__/*
+__pycache__/*
+experiments/*/*.npy
+experiments/*/*.npz
+!experiments/*/best_model.pt
+experiments/*
+gabriela-experiments-*/*
+gabriela-experiemnts-*/
+archive/*
+# v17 S8 - archive/ holds superseded but still-cited source (see archive/README.md).
+# Without these negations `git mv` into it UNTRACKS the files instead of moving them:
+# they would vanish from the repository and survive only in the local tree.
+!archive/README.md
+!archive/*.py
+data_*
+data/
+training/prep/__pycache__/
+scripts/__pycache__/
+hier_run.log
+ppt/*
+logs/*
+findings/*
+.vscode/*
+.**/*
+
+# v17 S12 - `__pycache__/*` above ignores the CONTENTS but not the directory entry, so
+# `git check-ignore __pycache__` said "not ignored" and two .pyc under scripts/ were
+# tracked. This catches the directory itself, at any depth.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# LaTeX build artifacts from paper/draft/. Eleven of these were TRACKED, including eight
+# identical 121-byte pdflatex*.fls files; latexmk regenerates all of them.
+*.aux
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# rasterised figures: build intermediate for doc/build_pptx.py, regenerate with rsvg-convert
+doc/figures/_png/
+
+# local scratch experiments, not part of the repository
+.scratch/
+
+# v17 S12b - torch.compile / Triton scratch, redirected off the RAM-backed /tmp
+.cache/
+prepare_script (1).py
+prepare_script.py
+prepare_hmi_lusc_v20.py
+scripts/convert_nchw_to_nhwc.py

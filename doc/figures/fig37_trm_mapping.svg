@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 500" width="1040" height="500" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="500" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">TRM’s x, y, z and f — in our model</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">The recursion is theirs. These four lines are what it is actually operating on.</text>
+<text x="66" y="106" class="tsb" style="text-anchor:start">TRM</text>
+<text x="250" y="106" class="tsb" style="text-anchor:start">in our model</text>
+<text x="848" y="106" class="tsb" style="text-anchor:middle">shape</text>
+<rect x="40" y="120" width="56" height="60" rx="7" fill="#fbeee3" stroke="#c2703a" stroke-width="1.6"/>
+<text x="68" y="160" class="monb" style="text-anchor:middle;fill:#c2703a;font-size:26px">x</text>
+<text x="116" y="146" class="tb" style="text-anchor:start;font-size:14px">Stem(SpectralPathway(patch))</text>
+<text x="116" y="168" class="ts" style="text-anchor:start">computed ONCE, then held fixed for all 63 calls</text>
+<rect x="760" y="134" width="176" height="32" rx="5" fill="#ffffff" stroke="#c2703a" stroke-width="1.3"/>
+<text x="848" y="155" class="mono" style="text-anchor:middle">[Hp, Wp, 128]</text>
+<rect x="40" y="192" width="56" height="60" rx="7" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="68" y="232" class="monb" style="text-anchor:middle;fill:#4e8c6a;font-size:26px">y</text>
+<text x="116" y="218" class="tb" style="text-anchor:start;font-size:14px">the feature grid the head reads</text>
+<text x="116" y="240" class="ts" style="text-anchor:start">decode it at any segment and you get logits</text>
+<rect x="760" y="206" width="176" height="32" rx="5" fill="#ffffff" stroke="#4e8c6a" stroke-width="1.3"/>
+<text x="848" y="227" class="mono" style="text-anchor:middle">[Hp, Wp, 128]</text>
+<rect x="40" y="264" width="56" height="60" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="68" y="304" class="monb" style="text-anchor:middle;fill:#5a6472;font-size:26px">z</text>
+<text x="116" y="290" class="tb" style="text-anchor:start;font-size:14px">the latent working</text>
+<text x="116" y="312" class="ts" style="text-anchor:start">same shape, never decoded, never supervised</text>
+<rect x="760" y="278" width="176" height="32" rx="5" fill="#ffffff" stroke="#5a6472" stroke-width="1.3"/>
+<text x="848" y="299" class="mono" style="text-anchor:middle">[Hp, Wp, 128]</text>
+<rect x="40" y="336" width="56" height="60" rx="7" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="68" y="376" class="monb" style="text-anchor:middle;fill:#6a5a92;font-size:26px">f</text>
+<text x="116" y="362" class="tb" style="text-anchor:start;font-size:14px">2 × (mixer → GatedMLP)</text>
+<text x="116" y="384" class="ts" style="text-anchor:start">post-norm RMSNorm · the only weights in the core</text>
+<rect x="760" y="350" width="176" height="32" rx="5" fill="#ffffff" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="848" y="371" class="mono" style="text-anchor:middle">398,592 params</text>
+<rect x="40" y="420" width="460" height="42" rx="7" fill="#f8e7e2" stroke="#b4553f" stroke-width="1.6"/>
+<text x="270.0" y="446.5" class="t" style="text-anchor:middle">y_init and z_init are BUFFERS, not parameters.</text>
+<rect x="520" y="420" width="480" height="42" rx="7" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="760.0" y="446.5" class="t" style="text-anchor:middle">(6 + 1) × 3 rounds × 3 passes = 63 calls to f.</text>
+<text x="520" y="484" class="ts" style="text-anchor:middle">The first read of the buffers is inside no_grad, so a parameter there would silently never receive a gradient.</text>
+</svg>

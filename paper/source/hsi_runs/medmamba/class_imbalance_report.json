@@ -1,0 +1,37 @@
+{
+  "class_names": [
+    "healthy",
+    "DCIS",
+    "IDC"
+  ],
+  "per_split": {
+    "train": {
+      "class_count": {
+        "healthy": 722358,
+        "DCIS": 122850,
+        "IDC": 1606878
+      },
+      "class_percentage": {
+        "healthy": 29.46,
+        "DCIS": 5.01,
+        "IDC": 65.53
+      },
+      "total": 2452086,
+      "imbalance_ratio_max_over_min": 13.08
+    },
+    "validation": {
+      "class_count": {
+        "healthy": 98280,
+        "DCIS": 24570,
+        "IDC": 211666
+      },
+      "class_percentage": {
+        "healthy": 29.38,
+        "DCIS": 7.34,
+        "IDC": 63.28
+      },
+      "total": 334516,
+      "imbalance_ratio_max_over_min": 8.61
+    }
+  }
+}

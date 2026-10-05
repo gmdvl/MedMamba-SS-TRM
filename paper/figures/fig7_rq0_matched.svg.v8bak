@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 620" width="1080" height="620" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/>
+    </marker>
+    <style>
+      .bx{stroke:#5a6472;stroke-width:1.1;rx:5}
+      .lb{font-size:11px;fill:#1c2430;text-anchor:middle}
+      .lbl{font-size:11px;fill:#1c2430}
+      .sm{font-size:9.3px;fill:#5a6472;text-anchor:middle}
+      .sml{font-size:9.3px;fill:#5a6472}
+      .ti{font-size:13px;font-weight:600;fill:#1c2430}
+      .hd{font-size:11.5px;font-weight:600;fill:#1c2430}
+      .cn{stroke:#5a6472;stroke-width:1.1;fill:none;marker-end:url(#a7)}
+      .panel{fill:#fbfcfd;stroke:#c3ccd6;stroke-width:1;rx:8}
+      .ax{stroke:#8b95a3;stroke-width:1}
+      .gr{stroke:#e2e7ee;stroke-width:1}
+      .vb{font-size:10px;fill:#1c2430;text-anchor:middle;font-weight:600}
+    </style>
+  </defs>
+
+  <text class="ti" x="30" y="26">Fig. 7 — The matched spectral-versus-colour comparison: one dataset, one model, one flag</text>
+  <text class="sml" x="30" y="44">HistologyHSI-BC, 35/5/5 patient-disjoint split. The two runs differ in exactly one command-line argument (<tspan font-family="monospace">--data_dir .../hsi/</tspan> vs <tspan font-family="monospace">.../rgb/</tspan>).</text>
+
+  <!-- ===== provenance panel ===== -->
+  <rect class="panel" x="30" y="62" width="1020" height="126"/>
+  <text class="hd" x="44" y="82">What is held fixed</text>
+
+  <rect class="bx" x="44" y="94" width="150" height="76" fill="#eef2f7"/>
+  <text class="lb" x="119" y="114">Same cubes</text>
+  <text class="sm" x="119" y="129">35 train / 5 val / 5 test</text>
+  <text class="sm" x="119" y="142">patients, no leakage</text>
+  <text class="sm" x="119" y="155">identical 348,894-patch</text>
+  <text class="sm" x="119" y="166">test split</text>
+
+  <rect class="bx" x="212" y="94" width="150" height="76" fill="#eef2f7"/>
+  <text class="lb" x="287" y="114">Same weights budget</text>
+  <text class="sm" x="287" y="131">446,409 trainable</text>
+  <text class="sm" x="287" y="144">parameters in BOTH</text>
+  <text class="sm" x="287" y="157">arms — the structural</text>
+  <text class="sm" x="287" y="168">band-agnosticism result</text>
+
+  <rect class="bx" x="380" y="94" width="150" height="76" fill="#eef2f7"/>
+  <text class="lb" x="455" y="114">Same recipe</text>
+  <text class="sm" x="455" y="131">seed 42, bs 256, bf16,</text>
+  <text class="sm" x="455" y="144">AdamW 1e-4, wd 0.05,</text>
+  <text class="sm" x="455" y="157">weighted CE (p=0.75),</text>
+  <text class="sm" x="455" y="168">step-axis cosine, EMA .995</text>
+
+  <rect class="bx" x="548" y="94" width="150" height="76" fill="#eef2f7"/>
+  <text class="lb" x="623" y="114">Same recursion</text>
+  <text class="sm" x="623" y="131">d = 128, 2 core layers,</text>
+  <text class="sm" x="623" y="144">6 latent · 3 improve ·</text>
+  <text class="sm" x="623" y="157">3 segments = 63 core</text>
+  <text class="sm" x="623" y="168">applications, mlp mixer</text>
+
+  <rect class="bx" x="716" y="94" width="150" height="76" fill="#f7e6d0"/>
+  <text class="lb" x="791" y="114">What differs</text>
+  <text class="sm" x="791" y="133">C = 32 bands</text>
+  <text class="sm" x="791" y="146">vs</text>
+  <text class="sm" x="791" y="159">C = 3 channels</text>
+
+  <rect class="bx" x="884" y="94" width="152" height="76" fill="#f3f0f7"/>
+  <text class="lb" x="960" y="114">Caveat</text>
+  <text class="sm" x="960" y="131">one seed; HSI stopped</text>
+  <text class="sm" x="960" y="144">at 12 epochs on the</text>
+  <text class="sm" x="960" y="157">divergence rule, RGB</text>
+  <text class="sm" x="960" y="168">ran all 20</text>
+
+  <!-- ===== bar chart: held-out test ===== -->
+  <text class="hd" x="30" y="222">Held-out test, 348,894 patches from five patients used for neither training nor selection</text>
+
+  <!-- axis -->
+  <line class="ax" x1="150" y1="430" x2="640" y2="430"/>
+  <g class="gr">
+    <line x1="150" y1="390" x2="640" y2="390"/><line x1="150" y1="350" x2="640" y2="350"/>
+    <line x1="150" y1="310" x2="640" y2="310"/><line x1="150" y1="270" x2="640" y2="270"/>
+    <line x1="150" y1="250" x2="640" y2="250"/>
+  </g>
+  <text class="sml" x="124" y="434">0</text>
+  <text class="sml" x="116" y="394">25</text>
+  <text class="sml" x="116" y="354">50</text>
+  <text class="sml" x="116" y="314">75</text>
+  <text class="sml" x="112" y="274">100</text>
+  <text class="sml" x="60" y="330" transform="rotate(-90 60 330)">percent / F1×100</text>
+
+  <!-- group 1: accuracy 94.36 / 89.04 -->
+  <rect x="176" y="279" width="42" height="151" fill="#4a6fa5" stroke="#33507a"/>
+  <rect x="222" y="288" width="42" height="142" fill="#c9a227" stroke="#96791d"/>
+  <text class="vb" x="197" y="273">94.36</text>
+  <text class="vb" x="243" y="282">89.04</text>
+  <text class="lb" x="220" y="448">Accuracy</text>
+  <text class="sm" x="220" y="461">+5.3 pts</text>
+
+  <!-- group 2: balanced accuracy 90.73 / 75.71 -->
+  <rect x="300" y="285" width="42" height="145" fill="#4a6fa5" stroke="#33507a"/>
+  <rect x="346" y="309" width="42" height="121" fill="#c9a227" stroke="#96791d"/>
+  <text class="vb" x="321" y="279">90.73</text>
+  <text class="vb" x="367" y="303">75.71</text>
+  <text class="lb" x="344" y="448">Balanced acc.</text>
+  <text class="sm" x="344" y="461">+15.0 pts</text>
+
+  <!-- group 3: macro F1 85.80 / 72.82 -->
+  <rect x="424" y="293" width="42" height="137" fill="#4a6fa5" stroke="#33507a"/>
+  <rect x="470" y="313" width="42" height="117" fill="#c9a227" stroke="#96791d"/>
+  <text class="vb" x="445" y="287">0.858</text>
+  <text class="vb" x="491" y="307">0.728</text>
+  <text class="lb" x="468" y="448">Macro F1</text>
+  <text class="sm" x="468" y="461">+0.130</text>
+
+  <!-- group 4: DCIS F1 70.40 / 44.32 -->
+  <rect x="548" y="317" width="42" height="113" fill="#4a6fa5" stroke="#33507a"/>
+  <rect x="594" y="359" width="42" height="71" fill="#c9a227" stroke="#96791d"/>
+  <text class="vb" x="569" y="311">0.704</text>
+  <text class="vb" x="615" y="353">0.443</text>
+  <text class="lb" x="592" y="448">F1, DCIS</text>
+  <text class="sm" x="592" y="461">+0.261</text>
+
+  <!-- legend -->
+  <rect x="176" y="480" width="14" height="11" fill="#4a6fa5" stroke="#33507a"/>
+  <text class="lbl" x="196" y="490">32-band hyperspectral</text>
+  <rect x="340" y="480" width="14" height="11" fill="#c9a227" stroke="#96791d"/>
+  <text class="lbl" x="360" y="490">3-channel RGB</text>
+
+  <!-- ===== right panel: where the difference lives ===== -->
+  <rect class="panel" x="680" y="206" width="370" height="300"/>
+  <text class="hd" x="696" y="228">Where the difference lives</text>
+
+  <text class="lbl" x="696" y="252">Per-class F1, held-out test</text>
+  <line class="ax" x1="790" y1="264" x2="790" y2="344"/>
+  <text class="sml" x="696" y="280">healthy</text>
+  <rect x="792" y="270" width="129" height="9" fill="#4a6fa5"/>
+  <rect x="792" y="281" width="110" height="9" fill="#c9a227"/>
+  <text class="sml" x="930" y="278">0.871</text>
+  <text class="sml" x="930" y="289">0.742</text>
+  <text class="sml" x="712" y="306">DCIS</text>
+  <rect x="792" y="296" width="104" height="9" fill="#4a6fa5"/>
+  <rect x="792" y="307" width="66" height="9" fill="#c9a227"/>
+  <text class="sml" x="930" y="304">0.704</text>
+  <text class="sml" x="930" y="315">0.443</text>
+  <text class="sml" x="722" y="332">IDC</text>
+  <rect x="792" y="322" width="148" height="9" fill="#4a6fa5"/>
+  <rect x="792" y="333" width="148" height="9" fill="#c9a227"/>
+  <text class="sml" x="950" y="330">0.999</text>
+  <text class="sml" x="950" y="341">0.999</text>
+
+  <text class="sml" x="696" y="366">Both arms solve IDC. The whole margin is the two classes a</text>
+  <text class="sml" x="696" y="379">pathologist actually has to separate — and most of it is DCIS,</text>
+  <text class="sml" x="696" y="392">the 7 % minority class the RGB arm recalls at 0.61 / 0.35 P.</text>
+
+  <line x1="696" y1="404" x2="1034" y2="404" stroke="#dde3ea" stroke-width="1"/>
+
+  <text class="lbl" x="696" y="424">Ranking and calibration follow the same direction</text>
+  <text class="sml" x="696" y="442">macro ROC-AUC   0.9933  vs  0.9641</text>
+  <text class="sml" x="696" y="456">macro PR-AUC      0.9445  vs  0.8093</text>
+  <text class="sml" x="696" y="470">ECE                        0.0038  vs  0.0457</text>
+  <text class="sml" x="696" y="484">Cohen's κ                0.880   vs  0.767</text>
+  <text class="sml" x="696" y="498">so the gap is not an artefact of one decision threshold.</text>
+
+  <!-- ===== bottom note ===== -->
+  <rect class="panel" x="30" y="518" width="1020" height="86"/>
+  <text class="hd" x="44" y="538">Read this way</text>
+  <text class="sml" x="44" y="556">The comparison is matched on every axis the pipeline records, so the spectral axis is the only intentional difference — which is what the previous revision of this work</text>
+  <text class="sml" x="44" y="570">lacked and why it declared the question unanswerable. It is still one seed on five test patients, and the per-patient breakdown is not uniform: hyperspectral input</text>
+  <text class="sml" x="44" y="584">gains +0.26 and +0.16 macro recall on two validation patients, ties on a third, and loses 0.01 and 0.06 on the remaining two. The aggregate margin is real and large;</text>
+  <text class="sml" x="44" y="598">the claim it licenses is "on this dataset, under this protocol", not "hyperspectral imaging improves breast-cancer detection".</text>
+</svg>

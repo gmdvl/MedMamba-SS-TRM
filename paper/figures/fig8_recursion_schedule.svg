@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 500" width="1080" height="500" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/>
+    </marker>
+    <marker id="a8o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/>
+    </marker>
+    <marker id="a8p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/>
+    </marker>
+    <style>
+      .bx{stroke:#5a6472;stroke-width:1.1;rx:5}
+      .lb{font-size:11px;fill:#1c2430;text-anchor:middle}
+      .lbl{font-size:11px;fill:#1c2430}
+      .sm{font-size:9.3px;fill:#5a6472;text-anchor:middle}
+      .sml{font-size:9.3px;fill:#5a6472}
+      .ti{font-size:13px;font-weight:600;fill:#1c2430}
+      .hd{font-size:11px;font-weight:600;fill:#1c2430}
+      .mono{font-family:"DejaVu Sans Mono",Consolas,monospace;font-size:9.6px;fill:#1c2430;text-anchor:middle}
+      .cn{stroke:#5a6472;stroke-width:1.1;fill:none;marker-end:url(#a8)}
+      .co{stroke:#c2703a;stroke-width:1.3;fill:none;marker-end:url(#a8o)}
+      .cp{stroke:#6a5a92;stroke-width:1.2;fill:none;marker-end:url(#a8p);stroke-dasharray:4 3}
+      .panel{fill:#fbfcfd;stroke:#c3ccd6;stroke-width:1;rx:8}
+    </style>
+  </defs>
+
+  <text class="ti" x="30" y="24">The recursion schedule: 63 applications of one two-layer core per forward pass</text>
+  <text class="sml" x="30" y="42">Read off <tspan font-family="monospace">RecursiveCore.improve / one_segment</tspan> and <tspan font-family="monospace">GMedMambaRecursive.forward_deep_supervision</tspan>. The run configuration is n_latent 6, n_improve 3, segments 3.</text>
+
+  <!-- ============== row 1: the innermost loop ============== -->
+  <rect class="panel" x="30" y="58" width="1020" height="120"/>
+  <text class="hd" x="44" y="78">One improvement step — <tspan font-family="monospace" font-size="10">RecursiveCore.improve</tspan> — 7 core applications</text>
+
+  <rect class="bx" x="44" y="90" width="120" height="66" fill="#eef2f7"/>
+  <text class="lb" x="104" y="112">x_emb</text>
+  <text class="sm" x="104" y="127">computed once by</text>
+  <text class="sm" x="104" y="139">embed(), then held</text>
+  <text class="sm" x="104" y="151">fixed for all 63 calls</text>
+
+  <rect class="bx" x="200" y="90" width="330" height="66" fill="#e6eefa"/>
+  <text class="mono" x="365" y="114">z &#8592; f(z + y + x_emb)</text>
+  <text class="sm" x="365" y="132">repeated trm_n_latent = 6 times</text>
+  <text class="sm" x="365" y="147">the latent state accumulates intermediate work</text>
+
+  <rect class="bx" x="566" y="90" width="250" height="66" fill="#f7e6d0"/>
+  <text class="mono" x="691" y="114">y &#8592; f(y + z)</text>
+  <text class="sm" x="691" y="132">once — the answer state</text>
+  <text class="sm" x="691" y="147">the classifier reads</text>
+
+  <rect class="bx" x="852" y="90" width="184" height="66" fill="#f3f0f7"/>
+  <text class="lb" x="944" y="114">6 + 1 = 7</text>
+  <text class="sm" x="944" y="132">calls to the shared</text>
+  <text class="sm" x="944" y="147">core f, 2 layers each</text>
+
+  <path class="cn" d="M164,123 L196,123"/>
+  <path class="cn" d="M530,123 L562,123"/>
+  <path class="cn" d="M816,123 L848,123"/>
+
+  <!-- ============== row 2: one segment ============== -->
+  <rect class="panel" x="30" y="192" width="1020" height="112"/>
+  <text class="hd" x="44" y="212">One segment — <tspan font-family="monospace" font-size="10">RecursiveCore.one_segment</tspan> — 3 improvement steps, 21 core applications</text>
+
+  <rect class="bx" x="44" y="224" width="215" height="62" fill="#eceff3"/>
+  <text class="lb" x="151" y="246">improvement step 1</text>
+  <text class="sm" x="151" y="263">under torch.no_grad()</text>
+  <text class="sm" x="151" y="277">no autograd graph retained</text>
+
+  <rect class="bx" x="285" y="224" width="215" height="62" fill="#eceff3"/>
+  <text class="lb" x="392" y="246">improvement step 2</text>
+  <text class="sm" x="392" y="263">under torch.no_grad()</text>
+  <text class="sm" x="392" y="277">no autograd graph retained</text>
+
+  <rect class="bx" x="526" y="224" width="215" height="62" fill="#f7e6d0" stroke="#c2703a" stroke-width="1.6"/>
+  <text class="lb" x="633" y="246">improvement step 3</text>
+  <text class="sm" x="633" y="263">carries gradient</text>
+  <text class="sm" x="633" y="277">graph bounded to ONE step</text>
+
+  <rect class="bx" x="767" y="224" width="269" height="62" fill="#fbfcfd"/>
+  <text class="sml" x="781" y="244">This prelude is what keeps the parameter</text>
+  <text class="sml" x="781" y="258">saving from being spent back on activations:</text>
+  <text class="sml" x="781" y="272">the graph does not grow in the 63 calls.</text>
+
+  <path class="cn" d="M259,255 L281,255"/>
+  <path class="co" d="M500,255 L522,255"/>
+
+  <!-- ============== row 3: the forward pass ============== -->
+  <rect class="panel" x="30" y="318" width="1020" height="126"/>
+  <text class="hd" x="44" y="338">One forward pass — deep supervision over 3 segments, 63 core applications</text>
+
+  <rect class="bx" x="44" y="352" width="180" height="60" fill="#e6eefa"/>
+  <text class="lb" x="134" y="376">segment 1</text>
+  <text class="sm" x="134" y="392">21 core applications</text>
+
+  <rect class="bx" x="292" y="352" width="180" height="60" fill="#e6eefa"/>
+  <text class="lb" x="382" y="376">segment 2</text>
+  <text class="sm" x="382" y="392">21 core applications</text>
+
+  <rect class="bx" x="540" y="352" width="180" height="60" fill="#e6eefa"/>
+  <text class="lb" x="630" y="376">segment 3</text>
+  <text class="sm" x="630" y="392">21 core applications</text>
+
+  <rect class="bx" x="788" y="352" width="248" height="60" fill="#f3f0f7"/>
+  <text class="lb" x="912" y="374">head after EVERY segment</text>
+  <text class="sm" x="912" y="390">loss = mean cross-entropy over</text>
+  <text class="sm" x="912" y="402">the per-segment logits</text>
+
+  <path class="cp" d="M224,382 L288,382"/>
+  <text class="sml" x="228" y="374" fill="#6a5a92">detach</text>
+  <path class="cp" d="M472,382 L536,382"/>
+  <text class="sml" x="476" y="374" fill="#6a5a92">detach</text>
+  <path class="cn" d="M720,382 L784,382"/>
+
+  <path class="cn" d="M134,412 L134,428 L912,428 L912,416" stroke-dasharray="3 3"/>
+  <text class="sml" x="470" y="442">the head is read at segments 1 and 2 as well, so the model is pushed to be right early rather than only at the end</text>
+
+  <!-- ============== bottom line ============== -->
+  <text class="hd" x="30" y="472">(6 + 1) &#215; 3 &#215; 3 = 63 applications of the same 2-layer core, so 126 mixer calls — and <tspan fill="#c2703a">forward() runs the whole schedule at inference too</tspan>.</text>
+  <text class="sml" x="30" y="490">Every core application is gradient-checkpointed (<tspan font-family="monospace">trm_checkpoint_core</tspan>). Without it the model exhausts 16 GB of VRAM on the hyperspectral arm.</text>
+</svg>

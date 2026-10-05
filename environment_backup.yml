@@ -1,0 +1,66 @@
+name: gmedmamba
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - numpy>=1.24
+  - pip
+  - python[version=">=3.10,<3.12"]
+  - pytorch::pytorch>=2.1.0
+  - pytorch::pytorch-cuda=12.1
+  - scipy>=1.10
+  - pytorch::torchvision>=0.16.0
+  - pip:
+    - ImageIO==2.37.4
+    - Pygments==2.21.0
+    - contourpy==1.3.3
+    - cuda-bindings==12.9.4
+    - cuda-pathfinder==1.2.2
+    - cuda-toolkit==12.8.1
+    - cycler==0.12.1
+    - et_xmlfile==2.0.0
+    - fonttools==4.63.0
+    - fsspec==2026.4.0
+    - iniconfig==2.3.0
+    - joblib==1.5.3
+    - kiwisolver==1.5.0
+    - lazy-loader==0.5
+    - matplotlib==3.11.1
+    - narwhals==2.24.0
+    - nvidia-cublas-cu12==12.8.4.1
+    - nvidia-cuda-cupti-cu12==12.8.90
+    - nvidia-cuda-nvrtc-cu12==12.8.93
+    - nvidia-cuda-runtime-cu12==12.8.90
+    - nvidia-cudnn-cu12==9.19.0.56
+    - nvidia-cufft-cu12==11.3.3.83
+    - nvidia-cufile-cu12==1.13.1.3
+    - nvidia-curand-cu12==10.3.9.90
+    - nvidia-cusolver-cu12==11.7.3.90
+    - nvidia-cusparse-cu12==12.5.8.93
+    - nvidia-cusparselt-cu12==0.7.1
+    - nvidia-nccl-cu12==2.28.9
+    - nvidia-nvjitlink-cu12==12.8.93
+    - nvidia-nvshmem-cu12==3.4.5
+    - nvidia-nvtx-cu12==12.8.90
+    - openpyxl==3.1.5
+    - panda==0.3.1
+    - pandas==3.0.5
+    - pillow==12.3.0
+    - pluggy==1.6.0
+    - pyparsing==3.3.2
+    - pytest==9.1.1
+    - python-dateutil==2.9.0.post0
+    - scikit-image==0.26.0
+    - scikit-learn==1.9.0
+    - seaborn==0.13.2
+    - setuptools==78.1.0
+    - six==1.17.0
+    - spectral==0.25
+    - threadpoolctl==3.6.0
+    - tifffile==2026.3.3
+    - torch==2.11.0+cu128
+    - torchvision==0.26.0+cu128
+    - tqdm==4.70.0
+    - triton==3.6.0
+
+prefix: "/home/dante/.local/share/mamba/envs/gmedmamba"

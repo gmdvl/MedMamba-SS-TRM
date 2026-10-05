@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 340" width="1040" height="340" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker>
+<marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<style>
+      .bx{stroke-width:1.6;rx:7}
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#7b8794;text-anchor:middle}
+      .tb{font-size:15px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .ti{font-size:21px;font-weight:600;fill:#1c2430}
+      .tsub{font-size:14px;fill:#7b8794}
+      .cap{font-size:13.5px;fill:#7b8794}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .c {stroke:#5a6472;stroke-width:1.8;fill:none;marker-end:url(#ar)}
+      .co{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#aro)}
+      .cg{stroke:#4e8c6a;stroke-width:2;fill:none;marker-end:url(#arg)}
+      .cp{stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+      .cr{stroke:#b4553f;stroke-width:2;fill:none;marker-end:url(#arr)}
+      .plain{stroke:#5a6472;stroke-width:1.6;fill:none}
+    </style>
+</defs>
+<rect width="1040" height="340" fill="#ffffff"/>
+<text x="30" y="38" class="ti">The problem: the channel count is inside the weights</text>
+<text x="30" y="60" class="tsub">We do not have 3 colour channels. We have 32 wavelength bands.</text>
+<rect class="bx" x="70" y="110" width="330" height="72" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="235.0" y="133.0" class="t">RGB model</text>
+<text x="235.0" y="152.0" class="t">Conv2d(3 → 96, k=4)</text>
+<text x="235.0" y="172.0" class="ts">weight shape  [96, 3, 4, 4]</text>
+<rect class="bx" x="640" y="110" width="330" height="72" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="805.0" y="133.0" class="t">Hyperspectral model</text>
+<text x="805.0" y="152.0" class="t">Conv2d(32 → 96, k=4)</text>
+<text x="805.0" y="172.0" class="ts">weight shape  [96, 32, 4, 4]</text>
+<line x1="450" y1="146" x2="590" y2="146" stroke="#b4553f" stroke-width="2.4"/>
+<circle cx="520" cy="146" r="24" fill="#fbe9e4" stroke="#b4553f" stroke-width="2"/>
+<text x="520" y="154" text-anchor="middle" font-size="24" fill="#b4553f">✕</text>
+<text x="520" y="200" class="ts">different shape — the weights cannot transfer</text>
+<rect class="bx" x="70" y="236" width="900" height="62" fill="#fbe9e4" stroke="#b4553f"/>
+<text x="520.0" y="271.5" class="t">1.  One trained model cannot read a different sensor.        2.  Band 7 is just "index 7" — no wavelength is represented.</text>
+</svg>

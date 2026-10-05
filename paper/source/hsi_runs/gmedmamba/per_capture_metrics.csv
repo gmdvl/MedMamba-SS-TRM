@@ -1,0 +1,6 @@
+group_id,key,patient,tissue,capture,n_patches,true_class,predicted_majority_class,accuracy
+136,Healthy_HS_VNIR_38_Healthy_x10_C01,38,Healthy,01,88452,IDC,IDC,0.8195518473296252
+141,Healthy_HS_VNIR_40_Healthy_x10_C01,40,Healthy,01,73710,IDC,IDC,0.929019129019129
+154,Healthy_HS_VNIR_45_Healthy_x10_C04,45,Healthy,04,49140,IDC,IDC,0.9998778998778999
+213,Healthy_HS_VNIR_85_Healthy_x10_C05,85,Healthy,05,73710,IDC,IDC,0.985022385022385
+229,IDC_HS_VNIR_136_IDC_x10_C01,136,IDC,01,63882,IDC,IDC,0.9831251369712908

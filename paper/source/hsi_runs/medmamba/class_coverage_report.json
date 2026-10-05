@@ -1,0 +1,22 @@
+{
+  "num_classes": 3,
+  "class_names": [
+    "healthy",
+    "DCIS",
+    "IDC"
+  ],
+  "per_split_counts": {
+    "train": {
+      "healthy": 722358,
+      "DCIS": 122850,
+      "IDC": 1606878
+    },
+    "validation": {
+      "healthy": 98280,
+      "DCIS": 24570,
+      "IDC": 211666
+    }
+  },
+  "missing": {},
+  "coverage_ok": true
+}

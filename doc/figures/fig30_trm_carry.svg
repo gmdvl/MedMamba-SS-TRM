@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 370" width="1040" height="370" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="370" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">Three things to carry into Part 4</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">If you remember nothing else from the last twelve minutes, remember these.</text>
+<rect x="30" y="92" width="314" height="212" rx="7" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.6"/>
+<circle cx="58" cy="122" r="12" fill="#6a5a92" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="58" y="126.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">1</text>
+<text x="80" y="128" class="tb" style="text-anchor:start;font-size:15px">Refinement beats capacity</text>
+<text x="52" y="168" class="ts" style="text-anchor:start">The model is never asked “solve this”.</text>
+<text x="52" y="190" class="ts" style="text-anchor:start">It is asked “here is a wrong answer —</text>
+<text x="52" y="212" class="ts" style="text-anchor:start">make it less wrong”. So it never needs</text>
+<text x="52" y="234" class="ts" style="text-anchor:start">the capacity to be right in one shot.</text>
+<rect x="363" y="92" width="314" height="212" rx="7" fill="#fbeee3" stroke="#c2703a" stroke-width="1.6"/>
+<circle cx="391" cy="122" r="12" fill="#c2703a" stroke="#c2703a" stroke-width="1.6"/>
+<text x="391" y="126.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">2</text>
+<text x="413" y="128" class="tb" style="text-anchor:start;font-size:15px">One network, two jobs</text>
+<text x="385" y="168" class="ts" style="text-anchor:start">z = f(z+y+x) thinks.</text>
+<text x="385" y="190" class="ts" style="text-anchor:start">y = f(y+z) answers.</text>
+<text x="385" y="212" class="ts" style="text-anchor:start">Whether it can see x is the only</text>
+<text x="385" y="234" class="ts" style="text-anchor:start">thing that tells it which job it is on.</text>
+<rect x="696" y="92" width="314" height="212" rx="7" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.6"/>
+<circle cx="724" cy="122" r="12" fill="#4e8c6a" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="724" y="126.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">3</text>
+<text x="746" y="128" class="tb" style="text-anchor:start;font-size:15px">Differentiate a whole round</text>
+<text x="718" y="168" class="ts" style="text-anchor:start">Run 3 rounds, the first 2 without</text>
+<text x="718" y="190" class="ts" style="text-anchor:start">gradients. Backpropagate one complete</text>
+<text x="718" y="212" class="ts" style="text-anchor:start">round, not one step. Worth 31 points —</text>
+<text x="718" y="234" class="ts" style="text-anchor:start">the largest single effect in the paper.</text>
+<rect x="30" y="320" width="980" height="40" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="520.0" y="345.5" class="tb" style="text-anchor:middle">Everything from here is ours again.</text>
+</svg>

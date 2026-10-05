@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 430" width="1040" height="430" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="430" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">Two numbers are frozen into MedMamba’s weights</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">Both are decided at build time. Both cost you something real. This talk deletes them.</text>
+<text x="120" y="106" class="tsb" style="text-anchor:middle">the frozen number</text>
+<text x="455" y="106" class="tsb" style="text-anchor:middle">what it costs you</text>
+<text x="855" y="106" class="tsb" style="text-anchor:middle">where we remove it</text>
+<rect x="40" y="125" width="160" height="96" rx="7" fill="#fbeee3" stroke="#c2703a" stroke-width="1.6"/>
+<text x="120" y="177" class="huge" style="text-anchor:middle;fill:#c2703a">C</text>
+<text x="120" y="203" class="ts" style="text-anchor:middle">channels it can read</text>
+<line x1="208" y1="173" x2="258" y2="173" stroke="#c2703a" stroke-width="1.8" fill="none" marker-end="url(#aro)"/>
+<rect x="266" y="125" width="380" height="96" rx="7" fill="#ffffff" stroke="#5a6472" stroke-width="1.6"/>
+<text x="456" y="165" class="t" style="text-anchor:middle">One model per sensor. RGB weights physically</text>
+<text x="456" y="187" class="t" style="text-anchor:middle">cannot load into a 32-band model.</text>
+<line x1="654" y1="173" x2="704" y2="173" stroke="#c2703a" stroke-width="1.8" fill="none" marker-end="url(#aro)"/>
+<rect x="712" y="125" width="288" height="96" rx="7" fill="#fbeee3" stroke="#c2703a" stroke-width="1.6"/>
+<text x="856" y="170" class="tb" style="text-anchor:middle;fill:#c2703a;font-size:19px">PART 2</text>
+<text x="856" y="195" class="ts" style="text-anchor:middle">we delete it</text>
+<rect x="40" y="255" width="160" height="96" rx="7" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="120" y="307" class="huge" style="text-anchor:middle;fill:#6a5a92">12</text>
+<text x="120" y="333" class="ts" style="text-anchor:middle">distinct blocks stored</text>
+<line x1="208" y1="303" x2="258" y2="303" stroke="#6a5a92" stroke-width="1.8" fill="none" marker-end="url(#arp)"/>
+<rect x="266" y="255" width="380" height="96" rx="7" fill="#ffffff" stroke="#5a6472" stroke-width="1.6"/>
+<text x="456" y="295" class="t" style="text-anchor:middle">27.43 M parameters, every block stored</text>
+<text x="456" y="317" class="t" style="text-anchor:middle">separately — 98 % of the whole model.</text>
+<line x1="654" y1="303" x2="704" y2="303" stroke="#6a5a92" stroke-width="1.8" fill="none" marker-end="url(#arp)"/>
+<rect x="712" y="255" width="288" height="96" rx="7" fill="#ece9f3" stroke="#6a5a92" stroke-width="1.6"/>
+<text x="856" y="300" class="tb" style="text-anchor:middle;fill:#6a5a92;font-size:19px">PART 4</text>
+<text x="856" y="325" class="ts" style="text-anchor:middle">we delete it</text>
+<rect x="40" y="372" width="960" height="42" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="520.0" y="398.5" class="tb" style="text-anchor:middle">PART 3 is the tool Part 4 needed — someone else’s paper, and none of it is ours.</text>
+</svg>

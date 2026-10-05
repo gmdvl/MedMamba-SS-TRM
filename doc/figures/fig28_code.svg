@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 470" width="1040" height="470" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="470" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">The same idea, precisely — and it is four lines</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">Everything TRM does that matters is on this slide.</text>
+<rect x="30" y="88" width="620" height="150" rx="8" fill="#f6f5fa" stroke="#ddd8e8" stroke-width="1.2"/>
+<text x="56" y="120" class="mono" style="text-anchor:start;fill:#1c2430;font-size:17px">for i in range(6):</text>
+<text x="78" y="160" class="monb" style="text-anchor:start;fill:#c2703a;font-size:17px">z = f(z + y + x)</text>
+<text x="330" y="160" class="ts" style="text-anchor:start">←  six scribbles: update the working</text>
+<text x="56" y="200" class="monb" style="text-anchor:start;fill:#4e8c6a;font-size:17px">y = f(y + z)</text>
+<text x="330" y="200" class="ts" style="text-anchor:start">←  one stroke: update the answer</text>
+<text x="56" y="222" class="ts" style="text-anchor:start">that is ONE round.  Three rounds is one pass.</text>
+<circle cx="48" cy="268" r="12" fill="#5a6472" stroke="#5a6472" stroke-width="1.6"/>
+<text x="48" y="272.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">1</text>
+<text x="72" y="273" class="tb" style="text-anchor:start">Both calls are the SAME network.</text>
+<text x="72" y="294" class="ts" style="text-anchor:start">Same weights, called again. That is the entire parameter saving.</text>
+<circle cx="48" cy="324" r="12" fill="#5a6472" stroke="#5a6472" stroke-width="1.6"/>
+<text x="48" y="328.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">2</text>
+<text x="72" y="329" class="tb" style="text-anchor:start">Inputs are ADDED, never concatenated.</text>
+<text x="72" y="350" class="ts" style="text-anchor:start">So f’s input is the same shape on call 1 and on call 63.</text>
+<circle cx="48" cy="380" r="12" fill="#c2703a" stroke="#c2703a" stroke-width="1.6"/>
+<text x="48" y="384.5" class="tb" style="text-anchor:middle;fill:#ffffff;font-size:13px">3</text>
+<text x="72" y="385" class="tb" style="text-anchor:start">x is in the thinking line and MISSING from the answering line.</text>
+<text x="72" y="406" class="ts" style="text-anchor:start">That is the only thing telling one shared network which job to do.</text>
+<rect x="676" y="88" width="334" height="150" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="843" y="116" class="tsb" style="text-anchor:middle">one network or two?</text>
+<rect x="694" y="132" width="298" height="42" rx="5" fill="#ffffff" stroke="#5a6472" stroke-width="1.4"/>
+<text x="708" y="158" class="t" style="text-anchor:start">two separate networks</text>
+<text x="916" y="158" class="tb" style="text-anchor:middle;fill:#5a6472">82.4 %</text>
+<text x="972" y="158" class="ts" style="text-anchor:middle">10 M</text>
+<rect x="694" y="182" width="298" height="42" rx="5" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.4"/>
+<text x="708" y="208" class="t" style="text-anchor:start">one shared f</text>
+<text x="916" y="208" class="tb" style="text-anchor:middle;fill:#4e8c6a">87.4 %</text>
+<text x="972" y="208" class="ts" style="text-anchor:middle">5 M</text>
+<text x="843" y="256" class="tb" style="text-anchor:middle">Half the parameters, and five points better.</text>
+<rect x="676" y="276" width="334" height="42" rx="7" fill="#fbeee3" stroke="#c2703a" stroke-width="1.6"/>
+<text x="843.0" y="302.5" class="tb" style="text-anchor:middle">See x → you are thinking.</text>
+<rect x="676" y="326" width="334" height="42" rx="7" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="843.0" y="352.5" class="tb" style="text-anchor:middle">No x → you are answering.</text>
+<text x="843" y="404" class="ts" style="text-anchor:middle">Point at the two lines. This is the one people miss.</text>
+</svg>

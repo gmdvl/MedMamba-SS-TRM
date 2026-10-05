@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 400" width="1040" height="400" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker><marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker><marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker><style>
+  .t   {font-size:15px;fill:#1c2430}
+  .tb  {font-size:15.5px;font-weight:600;fill:#1c2430}
+  .ts  {font-size:12.5px;fill:#7b8794}
+  .tsb {font-size:12.5px;font-weight:600;fill:#7b8794}
+  .ti  {font-size:21px;font-weight:600;fill:#1c2430}
+  .tsub{font-size:14px;fill:#7b8794}
+  .big {font-size:30px;font-weight:600;fill:#1c2430}
+  .huge{font-size:38px;font-weight:600;fill:#1c2430}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;fill:#1c2430}
+  .monb{font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;font-weight:600;fill:#1c2430}
+</style></defs>
+<rect width="1040" height="400" fill="#ffffff"/>
+<text x="30" y="38" class="ti" style="text-anchor:start">The job: sort breast tissue into three classes</text>
+<text x="30" y="60" class="tsub" style="text-anchor:start">Two of them are easy. The whole difficulty — and the whole clinical stake — is in the third.</text>
+<rect x="40" y="92" width="300" height="170" rx="7" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="190" y="128" class="tb" style="text-anchor:middle;fill:#4e8c6a;font-size:22px">healthy</text>
+<text x="190" y="156" class="t" style="text-anchor:middle">no carcinoma</text>
+<text x="190" y="182" class="ts" style="text-anchor:middle">24 % of test patches</text>
+<line x1="100" y1="198" x2="280" y2="198" stroke="#4e8c6a" stroke-width="1" fill="none" stroke-dasharray="4 3"/>
+<text x="190" y="224" class="ts" style="text-anchor:middle">both models get this mostly right</text>
+<rect x="370" y="92" width="300" height="170" rx="7" fill="#f8e7e2" stroke="#b4553f" stroke-width="1.6"/>
+<text x="520" y="128" class="tb" style="text-anchor:middle;fill:#b4553f;font-size:22px">DCIS</text>
+<text x="520" y="156" class="t" style="text-anchor:middle">carcinoma, still contained</text>
+<text x="520" y="182" class="ts" style="text-anchor:middle">7 % of test patches</text>
+<line x1="430" y1="198" x2="610" y2="198" stroke="#b4553f" stroke-width="1" fill="none" stroke-dasharray="4 3"/>
+<text x="520" y="224" class="ts" style="text-anchor:middle">THE hard call — and the one that governs treat</text>
+<text x="520" y="242" class="ts" style="text-anchor:middle">ment</text>
+<rect x="700" y="92" width="300" height="170" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="850" y="128" class="tb" style="text-anchor:middle;fill:#5a6472;font-size:22px">IDC</text>
+<text x="850" y="156" class="t" style="text-anchor:middle">carcinoma, now invasive</text>
+<text x="850" y="182" class="ts" style="text-anchor:middle">69 % of test patches</text>
+<line x1="760" y1="198" x2="940" y2="198" stroke="#5a6472" stroke-width="1" fill="none" stroke-dasharray="4 3"/>
+<text x="850" y="224" class="ts" style="text-anchor:middle">F1 = 0.999 for every model we tried</text>
+<line x1="340" y1="177" x2="366" y2="177" stroke="#5a6472" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="670" y1="177" x2="696" y2="177" stroke="#5a6472" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="40" y="286" width="960" height="42" rx="7" fill="#f2f4f7" stroke="#5a6472" stroke-width="1.6"/>
+<text x="520.0" y="312.5" class="tb" style="text-anchor:middle">Because IDC is 69 % of the test set and everybody solves it, raw accuracy hides the result.</text>
+<rect x="40" y="340" width="960" height="42" rx="7" fill="#e8f3ed" stroke="#4e8c6a" stroke-width="1.6"/>
+<text x="520.0" y="366.5" class="tb" style="text-anchor:middle">Every number in this talk is BALANCED accuracy or macro-F1 — which do not.</text>
+</svg>

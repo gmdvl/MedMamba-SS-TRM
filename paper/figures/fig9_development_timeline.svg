@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" width="1080" height="560" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/>
+    </marker>
+    <style>
+      .bx{stroke:#5a6472;stroke-width:1.1;rx:5}
+      .lb{font-size:11px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .sm{font-size:9.2px;fill:#5a6472;text-anchor:middle}
+      .sml{font-size:9.2px;fill:#5a6472}
+      .ti{font-size:13px;font-weight:600;fill:#1c2430}
+      .hd{font-size:11px;font-weight:600;fill:#1c2430}
+      .cn{stroke:#5a6472;stroke-width:1.2;fill:none;marker-end:url(#a9)}
+      .panel{fill:#fbfcfd;stroke:#c3ccd6;stroke-width:1;rx:8}
+      .tag{font-size:8.6px;font-weight:600;fill:#ffffff;text-anchor:middle}
+    </style>
+  </defs>
+
+  <text class="ti" x="30" y="24">How the model file got here: seven revisions, and what each one found</text>
+  <text class="sml" x="30" y="42">Four of these defects produced no error. The code ran, the loss fell, the metrics were plausible, and something load-bearing was inert.</text>
+
+  <!-- ROW 1 -->
+  <rect class="bx" x="30" y="60" width="240" height="112" fill="#eef2f7"/>
+  <rect x="30" y="60" width="240" height="18" fill="#5a6472" rx="5"/>
+  <rect x="30" y="70" width="240" height="8" fill="#5a6472"/>
+  <text class="tag" x="150" y="73">v3 — ARCHITECTURE COMPLETE</text>
+  <text class="lb" x="150" y="96">17 implementation phases</text>
+  <text class="sm" x="150" y="113">Band-agnostic spectral pathway,</text>
+  <text class="sm" x="150" y="126">SS2D scan registry, pluggable fusion,</text>
+  <text class="sm" x="150" y="139">config dataclass with validation.</text>
+  <text class="sm" x="150" y="158">Everything after this is repair.</text>
+
+  <rect class="bx" x="290" y="60" width="240" height="112" fill="#f7e6d0"/>
+  <rect x="290" y="60" width="240" height="18" fill="#c2703a" rx="5"/>
+  <rect x="290" y="70" width="240" height="8" fill="#c2703a"/>
+  <text class="tag" x="410" y="73">v12 / v13 — THE DATA WAS LYING</text>
+  <text class="lb" x="410" y="96">SIGBUS inside loader workers</text>
+  <text class="sm" x="410" y="113">A training array unreadable from byte</text>
+  <text class="sm" x="410" y="126">1,090,519,040 onward — 71 % of a 3.7 GB</text>
+  <text class="sm" x="410" y="139">file, while its header read cleanly.</text>
+  <text class="sm" x="410" y="158">Fix: manifest + SHA-256 preflight.</text>
+
+  <rect class="bx" x="550" y="60" width="240" height="112" fill="#f7e6d0"/>
+  <rect x="550" y="60" width="240" height="18" fill="#c2703a" rx="5"/>
+  <rect x="550" y="70" width="240" height="8" fill="#c2703a"/>
+  <text class="tag" x="670" y="73">THE SCHEDULE WAS ON THE WRONG AXIS</text>
+  <text class="lb" x="670" y="96">Every run peaked at epoch 1</text>
+  <text class="sm" x="670" y="113">The training split resamples each epoch;</text>
+  <text class="sm" x="670" y="126">a per-epoch schedule ran out long before</text>
+  <text class="sm" x="670" y="139">the data did, then decayed monotonically.</text>
+  <text class="sm" x="670" y="158">Fix: step the schedule on optimizer steps.</text>
+
+  <rect class="bx" x="810" y="60" width="240" height="112" fill="#f7e6d0"/>
+  <rect x="810" y="60" width="240" height="18" fill="#c2703a" rx="5"/>
+  <rect x="810" y="70" width="240" height="8" fill="#c2703a"/>
+  <text class="tag" x="930" y="73">v15 R1 — REPRESENTATION COLLAPSE</text>
+  <text class="lb" x="930" y="96">Four instances of one mechanism</text>
+  <text class="sm" x="930" y="113">A signal added to a much larger constant,</text>
+  <text class="sm" x="930" y="126">then normalized away. Input was 86–93&#215;</text>
+  <text class="sm" x="930" y="139">smaller than its positional encoding; the</text>
+  <text class="sm" x="930" y="158">stem's input sat below LayerNorm's eps.</text>
+
+  <path class="cn" d="M270,116 L286,116"/>
+  <path class="cn" d="M530,116 L546,116"/>
+  <path class="cn" d="M790,116 L806,116"/>
+
+  <!-- snake connector -->
+  <path class="cn" d="M1050,116 L1064,116 L1064,192 L16,192 L16,268 L26,268"/>
+
+  <!-- ROW 2 -->
+  <rect class="bx" x="30" y="212" width="240" height="112" fill="#f7e6d0"/>
+  <rect x="30" y="212" width="240" height="18" fill="#c2703a" rx="5"/>
+  <rect x="30" y="222" width="240" height="8" fill="#c2703a"/>
+  <text class="tag" x="150" y="225">v15 R3 — CHUNKING AND CHECKPOINTING</text>
+  <text class="lb" x="150" y="248">Two knobs that were not knobs</text>
+  <text class="sm" x="150" y="265">Chunk size hardcoded at 1024; core</text>
+  <text class="sm" x="150" y="278">checkpointing unconditional but reported</text>
+  <text class="sm" x="150" y="291">as a flag it did not obey.</text>
+  <text class="sm" x="150" y="310">Also: one mixer flag was worth 39&#215;.</text>
+
+  <rect class="bx" x="290" y="212" width="240" height="112" fill="#f7e6d0"/>
+  <rect x="290" y="212" width="240" height="18" fill="#c2703a" rx="5"/>
+  <rect x="290" y="222" width="240" height="8" fill="#c2703a"/>
+  <text class="tag" x="410" y="225">v15 R4 — THE HALF-WIRED HALT HEAD</text>
+  <text class="lb" x="410" y="248">20 % of the objective, read by nothing</text>
+  <text class="sm" x="410" y="265">A BCE term trained q; no code ever</text>
+  <text class="sm" x="410" y="278">consumed it. Measured flat at 0.66 against</text>
+  <text class="sm" x="410" y="291">ln 2 = 0.693 for 33 epochs — chance.</text>
+  <text class="sm" x="410" y="310">Fix: real ACT, or none. Runs use none.</text>
+
+  <rect class="bx" x="550" y="212" width="240" height="112" fill="#f7e6d0"/>
+  <rect x="550" y="212" width="240" height="18" fill="#c2703a" rx="5"/>
+  <rect x="550" y="222" width="240" height="8" fill="#c2703a"/>
+  <text class="tag" x="670" y="225">v16 — RECONSTRUCTION AND REPORTING</text>
+  <text class="lb" x="670" y="248">A gradient that never arrived</text>
+  <text class="sm" x="670" y="265">The decoder read a DETACHED feature map,</text>
+  <text class="sm" x="670" y="278">so the auxiliary loss trained the decoder</text>
+  <text class="sm" x="670" y="291">and shaped nothing. Metrics were also</text>
+  <text class="sm" x="670" y="310">computed in normalized, not reflectance, units.</text>
+
+  <rect class="bx" x="810" y="212" width="240" height="112" fill="#e6eefa"/>
+  <rect x="810" y="212" width="240" height="18" fill="#4a6fa5" rx="5"/>
+  <rect x="810" y="222" width="240" height="8" fill="#4a6fa5"/>
+  <text class="tag" x="930" y="225">CURRENT gmedmamba.py</text>
+  <text class="lb" x="930" y="248">2,212 lines, both variants, one flag</text>
+  <text class="sm" x="930" y="265">Hierarchical and recursive backbones behind</text>
+  <text class="sm" x="930" y="278">one config field, sharing the spectral front</text>
+  <text class="sm" x="930" y="291">end, the head interface and the output dict.</text>
+  <text class="sm" x="930" y="310">Every repair above is a config field whose</text>
+  <text class="sm" x="930" y="322">default reproduces the pre-fix behaviour.</text>
+
+  <path class="cn" d="M270,268 L286,268"/>
+  <path class="cn" d="M530,268 L546,268"/>
+  <path class="cn" d="M790,268 L806,268"/>
+
+  <!-- bottom panels -->
+  <rect class="panel" x="30" y="352" width="504" height="182"/>
+  <text class="hd" x="44" y="372">What caught them</text>
+  <text class="sml" x="44" y="392">Not review — measurement of the MECHANISM rather than the outcome:</text>
+  <text class="sml" x="44" y="412">&#8226;  comparing the magnitude of a signal against the constant it is added to;</text>
+  <text class="sml" x="44" y="430">&#8226;  checking whether a normalization's epsilon sits above or below the</text>
+  <text class="sml" x="60" y="444">   variance of its own input;</text>
+  <text class="sml" x="44" y="462">&#8226;  asserting in a test that a gradient reaches a named module;</text>
+  <text class="sml" x="44" y="480">&#8226;  reading what a term contributes to the objective against its own floor.</text>
+  <text class="sml" x="44" y="504">Several of these are now preflight gates that abort a run rather than</text>
+  <text class="sml" x="44" y="518">annotate it. That is the form the lesson took in this repository.</text>
+
+  <rect class="panel" x="546" y="352" width="504" height="182"/>
+  <text class="hd" x="560" y="372">The discipline that made the audit possible</text>
+  <text class="sml" x="560" y="392">Once a file is the audited entry point for a recorded run, it is not edited.</text>
+  <text class="sml" x="560" y="410">New capability arrives by subclassing or by wrapping at runtime:</text>
+  <text class="sml" x="560" y="430">&#8226;  prepare_histologyhsi_bc_v8 imports v6 and v7 — "frozen, imported not edited";</text>
+  <text class="sml" x="560" y="448">&#8226;  training/spectral_checkpoint.py wraps at runtime so "gmedmamba.py stays untouched".</text>
+  <text class="sml" x="560" y="470">Where a change HAD to reach the model file, it became a config field defaulting</text>
+  <text class="sml" x="560" y="484">to the old behaviour — so an existing checkpoint still loads with strict=True.</text>
+  <text class="sml" x="560" y="504">It costs duplication: eight train_example_v*.py and nine preparation scripts.</text>
+  <text class="sml" x="560" y="518">It buys the thing this paper needs: a run from five weeks ago is still rebuildable.</text>
+</svg>

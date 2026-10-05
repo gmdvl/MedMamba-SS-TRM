@@ -1,0 +1,36 @@
+{
+    "class_names": [
+        "healthy",
+        "DCIS",
+        "IDC"
+    ],
+    "splits": {
+        "train": {
+            "counts": {
+                "healthy": 122850,
+                "DCIS": 122850,
+                "IDC": 122850
+            },
+            "total": 368550,
+            "imbalance_ratio": 1.0
+        },
+        "val": {
+            "counts": {
+                "healthy": 98280,
+                "DCIS": 24570,
+                "IDC": 211666
+            },
+            "total": 334516,
+            "imbalance_ratio": 8.614814814814816
+        },
+        "test": {
+            "counts": {
+                "healthy": 83538,
+                "DCIS": 24570,
+                "IDC": 240786
+            },
+            "total": 348894,
+            "imbalance_ratio": 9.8
+        }
+    }
+}

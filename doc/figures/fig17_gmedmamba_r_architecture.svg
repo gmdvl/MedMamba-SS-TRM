@@ -1,0 +1,261 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1580" width="2000" height="1580" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3a4654"/></marker>
+<marker id="kp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a4fa0"/></marker>
+<marker id="ko" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="kg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3f7a46"/></marker>
+<marker id="kr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<linearGradient id="ttl" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#b9cfe8"/></linearGradient>
+    <linearGradient id="ttr" x1="0" x2="1"><stop offset="0" stop-color="#b9cfe8"/>
+      <stop offset="1" stop-color="#ffffff"/></linearGradient>
+    <style>
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .tb{font-size:15px;font-weight:700;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#6b7684;text-anchor:middle}
+      .tn{font-size:13px;fill:#1c2430;text-anchor:middle}
+      .sh{font-size:16px;fill:#1c2430;text-anchor:middle}
+      .pt{font-size:22px;font-weight:700;font-style:italic;fill:#1a3c6e}
+      .ph{font-size:17px;font-weight:700;font-style:italic;fill:#1a3c6e}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .a {stroke:#3a4654;stroke-width:2;fill:none;marker-end:url(#k)}
+      .ap{stroke:#6a4fa0;stroke-width:2;fill:none;marker-end:url(#kp)}
+      .ao{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#ko)}
+      .ag{stroke:#3f7a46;stroke-width:2;fill:none;marker-end:url(#kg)}
+      .pl{stroke:#3a4654;stroke-width:2;fill:none}
+    </style></defs>
+<rect width="2000" height="1580" fill="#ffffff"/>
+<rect x="290" y="42" width="520" height="26" fill="url(#ttl)"/>
+<rect x="1190" y="42" width="520" height="26" fill="url(#ttr)"/>
+<text x="1000" y="68" text-anchor="middle" font-size="42" font-weight="700" font-style="italic" fill="#1a3c6e">GMedMamba-R</text>
+<text x="1000" y="96" class="ts" style="text-anchor:middle;font-size:16px">the recursive (TRM) variant of gmedmamba.py  —  drawn from the code, one weight-shared core instead of four stages</text>
+<rect x="1638" y="132" width="336" height="120" rx="10" fill="#fbfcfe" stroke="#c3ccd8" stroke-width="1.6"/>
+<circle cx="1672" cy="166" r="15" fill="#2d6a3e"/>
+<text x="1672" y="172" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">×</text>
+<text x="1696" y="172" class="ts" style="text-anchor:start;font-size:14px;fill:#1c2430">Element-wise Product</text>
+<circle cx="1672" cy="206" r="15" fill="#1f6f8b"/>
+<text x="1672" y="212" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">+</text>
+<text x="1696" y="212" class="ts" style="text-anchor:start;font-size:14px;fill:#1c2430">Element-wise Addition</text>
+<circle cx="1672" cy="240" r="15" fill="#ffffff" stroke="#6a4fa0" stroke-width="2.4"/>
+<text x="1672" y="246" text-anchor="middle" font-size="15" font-weight="700" fill="#6a4fa0">↻</text>
+<text x="1696" y="246" class="ts" style="text-anchor:start;font-size:14px;fill:#1c2430">Weight-shared reuse</text>
+<rect x="94" y="218" width="118" height="124" rx="3" fill="#e6ddf3" stroke="#5a6472" stroke-width="1.3"/>
+<rect x="86" y="226" width="118" height="124" rx="3" fill="#fbdfe4" stroke="#5a6472" stroke-width="1.3"/>
+<rect x="78" y="234" width="118" height="124" rx="3" fill="#fdf0d2" stroke="#5a6472" stroke-width="1.3"/>
+<rect x="70" y="242" width="118" height="124" rx="3" fill="#dfeee2" stroke="#5a6472" stroke-width="1.3"/>
+<rect x="62" y="250" width="118" height="124" rx="3" fill="#dfe9f5" stroke="#5a6472" stroke-width="1.3"/>
+<text x="140" y="408" class="sh" style="text-anchor:middle;font-size:17px">H × W × C</text>
+<text x="140" y="430" class="ts" style="text-anchor:middle">any band count</text>
+<line class="a" x1="214" y1="320" x2="262" y2="320"/>
+<rect x="266" y="232" width="210" height="176" rx="9" fill="#fbe0cd" stroke="#c2703a" stroke-width="2"/>
+<text x="371.0" y="307.0" text-anchor="middle" font-size="19" font-weight="700" fill="#1c2430" class="">Spectral</text>
+<text x="371.0" y="326.0" text-anchor="middle" font-size="19" font-weight="700" fill="#1c2430" class="">Pathway</text>
+<text x="371.0" y="345.0" class="ts">C-agnostic front end</text>
+<text x="514" y="194" text-anchor="middle" font-size="15" fill="#1c2430">H</text>
+<line x1="502" y1="198" x2="526" y2="198" stroke="#1c2430" stroke-width="1.3"/>
+<text x="514" y="214" text-anchor="middle" font-size="15" fill="#1c2430">p</text>
+<text x="540" y="204" text-anchor="middle" font-size="15" fill="#1c2430">×</text>
+<text x="568" y="194" text-anchor="middle" font-size="15" fill="#1c2430">W</text>
+<line x1="556" y1="198" x2="580" y2="198" stroke="#1c2430" stroke-width="1.3"/>
+<text x="568" y="214" text-anchor="middle" font-size="15" fill="#1c2430">p</text>
+<text x="616" y="204" text-anchor="middle" font-size="15" fill="#1c2430">× d_ctx</text>
+<line class="a" x1="480" y1="320" x2="528" y2="320"/>
+<rect x="532" y="232" width="176" height="176" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="620.0" y="307.0" text-anchor="middle" font-size="17" font-weight="700" fill="#1c2430" class="">Stem</text>
+<text x="620.0" y="326.0" text-anchor="middle" font-size="17" font-weight="700" fill="#1c2430" class="">Linear(64→128)</text>
+<text x="620.0" y="345.0" class="ts">+ 2-D sinusoidal PE</text>
+<text x="760" y="194" text-anchor="middle" font-size="15" fill="#1c2430">H</text>
+<line x1="748" y1="198" x2="772" y2="198" stroke="#1c2430" stroke-width="1.3"/>
+<text x="760" y="214" text-anchor="middle" font-size="15" fill="#1c2430">p</text>
+<text x="786" y="204" text-anchor="middle" font-size="15" fill="#1c2430">×</text>
+<text x="814" y="194" text-anchor="middle" font-size="15" fill="#1c2430">W</text>
+<line x1="802" y1="198" x2="826" y2="198" stroke="#1c2430" stroke-width="1.3"/>
+<text x="814" y="214" text-anchor="middle" font-size="15" fill="#1c2430">p</text>
+<text x="862" y="204" text-anchor="middle" font-size="15" fill="#1c2430">× d</text>
+<line class="a" x1="712" y1="320" x2="760" y2="320"/>
+<rect x="764" y="232" width="250" height="176" rx="9" fill="#e3ddf2" stroke="#6a4fa0" stroke-width="2"/>
+<text x="889.0" y="307.0" text-anchor="middle" font-size="19" font-weight="700" fill="#1c2430" class="">Recursive Core</text>
+<text x="889.0" y="326.0" text-anchor="middle" font-size="19" font-weight="700" fill="#1c2430" class="">(× 63)</text>
+<text x="889.0" y="345.0" class="ts">2 layers, weight-shared</text>
+<circle cx="978" cy="260" r="16" fill="#ffffff" stroke="#6a4fa0" stroke-width="2.4"/>
+<text x="978" y="266" text-anchor="middle" font-size="16" font-weight="700" fill="#6a4fa0">↻</text>
+<text x="1060" y="194" text-anchor="middle" font-size="15" fill="#1c2430">H</text>
+<line x1="1048" y1="198" x2="1072" y2="198" stroke="#1c2430" stroke-width="1.3"/>
+<text x="1060" y="214" text-anchor="middle" font-size="15" fill="#1c2430">p</text>
+<text x="1086" y="204" text-anchor="middle" font-size="15" fill="#1c2430">×</text>
+<text x="1114" y="194" text-anchor="middle" font-size="15" fill="#1c2430">W</text>
+<line x1="1102" y1="198" x2="1126" y2="198" stroke="#1c2430" stroke-width="1.3"/>
+<text x="1114" y="214" text-anchor="middle" font-size="15" fill="#1c2430">p</text>
+<text x="1162" y="204" text-anchor="middle" font-size="15" fill="#1c2430">× d</text>
+<text x="1150" y="180" class="ts" style="text-anchor:middle;font-size:13px">unchanged by the core</text>
+<line class="a" x1="1018" y1="320" x2="1066" y2="320"/>
+<rect x="1070" y="232" width="186" height="176" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="1163.0" y="316.0" text-anchor="middle" font-size="17" font-weight="700" fill="#1c2430" class="">Recursive Head</text>
+<text x="1163.0" y="335.0" class="ts">RMSNorm → GAP → Linear</text>
+<line class="a" x1="1260" y1="320" x2="1330" y2="320"/>
+<text x="1420" y="314" class="sh" style="text-anchor:middle;font-size:18px">1 × num_classes</text>
+<text x="1420" y="338" class="ts" style="text-anchor:middle">+ q_halt  (inert by default)</text>
+<line x1="889" y1="408" x2="889" y2="464" stroke="#b4553f" stroke-width="2" stroke-dasharray="7 5"/>
+<rect x="660" y="464" width="460" height="62" rx="9" fill="#fbdcd4" stroke="#b4553f" stroke-width="2"/>
+<text x="890.0" y="491.0" text-anchor="middle" font-size="14" font-weight="400" fill="#1c2430" class="">Auxiliary Latent Reconstruction Decoder</text>
+<text x="890.0" y="510.0" class="ts">Conv3×3 → BN → LeakyReLU ×2 → Conv3×3   ·   OFF in every reported run</text>
+<line x1="1120" y1="495" x2="1170" y2="495" stroke="#b4553f" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#kr)"/>
+<rect x="1174" y="464" width="240" height="62" rx="9" fill="#fbdcd4" stroke="#b4553f" stroke-width="2"/>
+<text x="1294.0" y="491.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">Reconstructed cube</text>
+<text x="1294.0" y="510.0" class="ts">H × W × C, reflectance units</text>
+<text x="1430" y="502" class="ts" style="text-anchor:start">training / validation only</text>
+<polygon points="371,408 300,600 900,600" fill="#e8eef7" opacity="0.75"/>
+<polygon points="889,526 1120,640 1960,640" fill="#ece7f6" opacity="0.65"/>
+<rect x="30" y="612" width="930" height="938" rx="12" fill="#fbfcfe" stroke="#2c5f9e" stroke-width="2.4"/>
+<text x="52" y="646" class="ph">Spectral Pathway   ·   why C never appears in a weight</text>
+<line x1="70" y1="674" x2="299.6" y2="674" stroke="#c2703a" stroke-width="3.4" stroke-dasharray="9 7"/>
+<line x1="660.4" y1="674" x2="890" y2="674" stroke="#c2703a" stroke-width="3.4" stroke-dasharray="9 7"/>
+<text x="480.0" y="680" text-anchor="middle" font-size="17" font-weight="700" font-style="italic" fill="#c2703a">per patch position</text>
+<rect x="180" y="708" width="300" height="46" rx="9" fill="#eef1f5" stroke="#7b8794" stroke-width="2"/>
+<text x="330.0" y="736.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">Patchify   AvgPool k = p</text>
+<text x="502" y="736" class="ts" style="text-anchor:start;font-size:13px">H×W×C → Hp×Wp×C</text>
+<rect x="180" y="782" width="300" height="46" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="330.0" y="810.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="mono">one patch spectrum   [ C ]</text>
+<line class="a" x1="330" y1="754" x2="330" y2="778"/>
+<rect x="70" y="842" width="850" height="150" rx="10" fill="#fdf4ec" stroke="#c2703a" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="86" y="862" class="ts" style="text-anchor:start;font-size:14px;fill:#c2703a;font-style:italic">SpectralTokenizer   (spectral_token_fusion = concat_mlp)</text>
+<rect x="96" y="892" width="116" height="48" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="154.0" y="921.0" text-anchor="middle" font-size="14" font-weight="400" fill="#1c2430" class="">band value v</text>
+<rect x="96" y="954" width="116" height="48" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="154.0" y="983.0" text-anchor="middle" font-size="14" font-weight="400" fill="#1c2430" class="">λ (nm)</text>
+<rect x="236" y="954" width="150" height="48" rx="9" fill="#fdf2cd" stroke="#d4a017" stroke-width="2"/>
+<text x="311.0" y="974.0" text-anchor="middle" font-size="14" font-weight="400" fill="#1c2430" class="">Wavelength PE</text>
+<text x="311.0" y="993.0" class="ts">sin / cos</text>
+<line class="a" x1="212" y1="978" x2="232" y2="978"/>
+<rect x="416" y="920" width="104" height="52" rx="9" fill="#fdf2cd" stroke="#d4a017" stroke-width="2"/>
+<text x="468.0" y="951.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">Concat</text>
+<path class="a" d="M212,916 C330,916 360,932 412,940"/>
+<path class="a" d="M386,978 C402,978 406,966 412,960"/>
+<line class="a" x1="520" y1="946" x2="546" y2="946"/>
+<rect x="550" y="920" width="118" height="52" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="609.0" y="951.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">Linear</text>
+<circle cx="698" cy="946" r="16" fill="#ffffff" stroke="#2a9aa5" stroke-width="2.4"/>
+<path d="M688,946 C692,937 696,955 699,946 C702,939 705,943 708,946" stroke="#2a9aa5" stroke-width="2.2" fill="none"/>
+<text x="698" y="922" text-anchor="middle" font-size="13.5" font-style="italic" font-weight="600" fill="#2a9aa5">GELU</text>
+<line class="a" x1="668" y1="946" x2="678" y2="946"/>
+<line class="a" x1="718" y1="946" x2="734" y2="946"/>
+<rect x="738" y="920" width="118" height="52" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="797.0" y="951.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">Linear</text>
+<circle cx="892" cy="946" r="15" fill="#1f6f8b"/>
+<text x="892" y="952" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">+</text>
+<line class="a" x1="856" y1="946" x2="873" y2="946"/>
+<path class="ao" d="M386,962 C550,1004 790,996 892,964"/>
+<text x="670" y="1012" class="ts" style="text-anchor:middle;font-size:13px;fill:#c2703a">gain · PE</text>
+<text x="892" y="912" class="ts" style="text-anchor:middle;font-size:13.5px;fill:#1c2430">tokens [C, 32]</text>
+<line class="a" x1="330" y1="1012" x2="330" y2="1036"/>
+<rect x="100" y="1034" width="460" height="50" rx="9" fill="#bfd7ef" stroke="#2c5f9e" stroke-width="2"/>
+<text x="330.0" y="1055.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">ResidualSpectralBlock  ×1</text>
+<text x="330.0" y="1074.0" class="ts">LN → Conv1d k=3 ALONG THE BAND AXIS → GELU → Linear → ⊕</text>
+<line class="a" x1="330" y1="1084" x2="330" y2="1106"/>
+<rect x="100" y="1108" width="460" height="58" rx="9" fill="#d7ead7" stroke="#4a8a4a" stroke-width="2"/>
+<text x="330.0" y="1133.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">SpectralMamba   ·   bidirectional selective scan over bands</text>
+<text x="330.0" y="1152.0" class="ts">Linear → (x, z);  scan forward + backward → softmax mix → LN → ⊗ SiLU(z) → Linear</text>
+<line class="a" x1="330" y1="1166" x2="330" y2="1188"/>
+<rect x="100" y="1190" width="460" height="50" rx="9" fill="#bfd7ef" stroke="#2c5f9e" stroke-width="2"/>
+<text x="330.0" y="1211.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">ResidualSpectralBlock  ×2</text>
+<text x="330.0" y="1230.0" class="ts">same block, after the scan</text>
+<line class="a" x1="330" y1="1240" x2="330" y2="1262"/>
+<rect x="100" y="1264" width="336" height="50" rx="9" fill="#fde0cb" stroke="#d2691e" stroke-width="2"/>
+<text x="268.0" y="1285.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">BandGate   σ(Linear(32 → 1))</text>
+<text x="268.0" y="1304.0" class="ts">one weight per band</text>
+<circle cx="480" cy="1289" r="15" fill="#2d6a3e"/>
+<text x="480" y="1295" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">×</text>
+<line class="a" x1="436" y1="1289" x2="463" y2="1289"/>
+<line class="a" x1="330" y1="1314" x2="330" y2="1336"/>
+<rect x="100" y="1338" width="460" height="50" rx="9" fill="#d7ead7" stroke="#3f7a46" stroke-width="2"/>
+<text x="330.0" y="1359.0" text-anchor="middle" font-size="16" font-weight="700" fill="#1c2430" class="">Mean over the BAND axis</text>
+<text x="330.0" y="1378.0" class="ts">C disappears here — output is [32] for any C</text>
+<line class="a" x1="330" y1="1388" x2="330" y2="1410"/>
+<rect x="100" y="1412" width="460" height="50" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="330.0" y="1433.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">ProgressiveCompressor   32 → 128 → 64 → 64</text>
+<text x="330.0" y="1452.0" class="ts">Linear + GELU ×3</text>
+<line class="a" x1="330" y1="1462" x2="330" y2="1484"/>
+<rect x="180" y="1486" width="300" height="46" rx="9" fill="#fbe0cd" stroke="#c2703a" stroke-width="2"/>
+<text x="330.0" y="1514.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="mono">spectral context   [ Hp , Wp , 64 ]</text>
+<rect x="990" y="612" width="980" height="938" rx="12" fill="#fbfcfe" stroke="#2c5f9e" stroke-width="2.4"/>
+<text x="1012" y="646" class="ph">Recursive Core (TRM)   ·   one f, called 63 times</text>
+<line x1="1030" y1="674" x2="1270.8" y2="674" stroke="#6a4fa0" stroke-width="3.4" stroke-dasharray="9 7"/>
+<line x1="1649.2" y1="674" x2="1890" y2="674" stroke="#6a4fa0" stroke-width="3.4" stroke-dasharray="9 7"/>
+<text x="1460.0" y="680" text-anchor="middle" font-size="17" font-weight="700" font-style="italic" fill="#6a4fa0">recursion schedule</text>
+<rect x="1024" y="700" width="912" height="304" rx="10" fill="#f7f4fd" stroke="#6a4fa0" stroke-width="1.8"/>
+<rect x="1048" y="722" width="150" height="44" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="1123.0" y="749.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="mono">x   (fixed)</text>
+<rect x="1048" y="780" width="150" height="44" rx="9" fill="#fbe0cd" stroke="#c2703a" stroke-width="2"/>
+<text x="1123.0" y="807.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="mono">z ← z_init</text>
+<rect x="1048" y="838" width="150" height="44" rx="9" fill="#d7ead7" stroke="#3f7a46" stroke-width="2"/>
+<text x="1123.0" y="865.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="mono">y ← y_init</text>
+<text x="1123" y="904" class="ts" style="text-anchor:middle;font-size:12.5px">buffers, not parameters</text>
+<text x="1123" y="922" class="ts" style="text-anchor:middle;font-size:12.5px">(they are read inside no_grad)</text>
+<rect x="1230" y="718" width="680" height="266" rx="9" fill="#ffffff" stroke="#9b8ac4" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="1248" y="742" class="ts" style="text-anchor:start;font-size:14.5px;fill:#6a4fa0;font-style:italic">for segment s = 1 … 3          (deep supervision)</text>
+<rect x="1256" y="756" width="628" height="150" rx="8" fill="#faf8ff" stroke="#b7a8d8" stroke-width="1.6"/>
+<text x="1274" y="780" class="ts" style="text-anchor:start;font-size:14px">for improve t = 1 … 3        t &lt; 3 runs under torch.no_grad()</text>
+<rect x="1282" y="794" width="300" height="44" rx="9" fill="#fbe0cd" stroke="#c2703a" stroke-width="2"/>
+<text x="1432.0" y="821.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="mono">z = f(z + y + x)   × 6</text>
+<rect x="1282" y="846" width="300" height="44" rx="9" fill="#d7ead7" stroke="#3f7a46" stroke-width="2"/>
+<text x="1432.0" y="873.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="mono">y = f(y + z)   × 1</text>
+<line class="ap" x1="1460" y1="912" x2="1460" y2="932"/>
+<rect x="1286" y="934" width="200" height="40" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="1386.0" y="959.0" text-anchor="middle" font-size="14" font-weight="400" fill="#1c2430" class="">Head → logits_s , q_s</text>
+<rect x="1506" y="934" width="180" height="40" rx="9" fill="#fbdcd4" stroke="#b4553f" stroke-width="2"/>
+<text x="1596.0" y="959.0" text-anchor="middle" font-size="14" font-weight="400" fill="#1c2430" class="">detach (y, z)</text>
+<path class="ap" d="M1686,954 C1802,954 1814,796 1690,772"/>
+<text x="1836" y="872" class="ts" style="text-anchor:middle;font-size:13px;fill:#6a4fa0">next</text>
+<text x="1836" y="890" class="ts" style="text-anchor:middle;font-size:13px;fill:#6a4fa0">segment</text>
+<text x="1490" y="1022" class="ts" style="text-anchor:middle;font-size:15px;fill:#1c2430">(6 + 1) × 3 improve × 3 segments  =  63 applications of f  =  126 block calls</text>
+<line x1="1030" y1="1042" x2="1270.8" y2="1042" stroke="#6a4fa0" stroke-width="3.4" stroke-dasharray="9 7"/>
+<line x1="1649.2" y1="1042" x2="1890" y2="1042" stroke="#6a4fa0" stroke-width="3.4" stroke-dasharray="9 7"/>
+<text x="1460.0" y="1048" text-anchor="middle" font-size="17" font-weight="700" font-style="italic" fill="#6a4fa0">f  =  2 × RecursiveMambaBlock</text>
+<rect x="1030" y="1122" width="128" height="52" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="1094.0" y="1153.0" text-anchor="middle" font-size="16" font-weight="400" fill="#1c2430" class="mono">h</text>
+<line class="a" x1="1158" y1="1148" x2="1186" y2="1148"/>
+<rect x="1190" y="1122" width="210" height="52" rx="9" fill="#d7ead7" stroke="#4a8a4a" stroke-width="2"/>
+<text x="1295.0" y="1153.0" text-anchor="middle" font-size="15" font-weight="700" fill="#1c2430" class="">Token Mixer</text>
+<line class="a" x1="1400" y1="1148" x2="1428" y2="1148"/>
+<rect x="1432" y="1122" width="120" height="52" rx="9" fill="#eef1f5" stroke="#7b8794" stroke-width="2"/>
+<text x="1492.0" y="1153.0" text-anchor="middle" font-size="14" font-weight="400" fill="#1c2430" class="">DropPath</text>
+<circle cx="1596" cy="1148" r="15" fill="#1f6f8b"/>
+<text x="1596" y="1154" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">+</text>
+<line class="a" x1="1552" y1="1148" x2="1578" y2="1148"/>
+<path class="a" d="M1094,1122 C1094,1078 1596,1078 1596,1130"/>
+<line class="a" x1="1612" y1="1148" x2="1640" y2="1148"/>
+<rect x="1644" y="1122" width="150" height="52" rx="9" fill="#fde0cb" stroke="#d2691e" stroke-width="2"/>
+<text x="1719.0" y="1144.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">RMSNorm</text>
+<text x="1719.0" y="1163.0" class="ts">parameter-free</text>
+<path class="a" d="M1794,1148 C1870,1148 1870,1252 1118,1252"/>
+<rect x="1030" y="1226" width="128" height="52" rx="9" fill="#ffffff" stroke="#2b2b2b" stroke-width="2"/>
+<text x="1094.0" y="1257.0" text-anchor="middle" font-size="16" font-weight="400" fill="#1c2430" class="mono">h</text>
+<line class="a" x1="1158" y1="1252" x2="1186" y2="1252"/>
+<rect x="1190" y="1226" width="210" height="52" rx="9" fill="#fbd3da" stroke="#e0637f" stroke-width="2"/>
+<text x="1295.0" y="1257.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">GatedMLP  (GEGLU)</text>
+<line class="a" x1="1400" y1="1252" x2="1428" y2="1252"/>
+<rect x="1432" y="1226" width="120" height="52" rx="9" fill="#eef1f5" stroke="#7b8794" stroke-width="2"/>
+<text x="1492.0" y="1257.0" text-anchor="middle" font-size="14" font-weight="400" fill="#1c2430" class="">DropPath</text>
+<circle cx="1596" cy="1252" r="15" fill="#1f6f8b"/>
+<text x="1596" y="1258" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">+</text>
+<line class="a" x1="1552" y1="1252" x2="1578" y2="1252"/>
+<path class="a" d="M1094,1226 C1094,1186 1596,1186 1596,1234"/>
+<line class="a" x1="1612" y1="1252" x2="1640" y2="1252"/>
+<rect x="1644" y="1226" width="150" height="52" rx="9" fill="#fde0cb" stroke="#d2691e" stroke-width="2"/>
+<text x="1719.0" y="1248.0" text-anchor="middle" font-size="15" font-weight="400" fill="#1c2430" class="">RMSNorm</text>
+<text x="1719.0" y="1267.0" class="ts">post-norm, TRM style</text>
+<line class="a" x1="1794" y1="1252" x2="1840" y2="1252"/>
+<text x="1890" y="1258" class="ts" style="text-anchor:middle;font-size:15px;fill:#1c2430">out</text>
+<rect x="1170" y="1334" width="720" height="118" rx="9" fill="#f4f9f4" stroke="#4a8a4a" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="1190" y="1358" class="ts" style="text-anchor:start;font-size:14.5px;fill:#3f7a46;font-style:italic">Token Mixer  —  cfg.trm_mixer</text>
+<rect x="1190" y="1370" width="224" height="62" rx="9" fill="#d7ead7" stroke="#4a8a4a" stroke-width="2"/>
+<text x="1302.0" y="1397.0" text-anchor="middle" font-size="14.5" font-weight="400" fill="#1c2430" class="">DWConv 3×3  →  GEGLU</text>
+<text x="1302.0" y="1416.0" class="ts">"mlp"  ·  every reported run</text>
+<rect x="1430" y="1370" width="150" height="62" rx="9" fill="#eef1f5" stroke="#7b8794" stroke-width="2"/>
+<text x="1505.0" y="1397.0" text-anchor="middle" font-size="14.5" font-weight="400" fill="#1c2430" class="">SS2D</text>
+<text x="1505.0" y="1416.0" class="ts">"ss2d"  ·  unused</text>
+<rect x="1596" y="1370" width="180" height="62" rx="9" fill="#eef1f5" stroke="#7b8794" stroke-width="2"/>
+<text x="1686.0" y="1397.0" text-anchor="middle" font-size="14.5" font-weight="400" fill="#1c2430" class="">Self-Attention</text>
+<text x="1686.0" y="1416.0" class="ts">"attention"  ·  unused</text>
+<text x="1490" y="1528" class="ts" style="text-anchor:middle;font-size:14px;fill:#b4553f">every call to f is gradient-checkpointed — without it 63 live graphs exhaust a 16 GB card</text>
+</svg>

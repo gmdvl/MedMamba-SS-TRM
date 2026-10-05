@@ -1,0 +1,3 @@
+mamba create --name myenv --file mamba-spec.txt
+mamba activate myenv
+pip install -r requirements.txt

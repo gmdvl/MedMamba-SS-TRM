@@ -1,0 +1,42 @@
+{
+    "dataset": "PAD-UFES-20",
+    "num_classes": 6,
+    "classes": [
+        "ACK",
+        "BCC",
+        "MEL",
+        "NEV",
+        "SCC",
+        "SEK"
+    ],
+    "class_to_idx": {
+        "ACK": 0,
+        "BCC": 1,
+        "MEL": 2,
+        "NEV": 3,
+        "SCC": 4,
+        "SEK": 5
+    },
+    "train_images": 1378,
+    "val_images": 229,
+    "test_images": 691,
+    "model_variant": "t",
+    "epochs": 150,
+    "batch_size": 64,
+    "image_size": 224,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "optimizer": "AdamW",
+    "betas": [
+        0.9,
+        0.999
+    ],
+    "scheduler": "none",
+    "augmentation": false,
+    "early_stopping_patience": 20,
+    "class_weights": false,
+    "workers": 8,
+    "seed": 42,
+    "device": "cuda",
+    "amp": false
+}

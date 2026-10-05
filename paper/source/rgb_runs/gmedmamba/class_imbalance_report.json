@@ -1,0 +1,52 @@
+{
+  "class_names": [
+    "ACK",
+    "BCC",
+    "MEL",
+    "NEV",
+    "SCC",
+    "SEK"
+  ],
+  "per_split": {
+    "train": {
+      "class_count": {
+        "ACK": 39,
+        "BCC": 39,
+        "MEL": 39,
+        "NEV": 39,
+        "SCC": 39,
+        "SEK": 39
+      },
+      "class_percentage": {
+        "ACK": 16.67,
+        "BCC": 16.67,
+        "MEL": 16.67,
+        "NEV": 16.67,
+        "SCC": 16.67,
+        "SEK": 16.67
+      },
+      "total": 234,
+      "imbalance_ratio_max_over_min": 1.0
+    },
+    "validation": {
+      "class_count": {
+        "ACK": 108,
+        "BCC": 113,
+        "MEL": 6,
+        "NEV": 36,
+        "SCC": 28,
+        "SEK": 37
+      },
+      "class_percentage": {
+        "ACK": 32.93,
+        "BCC": 34.45,
+        "MEL": 1.83,
+        "NEV": 10.98,
+        "SCC": 8.54,
+        "SEK": 11.28
+      },
+      "total": 328,
+      "imbalance_ratio_max_over_min": 18.83
+    }
+  }
+}

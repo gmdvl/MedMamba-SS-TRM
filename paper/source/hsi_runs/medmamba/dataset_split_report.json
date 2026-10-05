@@ -1,0 +1,19 @@
+{
+  "manifest_path": "data/hsi_v7-80_10_10_importance/_progress.json",
+  "n_train_patients": 35,
+  "n_validation_patients": 5,
+  "n_test_patients": 5,
+  "patient_overlaps": {
+    "train_validation": [],
+    "train_test": [],
+    "validation_test": []
+  },
+  "slide_overlaps": {
+    "train_validation": [],
+    "train_test": [],
+    "validation_test": []
+  },
+  "patient_level_leakage": false,
+  "slide_level_leakage": false,
+  "leakage_detected": false
+}

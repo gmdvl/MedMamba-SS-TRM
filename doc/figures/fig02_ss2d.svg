@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 300" width="1040" height="300" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker>
+<marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<style>
+      .bx{stroke-width:1.6;rx:7}
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#7b8794;text-anchor:middle}
+      .tb{font-size:15px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .ti{font-size:21px;font-weight:600;fill:#1c2430}
+      .tsub{font-size:14px;fill:#7b8794}
+      .cap{font-size:13.5px;fill:#7b8794}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .c {stroke:#5a6472;stroke-width:1.8;fill:none;marker-end:url(#ar)}
+      .co{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#aro)}
+      .cg{stroke:#4e8c6a;stroke-width:2;fill:none;marker-end:url(#arg)}
+      .cp{stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+      .cr{stroke:#b4553f;stroke-width:2;fill:none;marker-end:url(#arr)}
+      .plain{stroke:#5a6472;stroke-width:1.6;fill:none}
+    </style>
+</defs>
+<rect width="1040" height="300" fill="#ffffff"/>
+<text x="30" y="38" class="ti">SS2D — an image is not a sequence</text>
+<text x="30" y="60" class="tsub">A state-space model reads a line. An image has no single line, so MedMamba reads it four ways.</text>
+<rect x="60" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="77" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="94" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="60" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="77" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="94" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="60" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="77" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="94" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<path d="M67,117 L118,117 L118,134 L67,134 L67,151 L118,151" fill="none" stroke="#c2703a" stroke-width="2.2" marker-end="url(#aro)"/>
+<text x="84" y="185" class="ts">→  left to right</text>
+<rect x="238" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="255" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="272" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="238" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="255" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="272" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="238" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="255" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="272" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<path d="M296,151 L245,151 L245,134 L296,134 L296,117 L245,117" fill="none" stroke="#c2703a" stroke-width="2.2" marker-end="url(#aro)"/>
+<text x="262" y="185" class="ts">←  right to left</text>
+<rect x="416" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="433" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="450" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="416" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="433" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="450" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="416" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="433" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="450" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<path d="M423,117 L423,151 L440,151 L440,117 L457,117 L457,151" fill="none" stroke="#c2703a" stroke-width="2.2" marker-end="url(#aro)"/>
+<text x="440" y="185" class="ts">↓  top to bottom</text>
+<rect x="594" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="611" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="628" y="110" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="594" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="611" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="628" y="127" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="594" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="611" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<rect x="628" y="144" width="15" height="15" rx="2" fill="#f2f4f7" stroke="#5a6472" stroke-width="1"/>
+<path d="M635,151 L635,117 L618,117 L618,151 L601,151 L601,117" fill="none" stroke="#c2703a" stroke-width="2.2" marker-end="url(#aro)"/>
+<text x="618" y="185" class="ts">↑  bottom to top</text>
+<rect class="bx" x="60" y="208" width="330" height="54" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="225.0" y="231.5" class="t">MedMamba:  y = y₁ + y₂ + y₃ + y₄</text>
+<text x="225.0" y="251.5" class="ts">the four readings are simply added</text>
+<rect class="bx" x="420" y="208" width="400" height="54" fill="#fbeee3" stroke="#c2703a"/>
+<text x="620.0" y="231.5" class="t">Ours:  y = Σ softmax(w)ᵢ · yᵢ   (+ 4 diagonals available)</text>
+<text x="620.0" y="251.5" class="ts">the model learns which reading order matters</text>
+</svg>

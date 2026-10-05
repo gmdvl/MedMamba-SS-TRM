@@ -1,0 +1,47 @@
+{
+    "cli_args": {
+        "data": "HistologyHSI-BC-Recurrence | Recurrent Breast Cancer: Histopathological and Hyperspectral Images Database",
+        "epochs": 30,
+        "batch_size": 256,
+        "lr": 0.0001,
+        "weight_decay": 0.0001,
+        "workers": 8,
+        "device": "auto",
+        "amp": "bf16",
+        "class_weights": false,
+        "normalize": "per_patch_zscore",
+        "checkpoint_metric": "f1_macro",
+        "patch_size": 1,
+        "dims": "64,128,256,512",
+        "depths": "1,1,2,1",
+        "d_state": 16,
+        "keep_last_n": 3,
+        "seed": 42,
+        "output": null,
+        "run_name": null,
+        "resume": null
+    },
+    "classes": 3,
+    "class_names": [
+        "healthy",
+        "DCIS",
+        "IDC"
+    ],
+    "in_channels": 32,
+    "patch_hw": [
+        11,
+        11
+    ],
+    "architecture": "MedMamba-HSI",
+    "modality": "hsi",
+    "run_name": "20260905_051406_hsi_v8-80_10_10_importance_undersample_medmamba_hsi_bs256_bf16",
+    "dataset_slug": "hsi_v8-80_10_10_importance_undersample",
+    "backbone_num_params": 3648995,
+    "torch_version": "2.10.0+cu128",
+    "entry_point": "train_hsi.py",
+    "device": "cuda",
+    "amp_mode": "bf16",
+    "seeding": {
+        "seed": 42
+    }
+}

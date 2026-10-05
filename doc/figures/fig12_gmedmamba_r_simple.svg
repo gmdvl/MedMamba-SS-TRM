@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 372" width="1040" height="372" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker>
+<marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<style>
+      .bx{stroke-width:1.6;rx:7}
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#7b8794;text-anchor:middle}
+      .tb{font-size:15px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .ti{font-size:21px;font-weight:600;fill:#1c2430}
+      .tsub{font-size:14px;fill:#7b8794}
+      .cap{font-size:13.5px;fill:#7b8794}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .c {stroke:#5a6472;stroke-width:1.8;fill:none;marker-end:url(#ar)}
+      .co{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#aro)}
+      .cg{stroke:#4e8c6a;stroke-width:2;fill:none;marker-end:url(#arg)}
+      .cp{stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+      .cr{stroke:#b4553f;stroke-width:2;fill:none;marker-end:url(#arr)}
+      .plain{stroke:#5a6472;stroke-width:1.6;fill:none}
+    </style>
+</defs>
+<rect width="1040" height="372" fill="#ffffff"/>
+<text x="30" y="38" class="ti">G-MedMamba-R, simplified</text>
+<text x="30" y="60" class="tsub">Same drawing style as Fig 1, so you can hold them side by side. Notice what is missing: stages.</text>
+<rect class="bx" x="30" y="126" width="150" height="78" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="105.0" y="161.5" class="t">cube</text>
+<text x="105.0" y="181.5" class="ts">[B, C, 11, 11]</text>
+<line class="c" x1="180" y1="165.0" x2="216" y2="165.0"/>
+<rect class="bx" x="220" y="126" width="210" height="78" fill="#fbeee3" stroke="#c2703a"/>
+<text x="325.0" y="161.5" class="t">Spectral Pathway</text>
+<text x="325.0" y="181.5" class="ts">C → 64, any C</text>
+<line class="c" x1="430" y1="165.0" x2="466" y2="165.0"/>
+<rect class="bx" x="470" y="126" width="180" height="78" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="560.0" y="161.5" class="t">stem 64 → 128</text>
+<text x="560.0" y="181.5" class="ts">+ 2-D position</text>
+<line class="c" x1="650" y1="165.0" x2="686" y2="165.0"/>
+<rect class="bx" x="690" y="126" width="200" height="78" fill="#efecf6" stroke="#6a5a92"/>
+<text x="790.0" y="161.5" class="t">Recursive Core</text>
+<text x="790.0" y="181.5" class="ts">2 layers</text>
+<line class="c" x1="890" y1="165.0" x2="926" y2="165.0"/>
+<rect class="bx" x="930" y="126" width="84" height="78" fill="#e8f3ed" stroke="#4e8c6a"/>
+<text x="972.0" y="160.0" class="t">pool</text>
+<text x="972.0" y="179.0" class="t">Linear</text>
+<text x="30" y="114" class="ts" style="text-anchor:start">any number of channels</text>
+<text x="930" y="114" class="ts" style="text-anchor:start">[B, 3]</text>
+<path d="M745,126 C745,80 835,80 835,124" stroke="#6a5a92" stroke-width="2.2" fill="none" marker-end="url(#arp)"/>
+<text x="790" y="72" class="tb">× 63, same weights</text>
+<line class="cg" x1="325" y1="204" x2="325" y2="230"/>
+<rect class="bx" x="196" y="232" width="258" height="34" fill="#e8f3ed" stroke="#4e8c6a"/>
+<text x="325.0" y="253.5" class="t">C disappears here</text>
+<line class="c" x1="780" y1="204" x2="780" y2="230"/>
+<rect class="bx" x="636" y="232" width="290" height="34" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="781.0" y="253.5" class="t">width 128, start to finish</text>
+<rect class="bx" x="30" y="300" width="984" height="44" fill="#efecf6" stroke="#6a5a92"/>
+<text x="522.0" y="326.5" class="t">No stages.  No PatchMerging.  No downsampling.  One core, 2 layers, 63 applications.  446,409 parameters.</text>
+</svg>

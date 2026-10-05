@@ -1,0 +1,13 @@
+{
+  "G5": {
+    "gate": "G5",
+    "checkpoint": "experiments/20260903_180812_80_10_10_importance-hsi_recursive_hsi_mlp_sup3_bs256_bf16_wce_zscore_sub1_vsub1/best_model.pt",
+    "tolerance": 1e-06,
+    "passed": true,
+    "metric": "f1_macro",
+    "logged": 0.7207837351452641,
+    "reproduced": 0.7207837351452641,
+    "delta": 0.0
+  },
+  "G6": true
+}

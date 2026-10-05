@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 452" width="1040" height="452" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6472"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2703a"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4e8c6a"/></marker>
+<marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6a5a92"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4553f"/></marker>
+<style>
+      .bx{stroke-width:1.6;rx:7}
+      .t {font-size:15px;fill:#1c2430;text-anchor:middle}
+      .ts{font-size:12.5px;fill:#7b8794;text-anchor:middle}
+      .tb{font-size:15px;font-weight:600;fill:#1c2430;text-anchor:middle}
+      .ti{font-size:21px;font-weight:600;fill:#1c2430}
+      .tsub{font-size:14px;fill:#7b8794}
+      .cap{font-size:13.5px;fill:#7b8794}
+      .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;fill:#1c2430;text-anchor:middle}
+      .c {stroke:#5a6472;stroke-width:1.8;fill:none;marker-end:url(#ar)}
+      .co{stroke:#c2703a;stroke-width:2;fill:none;marker-end:url(#aro)}
+      .cg{stroke:#4e8c6a;stroke-width:2;fill:none;marker-end:url(#arg)}
+      .cp{stroke:#6a5a92;stroke-width:2;fill:none;marker-end:url(#arp)}
+      .cr{stroke:#b4553f;stroke-width:2;fill:none;marker-end:url(#arr)}
+      .plain{stroke:#5a6472;stroke-width:1.6;fill:none}
+    </style>
+</defs>
+<rect width="1040" height="452" fill="#ffffff"/>
+<text x="30" y="38" class="ti">Where each piece came from</text>
+<text x="30" y="60" class="tsub">Be precise about this. It is the difference between a contribution and a claim.</text>
+<rect class="bx" x="30" y="100" width="300" height="40" fill="#f2f4f7" stroke="#5a6472"/>
+<text x="180.0" y="124.5" class="tb">MedMamba</text>
+<rect class="bx" x="370" y="100" width="300" height="40" fill="#efecf6" stroke="#6a5a92"/>
+<text x="520.0" y="124.5" class="tb">TRM</text>
+<rect class="bx" x="710" y="100" width="300" height="40" fill="#fbeee3" stroke="#c2703a"/>
+<text x="860.0" y="124.5" class="tb">ours</text>
+<rect x="30" y="156" width="300" height="28" rx="4" fill="#ffffff" stroke="#5a6472" stroke-width="1.3"/>
+<text x="180" y="175" class="t">SS2D cross-scan</text>
+<rect x="30" y="190" width="300" height="28" rx="4" fill="#ffffff" stroke="#5a6472" stroke-width="1.3"/>
+<text x="180" y="209" class="t">SS_Conv_SSM block</text>
+<rect x="30" y="224" width="300" height="28" rx="4" fill="#ffffff" stroke="#5a6472" stroke-width="1.3"/>
+<text x="180" y="243" class="t">PatchMerging2D</text>
+<rect x="30" y="258" width="300" height="28" rx="4" fill="#ffffff" stroke="#5a6472" stroke-width="1.3"/>
+<text x="180" y="277" class="t">channel_shuffle</text>
+<rect x="30" y="292" width="300" height="28" rx="4" fill="#ffffff" stroke="#5a6472" stroke-width="1.3"/>
+<text x="180" y="311" class="t">stage / depth schedule</text>
+<rect x="30" y="326" width="300" height="28" rx="4" fill="#ffffff" stroke="#5a6472" stroke-width="1.3"/>
+<text x="180" y="345" class="t">weight-init policy</text>
+<rect x="370" y="156" width="300" height="28" rx="4" fill="#ffffff" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="520" y="175" class="t">z = f(z+y+x) × 6</text>
+<rect x="370" y="190" width="300" height="28" rx="4" fill="#ffffff" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="520" y="209" class="t">y = f(y+z)</text>
+<rect x="370" y="224" width="300" height="28" rx="4" fill="#ffffff" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="520" y="243" class="t">no-grad prelude</text>
+<rect x="370" y="258" width="300" height="28" rx="4" fill="#ffffff" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="520" y="277" class="t">detach between segments</text>
+<rect x="370" y="292" width="300" height="28" rx="4" fill="#ffffff" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="520" y="311" class="t">buffer init states</text>
+<rect x="370" y="326" width="300" height="28" rx="4" fill="#ffffff" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="520" y="345" class="t">q-head init, halt loss × 0.5</text>
+<rect x="370" y="360" width="300" height="28" rx="4" fill="#ffffff" stroke="#6a5a92" stroke-width="1.3"/>
+<text x="520" y="379" class="t">EMAHelper (verbatim)</text>
+<rect x="710" y="156" width="300" height="28" rx="4" fill="#ffffff" stroke="#c2703a" stroke-width="1.3"/>
+<text x="860" y="175" class="t">SpectralTokenizer</text>
+<rect x="710" y="190" width="300" height="28" rx="4" fill="#ffffff" stroke="#c2703a" stroke-width="1.3"/>
+<text x="860" y="209" class="t">the whole spectral pathway</text>
+<rect x="710" y="224" width="300" height="28" rx="4" fill="#ffffff" stroke="#c2703a" stroke-width="1.3"/>
+<text x="860" y="243" class="t">stem replacement ★</text>
+<rect x="710" y="258" width="300" height="28" rx="4" fill="#ffffff" stroke="#c2703a" stroke-width="1.3"/>
+<text x="860" y="277" class="t">wavelength encoding</text>
+<rect x="710" y="292" width="300" height="28" rx="4" fill="#ffffff" stroke="#c2703a" stroke-width="1.3"/>
+<text x="860" y="311" class="t">pluggable fusion</text>
+<rect x="710" y="326" width="300" height="28" rx="4" fill="#ffffff" stroke="#c2703a" stroke-width="1.3"/>
+<text x="860" y="345" class="t">scan-direction registry</text>
+<rect x="710" y="360" width="300" height="28" rx="4" fill="#ffffff" stroke="#c2703a" stroke-width="1.3"/>
+<text x="860" y="379" class="t">the gate suite</text>
+<rect class="bx" x="30" y="404" width="980" height="34" fill="#efecf6" stroke="#6a5a92"/>
+<text x="520.0" y="412.5" class="t">We implemented TRM's RECURSION. We did not implement TRM's BLOCKS — they use attention, we use a conv.</text>
+</svg>

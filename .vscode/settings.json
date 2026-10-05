@@ -1,0 +1,73 @@
+{
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda",
+
+    // --- LaTeX Workshop -----------------------------------------------------
+    // VS Code runs as a Flatpak here, so its sandbox has no TeX at all
+    // (kpsewhich/latexmk are absent -> "spawn latexmk ENOENT"). The host DOES
+    // have a TeX install, and `flatpak-spawn --host` reaches it from inside the
+    // sandbox, so every tool below is invoked on the host.
+    //
+    // Default recipe is Tectonic: the host's texlive is a minimal install
+    // (texlive-basic/bin/binextra only) and is missing IEEEtran.cls,
+    // algorithm2e.sty, booktabs.sty, cite.sty and multirow.sty. Tectonic
+    // downloads what a document needs on first use and caches it, so it builds
+    // this manuscript with no system packages to install.
+    //
+    // To use latexmk instead, install the missing packages on the HOST:
+    //   sudo pacman -S texlive-latexextra texlive-latexrecommended \
+    //                  texlive-publishers texlive-fontsrecommended
+    // then switch the default recipe to "latexmk (host)".
+    "latex-workshop.latex.tools": [
+        {
+            "name": "tectonic-host",
+            "command": "flatpak-spawn",
+            "args": [
+                "--host",
+                "tectonic",
+                "-X", "compile",
+                "--keep-logs",
+                "--synctex",
+                "%DOC_EXT%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "latexmk-host",
+            "command": "flatpak-spawn",
+            "args": [
+                "--host",
+                "latexmk",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-cd",
+                "%DOC_EXT%"
+            ],
+            "env": {}
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "tectonic (host)",
+            "tools": ["tectonic-host"]
+        },
+        {
+            "name": "latexmk (host)",
+            "tools": ["latexmk-host"]
+        }
+    ],
+
+    // Tectonic writes the PDF next to the .tex and needs no aux dir.
+    "latex-workshop.latex.outDir": "%DIR%",
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.view.pdf.viewer": "tab",
+
+    // Tectonic cleans up after itself; these are the strays worth removing.
+    "latex-workshop.latex.clean.fileTypes": [
+        "*.aux", "*.bbl", "*.blg", "*.idx", "*.ind", "*.lof", "*.lot",
+        "*.out", "*.toc", "*.acn", "*.acr", "*.alg", "*.glg", "*.glo",
+        "*.gls", "*.fls", "*.fdb_latexmk", "*.synctex.gz", "*.log"
+    ]
+}

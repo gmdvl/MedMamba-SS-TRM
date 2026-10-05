@@ -1,0 +1,12 @@
+              precision    recall  f1-score   support
+
+         ACK       0.37      0.33      0.35       108
+         BCC       0.36      0.45      0.40       113
+         MEL       0.00      0.00      0.00         6
+         NEV       0.00      0.00      0.00        36
+         SCC       0.09      0.29      0.14        28
+         SEK       0.00      0.00      0.00        37
+
+    accuracy                           0.29       328
+   macro avg       0.14      0.18      0.15       328
+weighted avg       0.25      0.29      0.26       328
