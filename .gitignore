@@ -63,3 +63,6 @@ prepare_script (1).py
 prepare_script.py
 prepare_hmi_lusc_v20.py
 scripts/convert_nchw_to_nhwc.py
+PROJECT_HISTORY_AND_TECHNICAL_EVOLUTION.backup.md
+.gitignore
+PROJECT_UNDERSTANDING_AND_EXECUTION_GUIDE.backup.md
