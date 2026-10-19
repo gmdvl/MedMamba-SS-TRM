@@ -1,0 +1,17 @@
+flowchart TB
+    subgraph SSA["(a) MedMamba-SS"]
+        direction LR
+        aSP["Spectral pathway<br/>11 × 11 × 64"] --> aST["Stem"] --> aS1["Stage 1<br/>11 × 11 × 64"] --> aS2["Stage 2<br/>6 × 6 × 128"] --> aS3["Stage 3<br/>3 × 3 × 256"] --> aHD["Head:<br/>all stages"]
+    end
+    subgraph SSB["(b) MedMamba-SS-TRM"]
+        direction LR
+        bSP["Spectral pathway<br/>11 × 11 × 64"] --> bST["Stem and<br/>position code: x<br/>11 × 11 × 128"] --> bCO["One shared core f,<br/>applied 63 times<br/>11 × 11 × 128"] --> bHD["Head after<br/>each segment"]
+    end
+    SSA ~~~ SSB
+
+    classDef keep fill:#e8eaed,stroke:#6b7280,color:#111827
+    classDef ours fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#111827
+    classDef trm fill:#bfdbfe,stroke:#1d4ed8,stroke-width:2px,color:#111827
+    class aS1,aS2,aS3 keep
+    class aSP,aST,aHD,bSP,bST,bHD ours
+    class bCO trm

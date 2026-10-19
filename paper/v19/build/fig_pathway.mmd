@@ -1,0 +1,12 @@
+flowchart LR
+    A["Patch<br/>C × 11 × 11<br/>+ band centres λ"] --> B["Wavelength code<br/>and tokenizer,<br/>shared by all bands<br/>121 × C × 32"]
+    B --> C["Spectral encoder:<br/>convolutions and a<br/>bidirectional scan<br/>along the bands<br/>121 × C × 32"]
+    C --> D["Band gate,<br/>then mean over bands<br/>121 × 32<br/>(C disappears)"]
+    D --> E["Compressor:<br/>context map<br/>11 × 11 × 64"]
+
+    classDef io fill:#e8eaed,stroke:#6b7280,color:#111827
+    classDef ours fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#111827
+    classDef key fill:#bbf7d0,stroke:#15803d,stroke-width:3px,color:#111827
+    class A io
+    class B,C,E ours
+    class D key

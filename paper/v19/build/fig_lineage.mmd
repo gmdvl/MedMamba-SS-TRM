@@ -1,0 +1,13 @@
+flowchart LR
+    MM["MedMamba [5]<br/>patch embedding,<br/>4 stages of SS-Conv-SSM blocks"]
+    SS["MedMamba-SS<br/>spectral pathway,<br/>MedMamba's stages"]
+    TRM["Tiny Recursive Model [7]<br/>one two-layer network,<br/>applied recursively"]
+    SSTRM["MedMamba-SS-TRM<br/>spectral pathway,<br/>one recursive core"]
+    MM -->|"step 1: replace the<br/>patch embedding"| SS
+    SS -->|"step 2: replace<br/>the stages"| SSTRM
+    TRM -->|"recursion,<br/>deep supervision"| SSTRM
+
+    classDef base fill:#e8eaed,stroke:#6b7280,color:#111827
+    classDef ours fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#111827
+    class MM,TRM base
+    class SS,SSTRM ours

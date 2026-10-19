@@ -1,0 +1,10 @@
+flowchart LR
+    Z["z ← f(x + y + z)<br/>6 times"] --> Y["y ← f(y + z)"]
+    Y -->|"T = 3 steps"| Z
+    Y --> H["head:<br/>loss of<br/>segment j"]
+    H -->|"next segment<br/>(3 in total)"| Z
+
+    classDef trm fill:#bfdbfe,stroke:#1d4ed8,stroke-width:2px,color:#111827
+    classDef ours fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#111827
+    class Z,Y trm
+    class H ours

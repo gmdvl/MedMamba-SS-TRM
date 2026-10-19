@@ -66,3 +66,4 @@ scripts/convert_nchw_to_nhwc.py
 PROJECT_HISTORY_AND_TECHNICAL_EVOLUTION.backup.md
 .gitignore
 PROJECT_UNDERSTANDING_AND_EXECUTION_GUIDE.backup.md
+**/*-backup.md
