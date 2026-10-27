@@ -3,8 +3,8 @@
 test_synthetic_mix.py
 =======================
 `training/synthetic_mix.py`: the synthetic export schema, its loader, the
-real + synthetic training set and the minority plan over it. (The `train.py
---synthetic_dir` wiring adds its end-to-end tests here later.)
+real + synthetic training set and the minority plan over it; and its
+`train.py --synthetic_dir` wiring (`training/train_pipeline.py`).
 
 The properties everything else rests on:
   - with no synthetic rows and no copy mask, `plan_minority_with_synthetic` IS
@@ -12,17 +12,25 @@ The properties everything else rests on:
   - a real row of the mixed set is exactly the real `NpyDatasetV16` item, and
     a synthetic row is normalized with the REAL statistics;
   - a synthetic row is never a mixing partner and never copied;
-  - the loader refuses an export it cannot vouch for, each with its own error.
+  - the loader refuses an export it cannot vouch for, each with its own error;
+  - `train.py` with an EMPTY export trains bit-identically to `train.py`
+    without one, and refuses a bad export before it reads the real build.
 
-Every fixture is a few dozen 5 x 5 x 8 patches in `tmp_path`.
+Every fixture is a few dozen 5 x 5 x 8 patches in `tmp_path`; the `train.py`
+runs train a tiny model on 8 x 8 x 8 patches on the CPU (~8 s each).
 
 Run with: pytest tests/test_synthetic_mix.py -q
 """
 
 import hashlib
 import json
+import os
 import random
+import re
+import subprocess
+import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -39,9 +47,13 @@ from training.synthetic_mix import (
     X_SYN_NAME, Y_SYN_NAME, SyntheticExportError, attach_synthetic, load_synthetic_export,
     plan_minority_with_synthetic, write_synthetic_export,
 )
+from training.train_cli import resolve
+from training.train_pipeline import _class_weight_labels, _load_copy_mask, build_run_name
 from training.train_preflight import _probe_in_channels
 
-NAMES = ["healthy", "DCIS", "IDC"]
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+NAMES =["healthy", "DCIS", "IDC"]
 HWC = (5, 5, 8)
 REAL_Y = np.repeat([0, 1, 2], [12, 4, 14]).astype(np.int64)
 REAL_GROUPS = (np.arange(len(REAL_Y)) % 3 + 10 * REAL_Y).astype(np.int32)   # DCIS: patients 10, 11, 12
@@ -518,3 +530,256 @@ def test_an_empty_export_is_valid_and_changes_nothing(tmp_path, real):
     assert mix.pool_labels.tolist() == REAL_Y.tolist() and mix.groups.tolist() == REAL_GROUPS.tolist()
     _assert_same_plan(plan_minority_with_synthetic(REAL_Y, mix.n_syn, 3, NAMES, "auto", 2.0, y_syn=mix.export.y),
                       plan_minority_augmentation(REAL_Y, 3, NAMES, "auto", 2.0))
+
+
+# ============================================================================
+# train.py --synthetic_dir: flags, run name, class weights, copy mask
+# ============================================================================
+
+HSI = "data/hsi_v8-80_10_10_importance-new/hsi"
+
+
+def test_the_flags_are_off_by_default_and_nothing_is_checked_at_parse_time():
+    args = resolve(["--data_dir", HSI])[0].args
+    assert (args.synthetic_dir, args.synthetic_build_check, args.minority_copy_mask) == (None, "on", None)
+    # sweeps parse their argv on machines that do not hold the export (tests/test_sweeps.py)
+    args = resolve(["--data_dir", HSI, "--synthetic_dir", "no/such/export", "--minority_copy_mask",
+                    "no/such/mask.npy", "--synthetic_build_check", "off"])[0].args
+    assert (args.synthetic_dir, args.minority_copy_mask) == ("no/such/export", "no/such/mask.npy")
+    assert args.synthetic_build_check == "off"
+
+
+def test_the_run_name_gains_syn_only_with_synthetic_dir():
+    ts = "20261027_000000"
+    off = resolve(["--data_dir", HSI])[0].args
+    on = resolve(["--data_dir", HSI, "--synthetic_dir", "exports/cvae"])[0].args
+    assert build_run_name(on, ts, modality="x") == build_run_name(off, ts, modality="x") + "_syn"
+    both = resolve(["--data_dir", HSI, "--minority_augment", "on", "--synthetic_dir", "exports/cvae",
+                    "--run_tag", "t1"])[0].args
+    assert build_run_name(both, ts, modality="x").endswith("_minaug_syn_t1")
+
+
+_Y = np.array([0, 0, 0, 1, 2, 2])
+_PLAN = SimpleNamespace(effective_labels=np.array([0, 0, 0, 1, 2, 2, 1, 1]))
+_MIX = SimpleNamespace(y=np.array([0, 0, 0, 1, 2, 2, 1]))
+
+
+@pytest.mark.parametrize("minority, mix, mode, want, name", [
+    (None, None, "effective", _Y, "y_train"),                          # the default path
+    (None, _MIX, "effective", _MIX.y, "y_train_and_synthetic"),
+    (None, _MIX, "original", _MIX.y, "y_train_and_synthetic"),         # ignored with --minority_augment off
+    (_PLAN, None, "effective", _PLAN.effective_labels, "minority_effective_labels"),
+    (_PLAN, _MIX, "effective", _PLAN.effective_labels, "minority_effective_labels"),
+    (_PLAN, None, "original", _Y, "y_train"),
+    (_PLAN, _MIX, "original", _Y, "y_train"),                          # y_train.npy: real rows only
+])
+def test_class_weight_labels(minority, mix, mode, want, name):
+    labels, got = _class_weight_labels(_Y, minority, mix, mode)
+    assert labels is want and got == name
+
+
+def test_a_copy_mask_is_one_bool_per_real_train_row(tmp_path):
+    ok = np.zeros(5, bool)
+    ok[1] = True
+    np.save(tmp_path / "ok.npy", ok)
+    assert _load_copy_mask(str(tmp_path / "ok.npy"), 5).tolist() == ok.tolist()
+    for name, arr in (("short", np.ones(4, bool)), ("int", np.ones(5, np.int64)), ("2d", np.ones((5, 1), bool))):
+        np.save(tmp_path / f"{name}.npy", arr)
+        with pytest.raises(SystemExit, match="boolean array over the 5 real train rows"):
+            _load_copy_mask(str(tmp_path / f"{name}.npy"), 5)
+    (tmp_path / "junk.npy").write_text("not an array")
+    for name in ("junk.npy", "missing.npy"):
+        with pytest.raises(SystemExit, match="cannot read"):
+            _load_copy_mask(str(tmp_path / name), 5)
+
+
+# ============================================================================
+# train.py --synthetic_dir end to end
+# ============================================================================
+
+TINY = ["--epochs", "2", "--batch_size", "16", "--trm_dim", "16", "--trm_n_latent", "1",
+        "--trm_n_improve", "1", "--trm_deep_supervision_steps", "1", "--compile", "off",
+        "--loader_mode", "safe", "--drift_check_patches", "64", "--min_logit_std", "1e-4"]
+TIMING = {"GPU_memory_MB", "artifact_time_s", "data_wait_s", "epoch_time", "s_per_step",
+          "train_time_s", "val_time_s"}
+MINAUG = ("--minority_augment", "on", "--minority_oversample_factor", "3")
+E2E_HWC = (8, 8, 8)
+E2E_COUNTS = {"train": [40, 8, 56], "val": [16, 16, 16], "test": [16, 16, 16]}
+N_REAL = sum(E2E_COUNTS["train"])
+
+
+def _e2e_syn_x(n: int) -> np.ndarray:
+    return (np.random.default_rng(7).random((n, *E2E_HWC)) * 0.5 + 0.15).astype(np.float32)   # DCIS-like
+
+
+@pytest.fixture(scope="module")
+def tiny_bound_hsi(tmp_path_factory) -> SimpleNamespace:
+    """`tests/test_minority_augmentation.py`'s tiny imbalanced split, with the
+    sha256 manifest that binds an export to it; a 6-row DCIS export; an empty one."""
+    root = tmp_path_factory.mktemp("tiny_synthetic")
+    data = root / "hsi"
+    data.mkdir()
+    rng = np.random.default_rng(0)
+    files = ["wavelengths.npy"]
+    for split, per in E2E_COUNTS.items():
+        y = np.repeat(np.arange(3), per).astype(np.int64)
+        x = rng.random((len(y), *E2E_HWC), dtype=np.float32) * 0.5 + (y[:, None, None, None] * 0.15)
+        np.save(data / f"X_{split}.npy", x.astype(np.float32))
+        np.save(data / f"y_{split}.npy", y)
+        np.save(data / f"groups_{split}.npy", (np.arange(len(y)) % 4 + 10 * y).astype(np.int32))
+        files += [f"X_{split}.npy", f"y_{split}.npy", f"groups_{split}.npy"]
+    np.save(data / "wavelengths.npy", np.linspace(450, 900, E2E_HWC[2]).astype(np.float32))
+    (data / "class_names.json").write_text(json.dumps(NAMES))
+    write_dataset_manifest(str(data), files, sha256=True)
+    syn, empty = root / "export_dcis", root / "export_empty"
+    write_synthetic_export(str(syn), _e2e_syn_x(6), np.ones(6, np.int64), "cvae", str(data))
+    write_synthetic_export(str(empty), _e2e_syn_x(0), np.ones(0, np.int64), "cvae", str(data))
+    return SimpleNamespace(data=data, syn=syn, empty=empty)
+
+
+def _train_py(argv, cwd: Path) -> subprocess.CompletedProcess:
+    env = dict(os.environ, PYTHONPATH=str(REPO_ROOT), CUDA_VISIBLE_DEVICES="")
+    return subprocess.run([sys.executable, str(REPO_ROOT / "train.py")] + list(argv), cwd=cwd, env=env,
+                          capture_output=True, text=True, timeout=600)
+
+
+@pytest.fixture(scope="module")
+def train_runs(tiny_bound_hsi, tmp_path_factory):
+    """`train_runs(*flags)`: the run directory of `train.py --profile paper_recipe`
+    + TINY + flags on the tiny split, trained once per module per set of flags."""
+    done = {}
+
+    def run(*flags):
+        if flags not in done:
+            cwd = tmp_path_factory.mktemp("run")
+            proc = _train_py(["--data_dir", str(tiny_bound_hsi.data), "--profile", "paper_recipe"] + TINY
+                             + list(flags), cwd)
+            assert proc.returncode == 0, f"{proc.stdout[-3000:]}\n{proc.stderr[-3000:]}"
+            (done[flags],) = list((cwd / "experiments").iterdir())
+        return done[flags]
+    return run
+
+
+def _json(run_dir: Path, name: str):
+    return json.loads((run_dir / name).read_text())
+
+
+def _history(run_dir: Path):
+    return [{k: v for k, v in row.items() if k not in TIMING} for row in _json(run_dir, "history.json")]
+
+
+def _gates(run_dir: Path) -> dict:
+    """gates.json minus G5's checkpoint path, which contains the run directory."""
+    gates = _json(run_dir, "gates.json")
+    if isinstance(gates.get("G5"), dict):
+        gates["G5"].pop("checkpoint", None)
+    return gates
+
+
+@pytest.mark.parametrize("arm", [(), MINAUG], ids=["plain", "minaug"])
+def test_an_empty_export_trains_bit_identically(arm, tiny_bound_hsi, train_runs):
+    base = train_runs(*arm)
+    empty = train_runs(*arm, "--synthetic_dir", str(tiny_bound_hsi.empty))
+    assert empty.name[16:] == base.name[16:] + "_syn"          # past the timestamp
+
+    h_base, h_empty = _history(base), _history(empty)
+    assert len(h_base) == len(h_empty) == 2
+    for epoch, (a, b) in enumerate(zip(h_base, h_empty), 1):
+        diff = {k: (a.get(k), b.get(k)) for k in a.keys() | b.keys() if a.get(k) != b.get(k)}
+        assert not diff, f"epoch {epoch}: {diff}"
+    for name in ("test_predictions.npz", "predictions/predictions_epoch01.npz"):
+        p_base, p_empty = np.load(base / name), np.load(empty / name)
+        assert sorted(p_base.files) == sorted(p_empty.files)
+        for key in p_base.files:
+            np.testing.assert_array_equal(p_base[key], p_empty[key], err_msg=f"{name}: {key}")
+    assert _gates(base) == _gates(empty)
+    assert _json(base, "split_drift_report.json") == _json(empty, "split_drift_report.json")
+
+    c_base, c_empty = _json(base, "config.json"), _json(empty, "config.json")
+    assert (c_empty["synthetic"]["n_real"], c_empty["synthetic"]["n_syn"]) == (N_REAL, 0)
+    assert c_base.get("minority_augmentation") == c_empty.get("minority_augmentation")
+    assert c_base["train_subsample"] == c_empty["train_subsample"]
+    assert "synthetic" not in c_base and not (base / "synthetic_mix_report.json").exists()
+
+
+def test_train_py_trains_on_real_and_synthetic_rows(tiny_bound_hsi, train_runs, tmp_path_factory):
+    """Acceptance 2, 3, 4 and 7, on one run with 6 synthetic DCIS rows and a copy mask."""
+    mask = np.ones(N_REAL, bool)
+    mask[np.flatnonzero(np.repeat(np.arange(3), E2E_COUNTS["train"]) == 1)[:4]] = False   # 4 of 8 DCIS rows
+    mask_path = tmp_path_factory.mktemp("mask") / "copy_mask.npy"
+    np.save(mask_path, mask)
+    base = train_runs(*MINAUG)
+    run = train_runs(*MINAUG, "--synthetic_dir", str(tiny_bound_hsi.syn), "--minority_copy_mask", str(mask_path))
+    assert run.name.endswith("_minaug_syn")
+    cfg = _json(run, "config.json")
+
+    # 7: config.json["synthetic"], and the report next to it
+    syn = cfg["synthetic"]
+    prov = json.loads((tiny_bound_hsi.syn / PROVENANCE_NAME).read_text())
+    assert syn["export_id"] == prov["export_id"] and syn["source"] == "cvae" and syn["provenance"] == prov
+    assert (syn["n_real"], syn["n_syn"], syn["n_total"]) == (N_REAL, 6, N_REAL + 6)
+    assert syn["syn_class_counts"] == {"healthy": 0, "DCIS": 6, "IDC": 0}
+    assert syn["source_manifest_sha256"] == _sha256(tiny_bound_hsi.data / MANIFEST_NAME)
+    assert syn["in_reconstruction_loss"] is True                 # paper_recipe: recon_mode latent
+    assert syn["class_weight_labels"] == "minority_effective_labels"
+    assert syn["class_counts"] == {"real": {"healthy": 40, "DCIS": 8, "IDC": 56},
+                                   "synthetic": {"healthy": 0, "DCIS": 6, "IDC": 0},
+                                   "train_set": {"healthy": 40, "DCIS": 3 * 8 + 6, "IDC": 56}}
+    assert _json(run, "synthetic_mix_report.json") == syn
+
+    # 3: only real rows are copied (a copied synthetic row would give DCIS round(3 x 14) = 42), the
+    # mask keeps the number of copies, and the partners are the 8 real DCIS rows of 4 real patients
+    m = cfg["minority_augmentation"]
+    assert m["counts_before"] == {"healthy": 40, "DCIS": 8, "IDC": 56}
+    assert m["counts_after"] == {"healthy": 40, "DCIS": 30, "IDC": 56}
+    assert m["partner_pool_rows"] == {"1": 8} and m["partner_pool_patients"] == {"1": 4}
+    assert m["copy_mask"] == {"path": str(mask_path), "copyable_rows": N_REAL - 4}
+    assert cfg["train_subsample"]["total"] == 40 + 30 + 56
+
+    # 2: the statistics are still fitted on the real X_train alone; gate G8 normalizes every split
+    # with them, so its report is the one of the run without synthetic rows, to the bit
+    assert (cfg["cli_args"]["normalization"], cfg["cli_args"]["global_stats"]) == ("global_zscore", "train_fit")
+    assert _json(run, "split_drift_report.json") == _json(base, "split_drift_report.json")
+
+    # 4: validation and test are the real splits: the same rows, in the same order
+    assert cfg["val_subsample"] == _json(base, "config.json")["val_subsample"]
+    for a, b in zip(_history(run), _history(base)):
+        assert a["per_class_support"] == b["per_class_support"] == E2E_COUNTS["val"]
+    for name in ("test_predictions.npz", "predictions/predictions_epoch01.npz"):
+        np.testing.assert_array_equal(np.load(run / name)["true_label"], np.load(base / name)["true_label"])
+
+
+@pytest.mark.parametrize("case, match", [
+    ("build_mismatch", r"--synthetic_dir: the export was made from a different build.*"
+                       r"--synthetic_build_check off overrides"),
+    ("non_finite", r"--synthetic_dir: X_syn.npy: 1 row\(s\) hold a NaN/inf.*first: row 2"),
+    ("sampler", "--sampler balanced cannot be combined with --synthetic_dir"),
+    ("mask_without_minority", "--minority_copy_mask .* pass --minority_augment on"),
+    ("mask_wrong_shape", rf"--minority_copy_mask: .* boolean array over the {N_REAL} real train rows"),
+])
+def test_train_py_refuses_before_it_reads_the_real_build(case, match, tiny_bound_hsi, tmp_path):
+    """Acceptance 5 and 6, and the flag combinations: a non-zero exit with the
+    reason, before the sha256 pass over the real build and before any training."""
+    argv = ["--data_dir", str(tiny_bound_hsi.data)] + TINY
+    if case in ("build_mismatch", "non_finite"):
+        exp = tmp_path / "export"
+        write_synthetic_export(str(exp), _e2e_syn_x(4), np.ones(4, np.int64), "cvae", str(tiny_bound_hsi.data))
+        if case == "build_mismatch":                       # bound to some other build's manifest
+            _edit_provenance(exp, source_manifest_sha256="0" * 64)
+        else:
+            X = np.load(exp / X_SYN_NAME)
+            X[2, 0, 0, 0] = np.float16(np.nan)
+            np.save(exp / X_SYN_NAME, X)
+            _reseal(exp)
+        argv += ["--synthetic_dir", str(exp)]
+    elif case == "sampler":
+        argv += ["--synthetic_dir", str(tiny_bound_hsi.syn), "--sampler", "balanced"]
+    else:
+        np.save(tmp_path / "mask.npy", np.ones(N_REAL - (case == "mask_wrong_shape"), bool))
+        argv += ["--minority_copy_mask", str(tmp_path / "mask.npy")]
+        argv += list(MINAUG) if case == "mask_wrong_shape" else []
+    proc = _train_py(argv, tmp_path)
+    assert proc.returncode != 0
+    assert re.search(match, proc.stderr), proc.stderr[-2000:]
+    assert "[dataset-manifest]" not in proc.stdout
+    assert not list(tmp_path.glob("experiments/*/history.json"))

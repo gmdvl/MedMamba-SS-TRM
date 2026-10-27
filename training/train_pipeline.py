@@ -65,6 +65,8 @@ from training.run_naming_v16 import build_run_name as _base_run_name
 from training.run_naming_v16 import dataset_slug, infer_modality, modality_warnings
 from training.samplers import build_balanced_sampler, build_moderate_oversample_indices
 from training.spectral_checkpoint import enable_spectral_gradient_checkpointing
+from training.synthetic_mix import (SyntheticExportError, attach_synthetic, load_synthetic_export,
+                                    plan_minority_with_synthetic)
 from training.system_memory import (
     collect_system_memory_snapshot, log_system_memory, write_system_memory_report,
 )
@@ -88,6 +90,8 @@ def build_run_name(args, timestamp: Optional[str] = None, modality: Optional[str
     name = _base_run_name(args, timestamp, modality=modality) + PROFILES[args.profile].name_suffix
     if getattr(args, "minority_augment", "off") == "on":
         name += "_minaug"
+    if getattr(args, "synthetic_dir", None):
+        name += "_syn"
     return f"{name}_{args.run_tag}" if getattr(args, "run_tag", None) else name
 
 
@@ -251,6 +255,38 @@ class _G7Shim:
 
 
 # ============================================================================
+# synthetic rows (training/synthetic_mix.py)
+# ============================================================================
+
+def _load_copy_mask(path: str, n_train: int) -> np.ndarray:
+    """`--minority_copy_mask`: a boolean array with one entry per REAL train row."""
+    try:
+        mask = np.load(path)
+    except (OSError, ValueError) as e:
+        raise SystemExit(f"--minority_copy_mask: cannot read {path}: {e}")
+    if not isinstance(mask, np.ndarray) or mask.dtype != np.bool_ or mask.shape != (n_train,):
+        raise SystemExit(f"--minority_copy_mask: {path} must be a boolean array over the {n_train} real "
+                         f"train rows, got {getattr(mask, 'dtype', type(mask).__name__)} "
+                         f"{getattr(mask, 'shape', '')}")
+    return mask
+
+
+def _class_weight_labels(y_train: np.ndarray, minority, mix, minority_class_weights: str):
+    """The labels the class weights are counted on, and their name for config.json.
+
+    `--minority_class_weights original` means y_train.npy as it is on disk, so
+    it stays the REAL rows when synthetic ones were added: the synthetic rows,
+    like the copies, then raise the class's share on top of its weight."""
+    if minority is not None:
+        if minority_class_weights == "effective":
+            return minority.effective_labels, "minority_effective_labels"
+        return y_train, "y_train"
+    if mix is not None:
+        return mix.y, "y_train_and_synthetic"
+    return y_train, "y_train"
+
+
+# ============================================================================
 # the run
 # ============================================================================
 
@@ -304,6 +340,27 @@ def _run(parsed, notes):
           flush=True)
     if ("hsi" if wavelengths is not None else "rgb") != run_modality:
         raise SystemExit(f"INTERNAL: modality mismatch for {args.data_dir}.")
+
+    # ---- synthetic export + copy mask: refused before the real build's sha256 pass
+    syn_export = copy_mask = None
+    if args.minority_copy_mask and args.minority_augment != "on":
+        raise SystemExit("--minority_copy_mask narrows which rows --minority_augment copies; "
+                         "pass --minority_augment on.")
+    if args.synthetic_dir:
+        if args.sampler != "none":
+            # both samplers read y_train.npy only, so they would never draw a synthetic row
+            raise SystemExit(f"--sampler {args.sampler} cannot be combined with --synthetic_dir: it reads "
+                             f"y_train.npy only and would ignore the synthetic rows. Use --sampler none.")
+        try:
+            syn_export = load_synthetic_export(args.synthetic_dir, args.data_dir, num_classes,
+                                               manifest_check=args.manifest_check,
+                                               build_check=args.synthetic_build_check)
+        except SyntheticExportError as e:
+            raise SystemExit(f"--synthetic_dir: {e}")
+        print(f"[synthetic] export {syn_export.export_id} ({syn_export.source}): {syn_export.n_syn} rows "
+              f"from {args.synthetic_dir}", flush=True)
+    if args.minority_copy_mask:
+        copy_mask = _load_copy_mask(args.minority_copy_mask, n_train)
 
     dataset_paths = {"X_train": x_tr, "y_train": y_tr, "X_val": x_te, "y_val": y_te}
     integrity_report = None
@@ -392,6 +449,20 @@ def _run(parsed, notes):
 
     val_groups, val_captures = _subset(groups_val_full), _subset(captures_val_full)
 
+    # ---- synthetic rows join the train split (training/synthetic_mix.py) -----
+    # After the reports, the global stats and G8, which stay real-only; before
+    # everything that indexes train rows, which then indexes real ++ synthetic.
+    mix = None
+    if syn_export is not None:
+        try:
+            mix = attach_synthetic(train_ds, y_train_arr, sidecars["groups"].get("train"), syn_export,
+                                   _build_dataset)
+        except ValueError as e:
+            raise SystemExit(f"--synthetic_dir: {e}")
+        train_ds = mix.dataset
+        print(f"[synthetic] train split: {mix.n_real} real + {mix.n_syn} synthetic rows, normalized with "
+              f"the real X_train statistics", flush=True)
+
     # ---- train sampler / subsample -----------------------------------------
     train_sampler = None
     shuffle = True
@@ -412,9 +483,16 @@ def _run(parsed, notes):
                              f"(--minority_oversample_factor 1.0 keeps the sampler).")
         try:
             check_normalization(args.normalization, args.recon_mode != "none", args.minority_mix_prob)
-            minority = plan_minority_augmentation(y_train_arr, num_classes, class_names,
-                                                  args.minority_classes, args.minority_oversample_factor,
-                                                  seed=args.seed)
+            if mix is not None or copy_mask is not None:
+                # classes resolved and rows copied on the real part; each synthetic row once
+                minority = plan_minority_with_synthetic(
+                    y_train_arr, mix.n_syn if mix is not None else 0, num_classes, class_names,
+                    args.minority_classes, args.minority_oversample_factor, seed=args.seed,
+                    copy_mask=copy_mask, y_syn=mix.export.y if mix is not None else None)
+            else:
+                minority = plan_minority_augmentation(y_train_arr, num_classes, class_names,
+                                                      args.minority_classes, args.minority_oversample_factor,
+                                                      seed=args.seed)
         except ValueError as e:
             raise SystemExit(f"--minority_augment: {e}")
         if minority.indices is not None:
@@ -459,10 +537,15 @@ def _run(parsed, notes):
         groups_train = sidecars["groups"].get("train") if args.minority_mix_cross_patient == "on" else None
         if args.minority_mix_cross_patient == "on" and groups_train is None:
             print("[minority-aug] no groups_train.npy - mixing partners come from any patient", flush=True)
+        # with synthetic rows the root dataset is real ++ synthetic: a synthetic row's
+        # pool label is -1, so it is never a partner; its group id is never a patient's
+        labels_train = y_train_arr
+        if mix is not None:
+            labels_train, groups_train = mix.pool_labels, (mix.groups if groups_train is not None else None)
         try:
             train_ds = MinorityAugmentedDataset(
                 train_ds, build_active(aug_cfg), build_active(scaled_config(aug_cfg, args.minority_aug_strength)),
-                minority.classes, labels=y_train_arr, groups=groups_train, mix_mode=args.minority_mix_mode,
+                minority.classes, labels=labels_train, groups=groups_train, mix_mode=args.minority_mix_mode,
                 mix_prob=args.minority_mix_prob, mix_alpha=args.minority_mix_alpha, seed=args.seed)
         except ValueError as e:
             raise SystemExit(f"--minority_augment: {e}")
@@ -555,8 +638,7 @@ def _run(parsed, notes):
         if args.lambda_gan == 0.0:
             args.lambda_gan = 0.05
 
-    y_for_weights = (minority.effective_labels
-                     if minority is not None and args.minority_class_weights == "effective" else y_train_arr)
+    y_for_weights, weights_from = _class_weight_labels(y_train_arr, minority, mix, args.minority_class_weights)
     criterion = build_criterion(args.loss, y_train=y_for_weights, num_classes=num_classes,
                                 focal_gamma=args.focal_gamma, weight_method=args.weight_method,
                                 device=device, class_weight_power=args.class_weight_power)
@@ -624,6 +706,19 @@ def _run(parsed, notes):
         config["minority_augmentation"] = {
             **minority.as_dict(class_names), **augmented_train_ds.describe(),
             "strength": args.minority_aug_strength, "class_weights_from": args.minority_class_weights}
+        if copy_mask is not None:
+            config["minority_augmentation"]["copy_mask"] = {
+                "path": args.minority_copy_mask, "copyable_rows": int(copy_mask.sum())}
+    if mix is not None:
+        names = class_names or [str(c) for c in range(num_classes)]
+        config["synthetic"] = {
+            **mix.describe(class_names), "in_reconstruction_loss": args.recon_mode != "none",
+            "class_weight_labels": weights_from,
+            "class_counts": {k: dict(zip(names, np.bincount(v, minlength=num_classes).tolist())) for k, v in (
+                ("real", y_train_arr), ("synthetic", mix.y[mix.n_real:]),
+                ("train_set", minority.effective_labels if minority is not None else mix.y))}}
+        with open(exp_dir / "synthetic_mix_report.json", "w") as f:
+            json.dump(config["synthetic"], f, indent=2, default=str)
     with open(exp_dir / "config.json", "w") as f:
         json.dump(config, f, indent=4, default=str)
 

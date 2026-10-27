@@ -681,7 +681,28 @@ def _add_flags(p: argparse.ArgumentParser) -> None:
     g.add_argument("--minority_class_weights", choices=["effective", "original"], default="effective",
                    help="class weights from the oversampled label counts ('effective') or from "
                         "y_train.npy ('original'). 'original' compensates twice: the factor raises "
-                        "the class's share, and the weight still reflects the smaller count.")
+                        "the class's share, and the weight still reflects the smaller count. With "
+                        "--synthetic_dir, 'effective' counts the synthetic rows too and 'original' "
+                        "still counts y_train.npy only.")
+    _add_synthetic_flags(p)
+
+
+def _add_synthetic_flags(p: argparse.ArgumentParser) -> None:
+    """A synthetic export's rows added to the train split (training/synthetic_mix.py)."""
+    g = p.add_argument_group("synthetic rows (training/synthetic_mix.py)")
+    g.add_argument("--synthetic_dir", default=None,
+                   help="a synthetic export directory; its rows join the TRAIN split after the real "
+                        "ones. Refused unless it was made from --data_dir's build. Normalization, the "
+                        "class reports and gate G8 stay real-only; validation and test are untouched. "
+                        "Cannot be combined with --sampler. Appends _syn to the run name.")
+    g.add_argument("--synthetic_build_check", choices=["on", "off"], default="on",
+                   help="refuse an export whose provenance does not record the sha256 of "
+                        "<data_dir>/dataset_manifest.json (a data_dir without one is refused too). "
+                        "'off' prints a warning instead.")
+    g.add_argument("--minority_copy_mask", default=None,
+                   help="boolean .npy, one entry per real train row: --minority_oversample_factor "
+                        "copies only the True rows, and each class still gets the same number of "
+                        "copies (the glass rule). Needs --minority_augment on.")
 
 
 def build_parser(argv=None, profile: Optional[str] = None) -> argparse.ArgumentParser:
