@@ -227,7 +227,8 @@ def test_ledger_has_no_unknown_entries(ran):
         assert re.fullmatch(r"#\d+(, #\d+)*", e["issue"]) and e["evidence"] and e["stage"]
     band = next(e for e in entries if e["quantity"] == splits.BAND_SELECTION)
     assert "6 train patients" in band["evidence"]
-    assert ran.ledger["split_access"]["held_out_readers"] == {"discovery": ["structural"], "leakage": ["structural"]}
+    assert ran.ledger["split_access"]["held_out_readers"] == {"discovery": ["structural"], "index": ["structural"],
+                                                              "leakage": ["structural"]}
 
 
 def test_ledger_fits_on_train_only_except_classifier_selection(ran):
