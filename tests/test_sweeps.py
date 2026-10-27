@@ -55,6 +55,18 @@ def test_every_train_job_parses(sweep):
         assert parsed.args.run_tag, job.name
 
 
+def test_a_tag_shared_between_sweeps_is_one_command():
+    """A train job is done once a run with its tag exists on its data, so when two
+    sweeps list the same tag (sweeps/minority_augmentation.py reads against the
+    paper sweep's `v20-abl-base-s42` / `v20-head-s*`), whichever runs first
+    stands in for the other. That is only sound if both build the same argv."""
+    seen = {}
+    for path in SWEEPS:
+        for job, argv in _train_py_jobs(rx.load_sweep(str(path))):
+            first = seen.setdefault((argv[-1], argv[3].rstrip("/")), (f"{path.stem}:{job.name}", argv))
+            assert argv == first[1], f"{path.stem}:{job.name} vs {first[0]}"
+
+
 def test_flags_to_argv():
     assert rx.flags_to_argv({"lr": 1e-4, "no_use_wavelengths": True, "x": None, "y": False,
                              "keep": [32, 16]}) == \
