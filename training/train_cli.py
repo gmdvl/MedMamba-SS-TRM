@@ -655,6 +655,34 @@ def _add_flags(p: argparse.ArgumentParser) -> None:
     g.add_argument("--recon_max_cubes", type=int, default=64,
                    help="hard cap on retained cubes.")
 
+    g = p.add_argument_group("minority-class augmentation (training/minority_augmentation.py)")
+    g.add_argument("--minority_augment", choices=["on", "off"], default="off",
+                   help="oversample, mix and augment the under-represented class(es) of the train "
+                        "split. Off = the pipeline is unchanged. On appends _minaug to the run name.")
+    g.add_argument("--minority_classes", default="auto",
+                   help="comma list of class names or indices, or 'auto' = every class with fewer "
+                        "than half the median class count (DCIS on the HSI split, MEL on PAD-UFES-20).")
+    g.add_argument("--minority_oversample_factor", type=float, default=2.0,
+                   help="each minority class ends with this many times its rows; every copy gets its "
+                        "own augmentation draw. 1.0 = no oversampling. >1 cannot be combined with "
+                        "--sampler. Lengthens the epoch, so --train_subsample_frac keeps more rows.")
+    g.add_argument("--minority_aug_strength", type=float, default=1.0,
+                   help="multiplies the augmentation magnitudes (noise, per-band scale/offset, crop) "
+                        "for minority samples only. 1.0 = the augmentation every class gets.")
+    g.add_argument("--minority_mix_mode", choices=["stats", "pixel"], default="stats",
+                   help="'stats': move the patch's per-band mean/std toward a same-class partner's "
+                        "(MixStyle on the input bands); 'pixel': intra-class mixup.")
+    g.add_argument("--minority_mix_prob", type=float, default=0.5,
+                   help="probability a minority sample is mixed with a partner. 0 = no mixing.")
+    g.add_argument("--minority_mix_alpha", type=float, default=0.4,
+                   help="Beta(alpha, alpha) for the mixing weight; the anchor keeps max(l, 1 - l).")
+    g.add_argument("--minority_mix_cross_patient", choices=["on", "off"], default="on",
+                   help="draw the partner from a different patient (needs groups_train.npy).")
+    g.add_argument("--minority_class_weights", choices=["effective", "original"], default="effective",
+                   help="class weights from the oversampled label counts ('effective') or from "
+                        "y_train.npy ('original'). 'original' compensates twice: the factor raises "
+                        "the class's share, and the weight still reflects the smaller count.")
+
 
 def build_parser(argv=None, profile: Optional[str] = None) -> argparse.ArgumentParser:
     """The full parser with `profile`'s defaults applied (peeked from `argv` when

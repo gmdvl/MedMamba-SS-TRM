@@ -51,6 +51,8 @@ from training.gates import (
 )
 from training.grad_checkpoint import enable_gradient_checkpointing
 from training.losses import build_criterion
+from training.minority_augmentation import (MinorityAugmentedDataset, check_normalization,
+                                            plan_minority_augmentation, scaled_config)
 from training.npy_data import (NpyDatasetV16, compute_global_channel_stats, discover_data,
                                 setup_experiment_dir)
 from training.npy_integrity import (
@@ -84,6 +86,8 @@ def build_run_name(args, timestamp: Optional[str] = None, modality: Optional[str
     """`run_naming_v16.build_run_name` + the profile's suffix + `_<run_tag>` -
     byte-identical to what each former entry point produced."""
     name = _base_run_name(args, timestamp, modality=modality) + PROFILES[args.profile].name_suffix
+    if getattr(args, "minority_augment", "off") == "on":
+        name += "_minaug"
     return f"{name}_{args.run_tag}" if getattr(args, "run_tag", None) else name
 
 
@@ -399,6 +403,24 @@ def _run(parsed, notes):
                                                 target_percentile=args.oversample_target_percentile)
         train_ds = Subset(train_ds, idx.tolist())
 
+    # ---- minority-class oversampling (training/minority_augmentation.py) ----
+    minority = None
+    if args.minority_augment == "on":
+        if args.sampler != "none" and args.minority_oversample_factor != 1.0:
+            raise SystemExit(f"--minority_oversample_factor {args.minority_oversample_factor} and "
+                             f"--sampler {args.sampler} both rebalance the classes; use one "
+                             f"(--minority_oversample_factor 1.0 keeps the sampler).")
+        try:
+            check_normalization(args.normalization, args.recon_mode != "none", args.minority_mix_prob)
+            minority = plan_minority_augmentation(y_train_arr, num_classes, class_names,
+                                                  args.minority_classes, args.minority_oversample_factor,
+                                                  seed=args.seed)
+        except ValueError as e:
+            raise SystemExit(f"--minority_augment: {e}")
+        if minority.indices is not None:
+            train_ds = Subset(train_ds, minority.indices)
+        print(minority.summary(class_names), flush=True)
+
     if not 0.0 < args.train_subsample_frac <= 1.0:
         raise SystemExit(f"--train_subsample_frac must be in (0, 1], got {args.train_subsample_frac}")
     train_subsample_info = {"frac": args.train_subsample_frac, "mode": args.train_subsample_mode,
@@ -433,7 +455,19 @@ def _run(parsed, notes):
         flip_v_prob=args.flip_v_prob, rotate90_prob=args.rotate90_prob,
         crop_scale_max_frac=args.crop_scale_max_frac, seed=args.seed))
     augmented_train_ds = None
-    if args.augment_preset != "none":
+    if minority is not None:
+        groups_train = sidecars["groups"].get("train") if args.minority_mix_cross_patient == "on" else None
+        if args.minority_mix_cross_patient == "on" and groups_train is None:
+            print("[minority-aug] no groups_train.npy - mixing partners come from any patient", flush=True)
+        try:
+            train_ds = MinorityAugmentedDataset(
+                train_ds, build_active(aug_cfg), build_active(scaled_config(aug_cfg, args.minority_aug_strength)),
+                minority.classes, labels=y_train_arr, groups=groups_train, mix_mode=args.minority_mix_mode,
+                mix_prob=args.minority_mix_prob, mix_alpha=args.minority_mix_alpha, seed=args.seed)
+        except ValueError as e:
+            raise SystemExit(f"--minority_augment: {e}")
+        augmented_train_ds = train_ds
+    elif args.augment_preset != "none":
         # `build_active` drops switched-off steps; bit-identical, since a disabled
         # step consumes no RNG draws (training/augmentation_v16.py).
         train_ds = AugmentedPatchDatasetV16(train_ds, build_active(aug_cfg), seed=args.seed)  # E-4
@@ -521,7 +555,9 @@ def _run(parsed, notes):
         if args.lambda_gan == 0.0:
             args.lambda_gan = 0.05
 
-    criterion = build_criterion(args.loss, y_train=y_train_arr, num_classes=num_classes,
+    y_for_weights = (minority.effective_labels
+                     if minority is not None and args.minority_class_weights == "effective" else y_train_arr)
+    criterion = build_criterion(args.loss, y_train=y_for_weights, num_classes=num_classes,
                                 focal_gamma=args.focal_gamma, weight_method=args.weight_method,
                                 device=device, class_weight_power=args.class_weight_power)
     if args.weight_decay_groups:
@@ -584,6 +620,10 @@ def _run(parsed, notes):
                       "warmup_steps": int(scheduler.warmup_steps), "schedule": args.lr_schedule},
         "system_snapshot_startup": startup_snapshot,
     }
+    if minority is not None:
+        config["minority_augmentation"] = {
+            **minority.as_dict(class_names), **augmented_train_ds.describe(),
+            "strength": args.minority_aug_strength, "class_weights_from": args.minority_class_weights}
     with open(exp_dir / "config.json", "w") as f:
         json.dump(config, f, indent=4, default=str)
 

@@ -423,6 +423,17 @@ python train.py --data_dir <tiny_dataset_dir> --batch_size 16 --epochs 2 --lambd
 `--recon_mode none` (drop `--lambda_sam`), `--no_use_wavelengths`. `--architecture efficient` also needs
 `--fusion_type gated` (doc 15) **[Config/Doc]**. Every paper variant is spelled out in `sweeps/paper_runs.py` **[Code]**.
 
+**Minority-class augmentation** (DCIS is 5.0% of the training patches, from 5 patients): add
+`--minority_augment on` to the reference command **[Code]**. The run name gains `_minaug`. The
+under-represented class(es) (`--minority_classes auto` = below half the median class count: DCIS here,
+MEL on PAD) are oversampled (`--minority_oversample_factor`, default 2), and every copy gets its own
+augmentation draw. With probability `--minority_mix_prob` (default 0.5), a copy is first mixed with a
+same-class patch from another patient (`--minority_mix_mode stats|pixel`). By default, class weights are
+recomputed from the oversampled counts (`--minority_class_weights`). See
+[training/minority_augmentation.py](training/minority_augmentation.py). The ablation arms, with rows per
+epoch held at the reference's 250,113, are in `sweeps/minority_augmentation.py` (stages `screen`, `seeds`).
+CPU-tested only (`tests/test_minority_augmentation.py`); no GPU run yet **[Run]**.
+
 **Baselines** **[Code]**:
 
 ```bash
