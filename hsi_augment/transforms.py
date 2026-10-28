@@ -636,7 +636,9 @@ def augmentation_report(samples: Union[np.ndarray, torch.Tensor], ops: Sequence[
 
       sam_deg            mean / percentiles / max of the per-pixel SAM(x, x')
       corr_frobenius     ||R(x') - R(x)||_F, R the band-band correlation over all
-                         pixels of all samples (the plan's metric, bound 0.05)
+                         pixels of all samples (the plan's metric; its bound is
+                         relative since #20: <= the paper recipe's own
+                         augmentation's, see hsi_augment/augcal.py)
       corr_frobenius_rel the same divided by ||R(x)||_F
       corr_max_abs       its largest single entry
       min_value          min of x' (min_value_original: min of x)
