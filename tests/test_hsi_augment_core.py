@@ -747,6 +747,13 @@ def test_cli_help_lists_every_planned_command():
         assert r.returncode == 2 and where.split()[0] in r.stderr
 
 
+def test_every_command_help_formats():
+    # argparse %-formats help text, so a bare "%" in a param's help (e.g. "40%)") crashes `<stage> --help`
+    reg = load_builtin_stages()
+    for name in reg.command_names():
+        assert cli.build_stage_parser(reg, [name]).format_help(), name
+
+
 def test_cli_demo_stage_runs_skips_and_forces(tiny, tmp_path):
     out = tmp_path / "aug"
     base = ["demo", "--data_dir", tiny.data_dir, "--out", out, "--chunk_rows", "7"]

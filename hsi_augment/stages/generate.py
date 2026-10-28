@@ -96,7 +96,7 @@ class GenerateLDMConfig(GenerateConfig):
 
 @dataclass(frozen=True)
 class QCApplyConfig(StageConfig):
-    min_acceptance: float = param(0.4, help="fail when a class's QC acceptance is below this (the plan's 40%)")
+    min_acceptance: float = param(0.4, help="fail when a class's QC acceptance is below this (the plan's 40 percent)")
     chunk_rows: int = param(4096, help="generated samples read and scored at a time")
     bootstrap: Optional[int] = param(None, help="set metrics: bootstrap resamples (none = qc-reference's)")
     device: str = param("auto", choices=DEVICES, help="device of the nearest-neighbour searches")
