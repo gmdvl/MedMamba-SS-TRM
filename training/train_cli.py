@@ -685,6 +685,7 @@ def _add_flags(p: argparse.ArgumentParser) -> None:
                         "--synthetic_dir, 'effective' counts the synthetic rows too and 'original' "
                         "still counts y_train.npy only.")
     _add_synthetic_flags(p)
+    _add_phys_flags(p)
 
 
 def _add_synthetic_flags(p: argparse.ArgumentParser) -> None:
@@ -703,6 +704,43 @@ def _add_synthetic_flags(p: argparse.ArgumentParser) -> None:
                    help="boolean .npy, one entry per real train row: --minority_oversample_factor "
                         "copies only the True rows, and each class still gets the same number of "
                         "copies (the glass rule). Needs --minority_augment on.")
+
+
+def _tilt_max(value: str):
+    """`--phys_tilt_max`: 'auto' or a number. Range and file checks happen in
+    the pipeline, so a sweep parses its argv on a machine without the artifacts."""
+    if value == "auto":
+        return value
+    try:
+        return float(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"--phys_tilt_max must be 'auto' or a number, got {value!r}")
+
+
+def _add_phys_flags(p: argparse.ArgumentParser) -> None:
+    """Physics spectral ops after the base augmentation (hsi_augment/transforms.py)."""
+    g = p.add_argument_group("physics spectral ops (hsi_augment/transforms.py)")
+    g.add_argument("--phys_aug", choices=["off", "minority", "all"], default="off",
+                   help="spectral_tilt and sensor_noise (od_stain_jitter with --phys_od_delta), in value "
+                        "space, after the base augmentation's draws. 'minority': the --minority_augment "
+                        "classes only (needs --minority_augment on; factor 1.0 is fine); 'all': every train "
+                        "row. Needs --normalization global_zscore. Off = the pipeline is unchanged. Appends "
+                        "_phys to the run name.")
+    g.add_argument("--phys_tilt_max", type=_tilt_max, default="auto",
+                   help="spectral_tilt: Legendre P1/P2 coefficients ~ U(+-tilt_max). 'auto' (default) reads "
+                        "the bound from phys_calibration.json under --phys_artifacts (augment_pipeline.py "
+                        "aug-calibration: the largest value that changes the band-band correlation no more "
+                        "than the paper recipe's own augmentation). A number overrides it; 0 = off.")
+    g.add_argument("--phys_noise_k", type=float, default=1.0,
+                   help="sensor_noise: N(0, (k sigma_b)^2) with sigma_b = noise_sigma.npy under "
+                        "--phys_artifacts (spectral-audit). 0 = off.")
+    g.add_argument("--phys_od_delta", type=float, default=0.0,
+                   help="od_stain_jitter (EXPERIMENTAL): stain coefficients scaled by U(1 +- delta); needs "
+                        "od_components.npy and od_s_glass.npy under --phys_artifacts. 0 (default) = off.")
+    g.add_argument("--phys_artifacts", default=None,
+                   help="directory holding noise_sigma.npy and phys_calibration.json: the augment pipeline's "
+                        "--out, its prep/, or a stage directory (searched like load_phys_artifacts, plus "
+                        "augcal and prep/augcal).")
 
 
 def build_parser(argv=None, profile: Optional[str] = None) -> argparse.ArgumentParser:

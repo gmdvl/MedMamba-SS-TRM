@@ -382,14 +382,28 @@ def test_correlation_change_below_0_05_over_10k_samples(report_10k, name):
     assert r["corr_frobenius"] < 0.05, (name, r)
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "Plan bound not met: spectral_tilt at tilt_max 0.03 moves the pooled band-band correlation by "
-    "~1.1 (Frobenius) on this model. A per-sample +-3% tilt adds variance comparable to that of a band "
-    "with a small coefficient of variation (NIR ~7% here; ~12% in the v8 build's recorded global stats, "
-    "which would give roughly 0.4). The change is second order in tilt_max; the bound needs ~0.006 here. "
-    "Strict, so a change to the op or to the bound is noticed."))
-def test_spectral_tilt_correlation_change_below_0_05_at_default(report_10k):
-    assert report_10k["ops"]["spectral_tilt"]["corr_frobenius"] < 0.05
+def test_spectral_tilt_meets_the_recipe_relative_bound_at_its_calibrated_tilt_max():
+    """#20's decision (2026-10-27) replaced the plan's absolute bound (< 0.05,
+    missed at tilt_max 0.03 by ~1.1 here: a per-sample +-3% tilt adds variance
+    comparable to a NIR band's with a ~7% coefficient of variation). A physics op
+    may change the correlation no more than the paper recipe's own augmentation
+    does on the same data. `augcal.calibrate` picks the largest grid tilt_max that
+    meets it; here, and the plan's default does not."""
+    from hsi_augment.augcal import BASE_OP_NAME, calibrate, paper_recipe_aug_config
+
+    assert paper_recipe_aug_config(seed=42) == PAPER_RECIPE      # this file's copy is train_profiles' recipe
+    big = Data(10_000, 3, seed=1)
+    grid = (0.005, 0.01, 0.0125, 0.015, 0.0175, 0.02, 0.03)
+    decision, report = calibrate(big.norm, WAVELENGTHS, big.mean, big.std, np.full(C, NOISE_STD, np.float32), grid)
+    base, t = decision["base_corr_change"], decision["tilt_max"]
+    assert 0.2 < base < 0.4                                      # measured ~0.30
+    assert decision["tilt_bound"] == "interior" and 0.01 <= t <= 0.0175     # measured 0.015
+    tilt = report["chosen"]["ops"]["spectral_tilt"]["corr_frobenius"]
+    assert tilt == decision["tilt_corr_change"] <= base == report["scan"]["ops"][BASE_OP_NAME]["corr_frobenius"]
+    assert all(r["corr_frobenius"] > base for r in decision["grid"] if r["tilt_max"] > t)
+    assert report["scan"]["ops"]["spectral_tilt@0.03"]["corr_frobenius"] > 3 * base      # the plan's default
+    # sensor_noise at k = 1 with this model's sigma_b: the same criterion, checked (measured ~0.03)
+    assert decision["noise_check"]["within_base"] and decision["noise_check"]["corr_frobenius"] < 0.2 * base
 
 
 def test_spectral_tilt_correlation_change_is_quadratic_and_meets_the_bound_when_small(od_artifacts):

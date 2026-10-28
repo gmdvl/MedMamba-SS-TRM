@@ -28,12 +28,16 @@ import json
 import traceback
 from dataclasses import replace
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Optional
 
 import numpy as np
 import torch
 from torch.utils.data import DataLoader, Subset
 
+from hsi_augment.augcal import resolve_tilt_max
+from hsi_augment.io import sha256_file
+from hsi_augment.transforms import PhysArtifacts, build_physics_ops, compose_with_physics, load_phys_artifacts
 from training.activation_patch import replace_relu_with_leakyrelu
 from training.augmentation import PRESETS, AugmentationConfig
 from training.augmentation_v16 import AugmentedPatchDatasetV16, build_active
@@ -55,6 +59,7 @@ from training.minority_augmentation import (MinorityAugmentedDataset, check_norm
                                             plan_minority_augmentation, scaled_config)
 from training.npy_data import (NpyDatasetV16, compute_global_channel_stats, discover_data,
                                 setup_experiment_dir)
+from training.npy_atomic import MANIFEST_NAME
 from training.npy_integrity import (
     DatasetStorageError, validate_dataset, write_dataset_failure_artifacts, write_integrity_report,
 )
@@ -92,6 +97,8 @@ def build_run_name(args, timestamp: Optional[str] = None, modality: Optional[str
         name += "_minaug"
     if getattr(args, "synthetic_dir", None):
         name += "_syn"
+    if getattr(args, "phys_aug", "off") != "off":
+        name += "_phys"
     return f"{name}_{args.run_tag}" if getattr(args, "run_tag", None) else name
 
 
@@ -287,6 +294,94 @@ def _class_weight_labels(y_train: np.ndarray, minority, mix, minority_class_weig
 
 
 # ============================================================================
+# physics spectral ops (hsi_augment/transforms.py)
+# ============================================================================
+
+def _check_phys_aug(args, wavelengths, x_train_path: str) -> Optional[SimpleNamespace]:
+    """`--phys_aug`: the flag combinations, the artifacts and tilt_max, refused
+    before the real build's sha256 pass. None when off. Every refusal of
+    `build_physics_ops` is raised here too, on placeholder stats with the build's
+    band count; the real ops need the global stats and are built once those exist."""
+    mode = args.phys_aug
+    if mode == "off":
+        return None
+    n_bands = int(np.load(x_train_path, mmap_mode="r").shape[-1])
+    if args.normalization != "global_zscore":
+        raise SystemExit(f"--phys_aug {mode} needs --normalization global_zscore: the ops work in value space, "
+                         f"x = x_n * global_std + global_mean, and under {args.normalization} a patch has no "
+                         f"single map back to it.")
+    if mode == "minority" and args.minority_augment != "on":
+        raise SystemExit("--phys_aug minority applies the ops to the --minority_augment classes; pass "
+                         "--minority_augment on (--minority_oversample_factor 1.0 keeps the class counts), "
+                         "or use --phys_aug all.")
+    for flag in ("phys_tilt_max", "phys_noise_k", "phys_od_delta"):
+        v = getattr(args, flag)
+        if v != "auto" and not (np.isfinite(v) and v >= 0):
+            raise SystemExit(f"--{flag} must be a number >= 0 (0 turns the op off), got {v}")
+    try:
+        arts = load_phys_artifacts(args.phys_artifacts) if args.phys_artifacts else PhysArtifacts()
+    except FileNotFoundError as e:
+        raise SystemExit(f"--phys_artifacts: {e}")
+    try:
+        tilt_max, tilt_from = resolve_tilt_max(args.phys_tilt_max, args.phys_artifacts)
+    except (FileNotFoundError, ValueError) as e:
+        raise SystemExit(f"--phys_tilt_max {args.phys_tilt_max}: {e}")
+    phys = SimpleNamespace(mode=mode, artifacts=arts, artifacts_dir=args.phys_artifacts, tilt_max=tilt_max,
+                           tilt_from=tilt_from, noise_k=float(args.phys_noise_k), od_delta=float(args.phys_od_delta))
+    if not _build_phys_ops(phys, wavelengths, np.zeros(n_bands, np.float32), np.ones(n_bands, np.float32)):
+        raise SystemExit(f"--phys_aug {mode} with every op off (tilt_max {tilt_max:g}, --phys_noise_k "
+                         f"{phys.noise_k:g}, --phys_od_delta {phys.od_delta:g}) would apply nothing; "
+                         f"use --phys_aug off.")
+
+    cal = tilt_from["calibration"]
+    if cal is not None:
+        manifest = Path(args.data_dir) / MANIFEST_NAME
+        built_from = cal.get("input_manifest_sha256")
+        cal["build_match"] = (sha256_file(manifest) == built_from) if (built_from and manifest.is_file()) else None
+        if cal["build_match"] is False:
+            print(f"WARNING: --phys_tilt_max auto: {cal['path']} was calibrated on another build (its "
+                  f"input_manifest_sha256 is not the sha256 of {manifest}).", flush=True)
+        noise_check = cal.get("noise_check") or {}
+        if phys.noise_k > 0 and noise_check.get("within_base") is False:
+            print(f"WARNING: sensor_noise at k = {noise_check.get('k')} changed the band-band correlation by "
+                  f"{noise_check.get('corr_frobenius')}, more than the paper recipe's augmentation "
+                  f"({cal.get('base_corr_change')}) in {cal['path']}.", flush=True)
+    return phys
+
+
+def _build_phys_ops(phys: SimpleNamespace, wavelengths, global_mean, global_std) -> list:
+    """`build_physics_ops` on `global_mean`/`global_std` (the arrays the dataset
+    normalizes with), its ValueError turned into a SystemExit."""
+    try:
+        return build_physics_ops(wavelengths, global_mean, global_std, tilt_max=phys.tilt_max,
+                                 noise_k=phys.noise_k, od_delta=phys.od_delta, **phys.artifacts.builder_kwargs())
+    except ValueError as e:
+        where = f"--phys_artifacts {phys.artifacts_dir}" if phys.artifacts_dir else "no --phys_artifacts given"
+        raise SystemExit(f"--phys_aug {phys.mode}: {e} ({where})")
+
+
+def _phys_record(phys: SimpleNamespace, phys_fn, minority, class_names, args) -> dict:
+    """`config.json["phys_aug"]`."""
+    if phys.mode == "minority":
+        names = class_names or [str(c) for c in range(len(minority.counts_before))]
+        applied = {"rows": "minority", "classes": [names[c] for c in minority.classes],
+                   "after": "build_active(scaled_config(aug_cfg, --minority_aug_strength)), after any mixing"}
+    else:
+        applied = {"rows": "all",
+                   "after": "build_active(aug_cfg)" + (
+                       "; the minority classes after build_active(scaled_config(aug_cfg, --minority_aug_strength))"
+                       if minority is not None else "")}
+    return {
+        "mode": phys.mode, "applied_to": applied, "base_augment_preset": args.augment_preset,
+        "tilt_max": phys.tilt_max, "tilt_max_from": phys.tilt_from["source"],
+        "calibration": phys.tilt_from["calibration"],
+        "noise_k": phys.noise_k, "od_delta": phys.od_delta, "artifacts_dir": phys.artifacts_dir,
+        "artifacts": {k: {"path": p, "sha256": sha256_file(p)} for k, p in sorted(phys.artifacts.paths.items())},
+        "ops": phys_fn.describe(),
+    }
+
+
+# ============================================================================
 # the run
 # ============================================================================
 
@@ -361,6 +456,8 @@ def _run(parsed, notes):
               f"from {args.synthetic_dir}", flush=True)
     if args.minority_copy_mask:
         copy_mask = _load_copy_mask(args.minority_copy_mask, n_train)
+    # ---- physics spectral ops: refused here too, before the sha256 pass
+    phys = _check_phys_aug(args, wavelengths, x_tr)
 
     dataset_paths = {"X_train": x_tr, "y_train": y_tr, "X_val": x_te, "y_val": y_te}
     integrity_report = None
@@ -395,6 +492,8 @@ def _run(parsed, notes):
                   f"not fitted to the train split.", flush=True)
         global_mean, global_std = GLOBAL_STATS[args.global_stats](
             x_tr, sample_cap=args.norm_stats_sample_cap, seed=args.seed)
+    # the ops' value space is exactly this normalization (hsi_augment/transforms.py)
+    phys_ops = _build_phys_ops(phys, wavelengths, global_mean, global_std) if phys is not None else None
 
     return_norm_stats = args.recon_mode != "none"
 
@@ -533,6 +632,10 @@ def _run(parsed, notes):
         flip_v_prob=args.flip_v_prob, rotate90_prob=args.rotate90_prob,
         crop_scale_max_frac=args.crop_scale_max_frac, seed=args.seed))
     augmented_train_ds = None
+    # --phys_aug: the ops draw AFTER the base augmentation, from the same per-item (rng, gen);
+    # `compose_with_physics(fn, None)` is `fn` itself, so with --phys_aug off nothing moves
+    phys_all = phys_ops if (phys is not None and phys.mode == "all") else None
+    phys_fn = None
     if minority is not None:
         groups_train = sidecars["groups"].get("train") if args.minority_mix_cross_patient == "on" else None
         if args.minority_mix_cross_patient == "on" and groups_train is None:
@@ -543,18 +646,32 @@ def _run(parsed, notes):
         if mix is not None:
             labels_train, groups_train = mix.pool_labels, (mix.groups if groups_train is not None else None)
         try:
+            # built in the order, and inside the try, they always were: scaled_config's
+            # ValueError (a negative --minority_aug_strength) still becomes the SystemExit below
+            base_fn = compose_with_physics(build_active(aug_cfg), phys_all)
+            phys_fn = compose_with_physics(build_active(scaled_config(aug_cfg, args.minority_aug_strength)),
+                                           phys_ops)
             train_ds = MinorityAugmentedDataset(
-                train_ds, build_active(aug_cfg), build_active(scaled_config(aug_cfg, args.minority_aug_strength)),
+                train_ds, base_fn, phys_fn,
                 minority.classes, labels=labels_train, groups=groups_train, mix_mode=args.minority_mix_mode,
                 mix_prob=args.minority_mix_prob, mix_alpha=args.minority_mix_alpha, seed=args.seed)
         except ValueError as e:
             raise SystemExit(f"--minority_augment: {e}")
         augmented_train_ds = train_ds
-    elif args.augment_preset != "none":
+    elif args.augment_preset != "none" or phys_ops:
         # `build_active` drops switched-off steps; bit-identical, since a disabled
-        # step consumes no RNG draws (training/augmentation_v16.py).
-        train_ds = AugmentedPatchDatasetV16(train_ds, build_active(aug_cfg), seed=args.seed)  # E-4
+        # step consumes no RNG draws (training/augmentation_v16.py). Under --phys_aug all
+        # with --augment_preset none the base is the empty Compose: the ops alone.
+        phys_fn = compose_with_physics(build_active(aug_cfg), phys_all)
+        train_ds = AugmentedPatchDatasetV16(train_ds, phys_fn, seed=args.seed)  # E-4
         augmented_train_ds = train_ds
+    if phys is not None:
+        phys_record = _phys_record(phys, phys_fn, minority, class_names, args)
+        print(f"[phys-aug] {phys.mode}: " + ", ".join(
+            f"{d['op']} " + " ".join(f"{k}={d[k]:g}" for k in ("tilt_max", "k", "delta") if k in d)
+            for d in phys_record["ops"]) + f" (tilt_max from {phys.tilt_from['source']}) after "
+            + phys_record["applied_to"]["after"]
+            + (f", classes {phys_record['applied_to']['classes']}" if phys.mode == "minority" else ""), flush=True)
 
     train_policy, val_policy = train_val_policies_v16(args.loader_mode, args.num_workers,
                                                       args.prefetch_factor, args.persistent_workers,
@@ -719,6 +836,8 @@ def _run(parsed, notes):
                 ("train_set", minority.effective_labels if minority is not None else mix.y))}}
         with open(exp_dir / "synthetic_mix_report.json", "w") as f:
             json.dump(config["synthetic"], f, indent=2, default=str)
+    if phys is not None:
+        config["phys_aug"] = phys_record
     with open(exp_dir / "config.json", "w") as f:
         json.dump(config, f, indent=4, default=str)
 
