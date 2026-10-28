@@ -164,6 +164,7 @@ def write_pool(pool_dir: PathLike, X: np.ndarray, y: np.ndarray, patient: np.nda
     X = np.asarray(X)
     _check_arrays(X, side, codec, f"write_pool({d})")
     d.mkdir(parents=True, exist_ok=True)
+    (d / POOL_FILES["X"]).unlink(missing_ok=True)   # an old X next to new sidecars would look complete
     save_json(d / CODEC_NAME, codec.to_dict())
     for k in SIDECARS:
         save_npy(d / POOL_FILES[k], side[k])

@@ -75,7 +75,7 @@ DIRNAME_RE = re.compile(r"^[A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)*$")
 # needs no edit here.
 PLANNED_COMMANDS: Dict[str, str] = {
     "validate": "#11 (Phase 1)",
-    "preprocess": "#12, #13, #14, #15 (Phases 2a, 2b, 3, 4a)",
+    "preprocess": "#12, #13, #14, #15, #20 (Phases 2a, 2b, 3, 4a; aug-calibration)",
     "pool": "#16 (Phase 4b)",
     "fit-cvae": "#23 (Phase 6)",
     "fit-ae": "#24 (Phase 7)",
