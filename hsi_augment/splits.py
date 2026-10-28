@@ -99,7 +99,7 @@ The split-access policy
 cannot see is a stage that DECLARES a held-out purpose it should not have, so
 `registry_policy_violations` checks every registered stage:
   * `final_eval` (reads test) only for the Phase 10 stages in
-    `FINAL_EVAL_STAGES`, which is empty: no stage before Phase 10 reads test;
+    `FINAL_EVAL_STAGES` (`report-tissue`, #34): no stage before Phase 10 reads test;
   * a stage that pools, generates, runs QC or LOPO (`GENERATOR_SIDE_PURPOSES`)
     declares no held-out purpose at all, so it never sees val either;
   * `structural` only for the data phases, whose directories are under `prep/`.
@@ -138,10 +138,11 @@ FOLDS_RNG_KEY = "lopo-folds"           # ctx.rng(FOLDS_RNG_KEY): the companion d
 LABEL_KINDS = ("y", "groups", "captures")
 
 # Phase 10 stages that may declare `final_eval` (read test for the final
-# report). Empty: no stage before Phase 10 reads test. The issue that adds such
-# a stage (#33/#34) adds its name here, a one-line reviewed change, like an
-# edit of `io.PURPOSE_SPLITS`.
-FINAL_EVAL_STAGES: frozenset = frozenset()
+# report). No stage before Phase 10 reads test. Adding a name here is a one-line
+# reviewed change, like an edit of `io.PURPOSE_SPLITS`. `report-tissue` (#34)
+# scores val/test X with the train-fitted tissue reference, without labels, for
+# the report's tissue-vs-glass breakdown; it reads test only once selection.json exists.
+FINAL_EVAL_STAGES: frozenset = frozenset({"report-tissue"})
 # Purposes of the generator side. A stage declaring any of them may declare no
 # held-out purpose: generator, QC and pool code never see val or test.
 GENERATOR_SIDE_PURPOSES: Tuple[str, ...] = ("pool", "generator", "qc", "lopo")
@@ -708,12 +709,14 @@ def build_ledger(*, pass1: Mapping[str, Any], folds_doc: Mapping[str, Any],
     """The ledger document. Called only after every check passed: a failed
     check is a StageError, never a ledger row with a bad status."""
     reader_txt = ", ".join(f"{k} ({'/'.join(v)})" for k, v in sorted(readers.items())) or "none"
-    test_evidence = (f"no registered stage declares 'final_eval' (Phase 10 stages allowed: "
+    final = sorted(k for k, v in readers.items() if "final_eval" in v)
+    test_evidence = (f"registered stages declaring 'final_eval': {final or 'none'} (Phase 10 stages allowed: "
                      f"{sorted(FINAL_EVAL_STAGES) or 'none yet'}); SplitGuard refuses test to "
-                     f"{list(TRAIN_ONLY_PURPOSES)}; stages that may read held-out splits: {reader_txt}, "
-                     f"for counts and ids only")
-    val_evidence = (f"no hsi_augment stage reads val except structurally (stages that may: {reader_txt}); "
-                    f"generator, QC, pool and LOPO purposes refuse val. Selection itself is Phase 10's")
+                     f"{list(TRAIN_ONLY_PURPOSES)}; stages that may read held-out splits: {reader_txt}; "
+                     f"'structural' is for counts and ids only")
+    val_evidence = (f"no hsi_augment stage reads val except structurally or for the final report (stages that "
+                    f"may: {reader_txt}); generator, QC, pool and LOPO purposes refuse val. Selection itself "
+                    f"is Phase 10's")
     dynamic = {
         BAND_SELECTION: ("verified", pass1["detail"]),
         LOPO_FOLDS: ("verified", folds_evidence(folds_doc)),
