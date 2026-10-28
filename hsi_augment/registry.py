@@ -84,7 +84,6 @@ PLANNED_COMMANDS: Dict[str, str] = {
     "qc": "#28, #29 (Phase 8b)",
     "export": "#29 (Phase 9)",
     "lopo-utility": "#30 (Phase 8c)",
-    "bench": "#33 (Phase 10)",
 }
 
 StageFn = Callable[[Any, StageConfig], Optional[Dict[str, Any]]]

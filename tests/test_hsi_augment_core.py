@@ -429,7 +429,7 @@ def test_builtin_registry_has_the_demo_and_every_planned_command():
     reg = load_builtin_stages()
     assert "demo" in reg and not reg.get("demo").in_all
     assert set(PLANNED_COMMANDS) == {"validate", "preprocess", "pool", "fit-cvae", "fit-ae", "fit-ldm",
-                                     "generate", "qc", "export", "lopo-utility", "bench"}
+                                     "generate", "qc", "export", "lopo-utility"}
     # The leakage policy is visible at registration: the default purposes are
     # train-only, so a stage reads val/test only if its registration says so.
     from hsi_augment.registry import StageSpec
@@ -739,10 +739,12 @@ def test_cli_help_lists_every_planned_command():
         assert name in r.stdout
     r = _cli("demo", "--help")
     assert r.returncode == 0 and "--chunk_rows" in r.stdout and "--max_rows" in r.stdout
-    # a command that is still only planned (fit-cvae was the example until #23 registered it)
-    name, where = sorted(load_builtin_stages().planned_only().items())[0]
-    r = _cli(name, "--data_dir", "x", "--out", "y")
-    assert r.returncode == 2 and where.split()[0] in r.stderr
+    # a command that is still only planned, while one is left (fit-cvae was the example until #23)
+    planned = sorted(load_builtin_stages().planned_only().items())
+    if planned:
+        name, where = planned[0]
+        r = _cli(name, "--data_dir", "x", "--out", "y")
+        assert r.returncode == 2 and where.split()[0] in r.stderr
 
 
 def test_cli_demo_stage_runs_skips_and_forces(tiny, tmp_path):

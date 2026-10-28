@@ -679,8 +679,9 @@ LEDGER_TABLE: Tuple[LedgerRow, ...] = (
     LedgerRow("CVAE / AE / LDM weights", "train", "train", "P6 fit-cvae; P7 fit-ae, fit-ldm", "#23, #24",
               "generator stages read train only (SplitGuard purpose 'generator')"),
     LedgerRow("Generator early stopping, beta/tau/w choices", "train LOPO folds", "train",
-              "P6 fit-cvae; P7 fit-ldm", "#23, #24",
-              "chosen on the LOPO folds of prep/leakage/folds.json, never on val"),
+              "P6 fit-cvae; P7 fit-ldm; P8a generate", "#23, #24, #29",
+              "chosen on the LOPO folds of prep/leakage/folds.json, never on val; tau_s / w in "
+              "synth/<source>/choice.json"),
     LedgerRow("QC classifier", "train (cross-fitted LOPO)", "train", "P8b qc", "#28",
               "cross-fitted over the LOPO folds of prep/leakage/folds.json"),
     LedgerRow("A4 generator choice", "LOPO utility (train)", "train", "P8c lopo-utility", "#30",
