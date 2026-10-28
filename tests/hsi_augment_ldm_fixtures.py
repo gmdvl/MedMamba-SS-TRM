@@ -3,20 +3,22 @@
 tests/hsi_augment_ldm_fixtures.py
 =================================
 Shared by `test_hsi_augment_autoencoder.py` and `test_hsi_augment_diffusion.py`
-(Phase 7, #24, arm A3): a generator pool for the tiny build of
+(Phase 7, #24, arm A3): the generator pool of the tiny build of
 `tests/hsi_augment_fixtures.py`, tiny stage configs, and helpers that run the
 `fit-ae` / `fit-ldm` stages through the stage API and compare two runs bit
 for bit.
 
-    out = prepare(tiny, registry, tmp_path / "aug")     # leakage done, <out>/pool written
+    out = prepare(tiny, registry, tmp_path / "aug")     # tissue-mask, leakage and pool done
     run(registry, tiny, out, "ae-lopo", ae_lopo_cfg())  # StageResult
 
-The pool is every train row of the tiny build, encoded with a codec fitted on
-them, written with `pool_io.write_pool` (the pool stage, #16, is not merged).
-Row i of the pool is train row i. The tiny build has 6 train patients, 2 of
-them with DCIS, so `leakage` makes 2 LOPO folds; the models are 5x5x8 patches
--> a 2x3x3 latent, ~17k (autoencoder) and ~98k (denoiser) parameters, 6
-optimizer steps per fit: every stage runs in about a second on a CPU.
+The pool is the real `pool` stage's, run through the stage API with its
+default config: tissue rows only, and the healthy / IDC quotas
+(`rows_per_class`, 120k) exceed the fixture, so it holds every train tissue
+row (184 of the 240 train rows), in train-row order. The tiny build has 6
+train patients, 2 of them with DCIS, so `leakage` makes 2 LOPO folds; the
+models are 5x5x8 patches -> a 2x3x3 latent, ~17k (autoencoder) and ~98k
+(denoiser) parameters, 6 optimizer steps per fit: every stage runs in about
+a second on a CPU.
 
 `StepSpy` patches a loss class's `__call__` (AELoss, DiffusionLoss) to record
 the pool rows of every training and held-out batch (fold isolation) and,
@@ -33,11 +35,12 @@ import numpy as np
 import torch
 
 from hsi_augment.codec import LogSpaceCodec
-from hsi_augment.pool_io import write_pool
 from hsi_augment.stage import RunOptions, run_stage
 from hsi_augment.stages.fit_ae import AEFinalConfig, AELopoConfig
 from hsi_augment.stages.fit_ldm import LDMFinalConfig, LDMLopoConfig
 from hsi_augment.stages.leakage import LeakageConfig
+from hsi_augment.stages.pool import PoolConfig
+from hsi_augment.stages.tissue_mask import TissueMaskConfig
 from hsi_augment.train_generative import BEST_NAME, LAST_NAME, TIMING_COLUMNS, load_checkpoint
 
 TINY_AE = dict(widths=(8, 16), blocks_per_level=1, latent_channels=2)
@@ -57,25 +60,18 @@ def tiny_codec(X: np.ndarray) -> LogSpaceCodec:
     return LogSpaceCodec.from_stats(stats, LogSpaceCodec.clip_hi_from_quantile(p9999))
 
 
-def make_tiny_pool(tiny, pool_dir: Path) -> Path:
-    """Every train row of the tiny build, encoded, in the pool contract's layout."""
-    d = tiny.data_dir
-    X = np.load(d / "X_train.npy")
-    codec = tiny_codec(X)
-    return write_pool(pool_dir, codec.encode_np(X).astype(np.float16), np.load(d / "y_train.npy"),
-                      np.load(d / "groups_train.npy"), np.arange(X.shape[0]), np.load(d / "captures_train.npy"),
-                      codec)
-
-
 def opts(tiny, out: Path, **kw) -> RunOptions:
     return RunOptions(data_dir=str(tiny.data_dir), out=str(out), **kw)
 
 
 def prepare(tiny, registry, out: Path, *, pool: bool = True) -> Path:
-    """`out` with the leakage stage done and (optionally) a pool at <out>/pool."""
-    run_stage(registry.get("leakage"), LeakageConfig(), opts(tiny, out), registry)
+    """`out` with tissue-mask and leakage done and, unless `pool` is False,
+    the real pool stage (default config) too, at <out>/pool."""
+    stages = [("tissue-mask", TissueMaskConfig()), ("leakage", LeakageConfig())]
     if pool:
-        make_tiny_pool(tiny, out / "pool")
+        stages.append(("pool", PoolConfig()))
+    for name, cfg in stages:
+        run_stage(registry.get(name), cfg, opts(tiny, out), registry)
     return out
 
 

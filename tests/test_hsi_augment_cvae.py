@@ -12,11 +12,16 @@ checkpoints, diagnostics and summary as an uninterrupted run); the sampling
 sha256 is deterministic and independent of how the rows are requested. Also:
 shapes, a finite loss, the SAM calibration, weights_only checkpoints, fold
 directories that do not overwrite each other, the final stage refusing to
-run without LOPO results, and a split-access log with train only.
+run without LOPO results, the pool stage as a declared upstream (no finished
+pool: StageNotReady; a re-run pool: stale), and a split-access log with train
+only.
 
 Everything runs on `tests/hsi_augment_fixtures.make_tiny_build` (5x5x8
-patches, 2 DCIS train patients -> 2 LOPO folds) with a ~24k-parameter model;
-the pool is written here with `pool_io.write_pool` (`make_tiny_pool`).
+patches, 2 DCIS train patients -> 2 LOPO folds) with a ~24k-parameter model.
+The stages read the real `pool` stage's output (`prepare` runs tissue-mask,
+leakage and pool through the stage API; tissue rows only, and the default
+quotas exceed the fixture, so every train tissue row). `make_tiny_pool`
+writes a pool directly with `pool_io.write_pool`, for the pool_io tests only.
 """
 
 from __future__ import annotations
@@ -35,7 +40,7 @@ import numpy as np
 import pytest
 import torch
 
-from hsi_augment import fit_cvae
+from hsi_augment import fit_cvae, tissue
 from hsi_augment.codec import LogSpaceCodec, make_decoded_sam_loss
 from hsi_augment.io import read_access_log
 from hsi_augment.models.blocks import assert_no_batchnorm
@@ -45,9 +50,11 @@ from hsi_augment.pool_io import (POOL_FILES, PoolError, check_against_train, loa
                                  write_pool)
 from hsi_augment.registry import load_builtin_stages
 from hsi_augment.splits import registry_policy_violations
-from hsi_augment.stage import DONE_NAME, RunOptions, StageError, StageNotReady, read_done, run_stage
+from hsi_augment.stage import DONE_NAME, RunOptions, StageError, StageNotReady, read_done, run_stage, stage_status
 from hsi_augment.stages.fit_cvae import CVAEFinalConfig, CVAELopoConfig
 from hsi_augment.stages.leakage import LeakageConfig
+from hsi_augment.stages.pool import PoolConfig
+from hsi_augment.stages.tissue_mask import TissueMaskConfig
 from hsi_augment.train_generative import (BEST_NAME, HISTORY_NAME, LAST_NAME, TIMING_COLUMNS, StepInfo,
                                           TrainConfig, Trainer, load_checkpoint)
 from tests.hsi_augment_fixtures import make_tiny_build
@@ -78,7 +85,8 @@ def tiny_codec(X: np.ndarray) -> LogSpaceCodec:
 
 
 def make_tiny_pool(tiny, pool_dir: Path) -> Path:
-    """Every train row of the tiny build, encoded, in the pool contract's layout."""
+    """Every train row of the tiny build, encoded, in the pool contract's layout
+    (written directly, not by the pool stage: for the pool_io tests)."""
     d = tiny.data_dir
     X = np.load(d / "X_train.npy")
     codec = tiny_codec(X)
@@ -92,10 +100,13 @@ def opts(tiny, out: Path, **kw) -> RunOptions:
 
 
 def prepare(tiny, registry, out: Path, *, pool: bool = True) -> Path:
-    """`out` with the leakage stage done and (optionally) a pool."""
-    run_stage(registry.get("leakage"), LeakageConfig(), opts(tiny, out), registry)
+    """`out` with tissue-mask and leakage done and, unless `pool` is False,
+    the real pool stage (default config) too, at <out>/pool."""
+    stages = [("tissue-mask", TissueMaskConfig()), ("leakage", LeakageConfig())]
     if pool:
-        make_tiny_pool(tiny, out / "pool")
+        stages.append(("pool", PoolConfig()))
+    for name, cfg in stages:
+        run_stage(registry.get(name), cfg, opts(tiny, out), registry)
     return out
 
 
@@ -334,10 +345,14 @@ def test_pool_io_round_trip_and_validation(tiny, tmp_path):
 def test_stages_are_registered_train_only(registry):
     lopo, final = registry.get("cvae-lopo"), registry.get("cvae-final")
     assert (lopo.group, lopo.dirname, lopo.requires, lopo.purposes) == \
-        ("fit-cvae", "gen/cvae/lopo", ("leakage",), ("generator",))
+        ("fit-cvae", "gen/cvae/lopo", ("leakage", "pool"), ("generator",))
     assert (final.group, final.dirname, final.requires, final.purposes) == \
-        ("fit-cvae", "gen/cvae/final", ("cvae-lopo",), ("generator",))
+        ("fit-cvae", "gen/cvae/final", ("cvae-lopo", "pool"), ("generator",))
     assert [s.name for s in registry.resolve(["fit-cvae"])] == ["cvae-lopo", "cvae-final"]
+    # host GPU fits, run as their own command: `all` is the CPU prep chain, ending in the pool
+    assert not lopo.in_all and not final.in_all
+    in_all = [s.name for s in registry.resolve(["all"])]
+    assert "pool" in in_all and not {"cvae-lopo", "cvae-final"} & set(in_all)
     assert not lopo.reads_held_out() and not final.reads_held_out()
     assert registry_policy_violations(registry) == []
 
@@ -380,10 +395,15 @@ def test_fold_runs_have_their_own_directories(ran):
 
 def test_diagnostics_are_on_held_out_patients(ran, tiny):
     folds = json.loads((ran.out / "prep/leakage/folds.json").read_text())["folds"]
+    groups = np.load(tiny.data_dir / "groups_train.npy")
+    is_tissue = np.load(ran.out / "prep/tissue" / tissue.MASK_NAME)
+    pool = load_pool(ran.out / "pool")
     for k, f in enumerate(folds):
         diag = json.loads((ran.lopo_dir / "d4-r0.1" / f"fold-{k}" / "diagnostics.json").read_text())
-        groups = np.load(tiny.data_dir / "groups_train.npy")
-        assert diag["heldout"]["rows"] == int(np.isin(groups, f["heldout_patients"]).sum())
+        held = np.isin(groups, f["heldout_patients"])
+        # every held-out patient's train TISSUE row (the default quotas exceed the fixture), and no glass row
+        assert diag["heldout"]["rows"] == int((held & is_tissue).sum()) == \
+            int(np.isin(pool.patient, f["heldout_patients"]).sum()) < int(held.sum())
         assert diag["heldout_patients"] == f["heldout_patients"]
         for c in ("0", "1", "2"):
             pc = diag["heldout"]["per_class"][c]
@@ -438,11 +458,61 @@ def test_final_refuses_to_run_without_lopo_results(tiny, registry, tmp_path):
     assert not (out / "gen/cvae/final" / DONE_NAME).exists()
 
 
-def test_a_missing_pool_is_a_stage_error(tiny, registry, tmp_path):
+def test_without_a_finished_pool_stage_both_stages_are_not_ready(tiny, registry, tmp_path):
     out = prepare(tiny, registry, tmp_path / "aug", pool=False)
-    with pytest.raises(StageError, match="no pool directory"):
+    with pytest.raises(StageNotReady, match="needs 'pool' done first"):
         run_stage(registry.get("cvae-lopo"), lopo_cfg(), opts(tiny, out), registry)
+    assert not (out / "gen/cvae/lopo").exists()                    # refused before the stage started
+    run_stage(registry.get("pool"), PoolConfig(), opts(tiny, out), registry)
+    run_stage(registry.get("cvae-lopo"), lopo_cfg(), opts(tiny, out), registry)
+    (out / "pool" / DONE_NAME).unlink()          # a pool re-run in progress, or one that died, has no done.json
+    for name, cfg in (("cvae-lopo", lopo_cfg()), ("cvae-final", final_cfg())):
+        with pytest.raises(StageNotReady, match="needs 'pool' done first"):
+            run_stage(registry.get(name), cfg, opts(tiny, out, force=True), registry)
+        assert stage_status(registry.get(name), cfg, opts(tiny, out), registry)[0] == "blocked"
+    assert (out / "gen/cvae/lopo" / DONE_NAME).is_file() and not (out / "gen/cvae/final").exists()
+
+
+def test_a_vanished_pool_is_a_stage_error(tiny, registry, tmp_path):
+    """The pool stage is done, but a file of its pool was deleted after it finished."""
+    out = prepare(tiny, registry, tmp_path / "aug")
+    (out / "pool" / POOL_FILES["y"]).unlink()
+    with pytest.raises(StageError, match="y_pool.npy.*re-run the pool stage") as e:
+        run_stage(registry.get("cvae-lopo"), lopo_cfg(), opts(tiny, out), registry)
+    assert not isinstance(e.value, StageNotReady)
     assert not (out / "gen/cvae/lopo" / DONE_NAME).exists()
+
+
+def test_a_rebuilt_pool_makes_both_stages_stale(tiny, registry, tmp_path):
+    """Re-running the pool stage with another config changes its fingerprint:
+    cvae-lopo and cvae-final are stale (not "already done"), and cvae-final
+    refuses the new pool until cvae-lopo has re-run on it. --force with the
+    same config rebuilds the same pool (fingerprint and bytes): nothing is stale."""
+    out = prepare(tiny, registry, tmp_path / "aug")
+    lopo = run_stage(registry.get("cvae-lopo"), lopo_cfg(), opts(tiny, out), registry)
+    final = run_stage(registry.get("cvae-final"), final_cfg(), opts(tiny, out), registry)
+    old_sha = pool_fingerprint(out / "pool")
+    assert lopo.done["upstream"]["pool"] == final.done["upstream"]["pool"] == read_done(out / "pool")["fingerprint"]
+    same = run_stage(registry.get("pool"), PoolConfig(), opts(tiny, out, force=True), registry)
+    assert same.status == "ran" and same.fingerprint == lopo.done["upstream"]["pool"]
+    assert pool_fingerprint(out / "pool") == old_sha
+    for name, cfg in (("cvae-lopo", lopo_cfg()), ("cvae-final", final_cfg())):
+        assert run_stage(registry.get(name), cfg, opts(tiny, out), registry).status == "skipped"
+
+    new = run_stage(registry.get("pool"), PoolConfig(rows_per_class=60), opts(tiny, out, force=True), registry)
+    assert new.fingerprint != same.fingerprint and pool_fingerprint(out / "pool") != old_sha   # ~80 rows: binds
+    for name, cfg in (("cvae-lopo", lopo_cfg()), ("cvae-final", final_cfg())):
+        status, why = stage_status(registry.get(name), cfg, opts(tiny, out), registry)
+        assert status == "stale" and "fingerprint changed" in why, name
+    with pytest.raises(StageError, match="changed since cvae-lopo"):
+        run_stage(registry.get("cvae-final"), final_cfg(), opts(tiny, out), registry)
+    lopo2 = run_stage(registry.get("cvae-lopo"), lopo_cfg(), opts(tiny, out), registry)
+    assert lopo2.status == "ran" and lopo2.done["upstream"] == {"leakage": lopo.done["upstream"]["leakage"],
+                                                                "pool": new.fingerprint}
+    assert lopo2.done["summary"]["pool_sha256"] == pool_fingerprint(out / "pool")
+    final2 = run_stage(registry.get("cvae-final"), final_cfg(), opts(tiny, out), registry)
+    assert final2.status == "ran" and final2.done["upstream"] == {"cvae-lopo": lopo2.fingerprint,
+                                                                  "pool": new.fingerprint}
 
 
 def test_gates_refuse_a_collapsed_grid(ran, registry, tiny):

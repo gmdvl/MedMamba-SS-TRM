@@ -23,6 +23,14 @@ Layout
 model.json and the EMA weights of best.pt; `sample(model, codec, class_id, n,
 tau_s, seed, start)` generates. `lopo_run_dir` / `final_run_dir` name them.
 
+The pool
+--------
+Both stages require the `pool` stage and read its directory,
+`ctx.upstream_dir("pool")` (`open_pool`), checked against this build's train
+split. The pool stage's fingerprint is chained into theirs; the pool's bytes
+are guarded by its content sha256 (`Pool.fingerprint()`), recorded in the
+LOPO summary, every model.json and every batch source.
+
 One fit (`train_run`)
 ---------------------
 1. `setup_determinism(init seed)`, build the CVAE (GroupNorm only, checked).
@@ -103,7 +111,6 @@ SELECTION_NAME = "selection.json"
 DIAGNOSTICS_NAME = "diagnostics.json"
 CALIBRATION_NAME = "calibration.json"
 CELL_RE = re.compile(r"^d\d+-r[0-9.e+-]+$")
-POOL_DIRNAME = "pool"
 
 
 # ============================================================================
@@ -198,15 +205,16 @@ class PoolBatchSource(ArrayBatchSource):
 # the pool, read through the stage's SplitGuard
 # ============================================================================
 
-def open_pool(ctx: "StageContext", pool_dir: Optional[str]) -> Pool:
-    """Load and validate the pool, and check it against THIS build's train
-    sidecars (opened with purpose "generator": the access log's only record
-    for the CVAE stages, and train only)."""
-    d = Path(pool_dir) if pool_dir else Path(ctx.out_root) / POOL_DIRNAME
+def open_pool(ctx: "StageContext") -> Pool:
+    """Load and validate the pool stage's output (a declared upstream, so the
+    runner has checked that it finished), and check it against THIS build's
+    train sidecars (opened with purpose "generator": the access log's only
+    record for the CVAE stages, and train only)."""
+    d = ctx.upstream_dir("pool")
     try:
         pool = load_pool(d)
     except FileNotFoundError as e:
-        raise StageError(f"{e}. The pool stage (#16) writes it; or pass --pool_dir") from e
+        raise StageError(f"{e}: the pool stage finished, but its files are gone; re-run the pool stage") from e
     except PoolError as e:
         raise StageError(str(e)) from e
     train = ctx.open_split("train", purpose="generator", kinds=("y", "groups", "captures"))
@@ -449,7 +457,7 @@ def _aggregate(folds: Sequence[Mapping[str, Any]]) -> Dict[str, Any]:
 
 def run_lopo(ctx: "StageContext", cfg: CVAELopoConfig) -> Dict[str, Any]:
     device = resolve_device(cfg.device)
-    pool = open_pool(ctx, cfg.pool_dir)
+    pool = open_pool(ctx)
     with ctx.timer("pool sha256"):
         pool_sha = pool.fingerprint()
     folds_doc = load_folds(ctx.upstream_dir("leakage"))
@@ -602,7 +610,7 @@ def run_final(ctx: "StageContext", cfg: CVAEFinalConfig) -> Dict[str, Any]:
     if selection["warning"]:
         ctx.warn(selection["warning"])
     device = resolve_device(cfg.device)
-    pool = open_pool(ctx, lopo_cfg.pool_dir)
+    pool = open_pool(ctx)
     with ctx.timer("pool sha256"):
         pool_sha = pool.fingerprint()
     if pool_sha != summary["pool"]["sha256"]:

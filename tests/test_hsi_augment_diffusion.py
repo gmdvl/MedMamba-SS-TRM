@@ -14,8 +14,9 @@ w > 1); the model overfits one batch; resume is bitwise (inside ldm-lopo and
 ldm-final); the sampling sha256 is deterministic (recorded by the stage,
 reproduced from the exported generator.pt). Also: shapes and conditioning,
 the cosine schedule, Min-SNR weights, bf16 autocast, the latent cache, the
-latent MMD, fold isolation, the final refit, refusing changed inputs, and the
-`fit-ae` / `fit-ldm` command lines.
+latent MMD, fold isolation, the final refit, the pool stage as a declared
+upstream (no finished pool: StageNotReady; a re-run pool: stale), refusing
+changed inputs, and the `fit-ae` / `fit-ldm` command lines.
 
 Shared helpers: `tests/hsi_augment_ldm_fixtures.py`.
 """
@@ -45,13 +46,14 @@ from hsi_augment.models.diffusion import (CosineSchedule, DiffusionLoss, LatentU
 from hsi_augment.pool_io import load_pool, pool_fingerprint, write_pool
 from hsi_augment.registry import load_builtin_stages
 from hsi_augment.splits import fold_masks
-from hsi_augment.stage import DONE_NAME, StageError, StageNotReady, read_done
+from hsi_augment.stage import DONE_NAME, StageError, StageNotReady, read_done, stage_status
 from hsi_augment.stages.fit_ldm import LDMLopoConfig
+from hsi_augment.stages.pool import PoolConfig
 from hsi_augment.train_generative import BEST_NAME, HISTORY_NAME, LAST_NAME, load_checkpoint
 from tests.hsi_augment_fixtures import make_tiny_build
 from tests.hsi_augment_ldm_fixtures import (FOLD_SUMMARY_KEYS, TINY_AE, StepSpy, ae_final_cfg, ae_lopo_cfg,
-                                            assert_same, assert_same_training, ldm_final_cfg, ldm_lopo_cfg, prepare,
-                                            run, sha)
+                                            assert_same, assert_same_training, ldm_final_cfg, ldm_lopo_cfg, opts,
+                                            prepare, run, sha)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 FOLD_FILES = (ld.LATENTS_NAME, ld.LATENTS_META_NAME, BEST_NAME, LAST_NAME, HISTORY_NAME, ld.GENERATOR_NAME,
@@ -76,7 +78,7 @@ def registry():
 
 @pytest.fixture(scope="module")
 def ran(tiny, registry, tmp_path_factory):
-    """leakage -> pool -> ae-lopo -> ae-final -> ldm-lopo (loss calls recorded) -> ldm-final."""
+    """tissue-mask -> leakage -> pool -> ae-lopo -> ae-final -> ldm-lopo (loss calls recorded) -> ldm-final."""
     out = prepare(tiny, registry, tmp_path_factory.mktemp("ldm"))
     ae_lopo = run(registry, tiny, out, "ae-lopo", ae_lopo_cfg())
     ae_final = run(registry, tiny, out, "ae-final", ae_final_cfg())
@@ -360,15 +362,18 @@ def test_registration(registry):
     for name in ("ldm-lopo", "ldm-final"):
         spec = registry.get(name)
         assert spec.group == "fit-ldm" and spec.purposes == ("generator",) and not spec.in_all
-    assert registry.get("ldm-lopo").requires == ("ae-lopo",)
-    assert registry.get("ldm-final").requires == ("ae-final", "ldm-lopo")
+    assert registry.get("ldm-lopo").requires == ("ae-lopo", "pool")
+    assert registry.get("ldm-final").requires == ("ae-final", "ldm-lopo", "pool")
     assert [s.name for s in registry.resolve(["fit-ae", "fit-ldm"])] == ["ae-lopo", "ae-final", "ldm-lopo",
                                                                          "ldm-final"]
+    in_all = [s.name for s in registry.resolve(["all"])]       # `all` is the CPU prep chain, ending in the pool
+    assert "pool" in in_all and not {"ldm-lopo", "ldm-final"} & set(in_all)
 
 
 def test_lopo_writes_one_directory_per_fold(ran):
     done = ran.lopo.done
-    assert done["status"] == "ok" and done["upstream"] == {"ae-lopo": ran.ae_lopo.done["fingerprint"]}
+    assert done["status"] == "ok" and done["upstream"] == {"ae-lopo": ran.ae_lopo.done["fingerprint"],
+                                                           "pool": read_done(ran.out / "pool")["fingerprint"]}
     s = done["summary"]
     assert s["pool"]["pool_sha256"] == pool_fingerprint(ran.out / "pool")
     assert s["guidance_candidates"] == [1.0, 2.0] and "picks w" in s["guidance_choice"]
@@ -428,17 +433,24 @@ def test_the_sampling_sha_is_reproduced_from_generator_pt(ran):
 
 
 def test_latent_mmd_per_class_and_guidance_scale(ran):
+    sizes = []
     for k in (0, 1):
         mmd = json.loads((ran.lopo_dir / f"fold-{k}" / ld.MMD_NAME).read_text())
         assert mmd["pass_ratio"] == 1.5 and set(mmd["classes"]) == {"healthy", "DCIS", "IDC"}
+        train_mask, held_mask = fold_masks(ran.pool.patient, ran.folds[k])
         for c, rec in mmd["classes"].items():
-            assert rec["n"] == 16 and rec["mmd_train_heldout"] > 0 and len(rec["bandwidths"]) == 3
+            in_class = ran.pool.y == ("healthy", "DCIS", "IDC").index(c)
+            # mmd_rows (16) per set, or fewer if the fold's held-out (or train) rows of the class are fewer
+            n = min(16, int((held_mask & in_class).sum()), int((train_mask & in_class).sum()))
+            sizes.append(n)
+            assert rec["n"] == n >= 2 and rec["mmd_train_heldout"] > 0 and len(rec["bandwidths"]) == 3
             assert set(rec["by_w"]) == {"1", "2"}
             for w in rec["by_w"].values():
                 assert w["mmd"] >= 0 and math.isfinite(w["ratio"]) and isinstance(w["pass"], bool)
                 assert w["pass"] == (w["ratio"] <= 1.5)
         ratios = ran.lopo.done["summary"]["folds"][k]["latent_mmd_ratio"]
         assert ratios == {c: {w: r["ratio"] for w, r in v["by_w"].items()} for c, v in mmd["classes"].items()}
+    assert 16 in sizes and min(sizes) < 16             # the tissue-only pool exercises both cases
 
 
 def test_the_final_refit(ran):
@@ -448,7 +460,7 @@ def test_the_final_refit(ran):
     assert s["steps"] == {"rule": "median_best", "steps": budget, "lopo_best_steps": best}
     assert load_checkpoint(ran.final_dir / BEST_NAME)["step"] == budget
     assert ran.final.done["upstream"] == {"ae-final": ran.ae_final.done["fingerprint"],
-                                          "ldm-lopo": lopo["fingerprint"]}
+                                          "ldm-lopo": lopo["fingerprint"], "pool": lopo["upstream"]["pool"]}
     assert s["ae_sha256"] == sha256_file(ran.out / "gen/ae/final" / ld.AE_EXPORT_NAME)
     assert not (ran.final_dir / ld.MMD_NAME).exists() and "latent_mmd_ratio" not in s
     assert s["train_config"]["precision"] == "fp32" and s["train_config"]["guidance"] == [1.0, 2.0]
@@ -477,6 +489,37 @@ def test_refusals(ran, tiny, registry, tmp_path):
     assert not (out / "gen/ldm/lopo" / DONE_NAME).exists()
     with pytest.raises(StageNotReady, match="ae-final"):
         run(registry, tiny, out, "ldm-final", ldm_final_cfg())
+
+
+def test_the_ldm_stages_need_a_finished_pool_and_go_stale_with_it(tiny, registry, tmp_path):
+    """The pool is a declared upstream of ldm-lopo and ldm-final themselves,
+    not only through ae-lopo: a pool stage that is re-running (or died) has no
+    done.json, and a rebuilt pool makes them stale even before ae-lopo re-ran."""
+    out = prepare(tiny, registry, tmp_path / "aug")
+    fits = {}
+    for name, cfg in (("ae-lopo", ae_lopo_cfg()), ("ae-final", ae_final_cfg()), ("ldm-lopo", ldm_lopo_cfg()),
+                      ("ldm-final", ldm_final_cfg())):
+        fits[name] = run(registry, tiny, out, name, cfg)
+    pool_done = (out / "pool" / DONE_NAME).read_bytes()
+    (out / "pool" / DONE_NAME).unlink()                          # what the runner does first when pool re-runs
+    for name, cfg in (("ldm-lopo", ldm_lopo_cfg()), ("ldm-final", ldm_final_cfg())):
+        with pytest.raises(StageNotReady, match="needs 'pool' done first"):
+            run(registry, tiny, out, name, cfg, force=True)
+        assert (out / "gen/ldm" / name.split("-")[1] / DONE_NAME).is_file()   # refused before it started
+    (out / "pool" / DONE_NAME).write_bytes(pool_done)
+
+    new = run(registry, tiny, out, "pool", PoolConfig(rows_per_class=60), force=True)   # binds: ~80 rows
+    assert new.fingerprint != fits["ldm-lopo"].done["upstream"]["pool"]
+    for name, cfg in (("ldm-lopo", ldm_lopo_cfg()), ("ldm-final", ldm_final_cfg())):
+        status, why = stage_status(registry.get(name), cfg, opts(tiny, out), registry)
+        assert status == "stale" and "fingerprint changed" in why, name
+    with pytest.raises(StageError, match="not the one ae-lopo was trained on"):
+        run(registry, tiny, out, "ldm-lopo", ldm_lopo_cfg())       # ae-lopo has not re-run on the new pool
+    for name, cfg in (("ae-lopo", ae_lopo_cfg()), ("ae-final", ae_final_cfg()), ("ldm-lopo", ldm_lopo_cfg()),
+                      ("ldm-final", ldm_final_cfg())):
+        r = run(registry, tiny, out, name, cfg)
+        assert r.status == "ran" and r.done["upstream"]["pool"] == new.fingerprint, name
+        assert r.done["summary"]["pool"]["pool_sha256"] == pool_fingerprint(out / "pool")
 
 
 def test_resume_auto_is_bitwise_inside_both_stages(ran, tiny, registry, tmp_path, monkeypatch):

@@ -17,15 +17,17 @@ Why a separate, unconditional autoencoder (and not the CVAE's latent): see
 `hsi_augment/models/autoencoder.py`. The logic, the output files and the
 pool contract are in `hsi_augment/latent_diffusion.py`.
 
-Both stages declare only the `generator` purpose: they read the generator
-pool (`hsi_augment/pool_io.py`; train rows only, checked against the train
-split's sidecars through the SplitGuard) and never val or test. `ae-final`
-takes every model, loss and optimiser setting from `ae-lopo`'s done.json, so
-the final model is the LOPO-chosen one by construction; its own flags are
-only the step-budget rule, the device and the diagnostics size.
+Both stages require the `pool` stage and read its directory (contract in
+`hsi_augment/pool_io.py`; train rows only, checked against the train split's
+sidecars through the SplitGuard): without a finished pool they stop with
+StageNotReady, and re-running the pool with another config makes them stale.
+They declare only the `generator` purpose, so they never read val or test.
+`ae-final` takes every model, loss and optimiser setting from `ae-lopo`'s
+done.json, so the final model is the LOPO-chosen one by construction; its own
+flags are only the step-budget rule, the device and the diagnostics size.
 
-Not in `all` yet (`in_all=False`): nothing in `all` writes the pool until the
-pool stage (#16) is registered and these stages require it.
+Not in `all` (`in_all=False`): the defaults are 30k-step fits for the host
+GPU (#26), run as their own command (`fit-ae`); `all` is the CPU prep chain.
 
     python augment_pipeline.py fit-ae --data_dir data/hsi_v9-trainsel/hsi \\
         --out data/hsi_v9-trainsel-aug
@@ -35,7 +37,7 @@ pool stage (#16) is registered and these stages require it.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Tuple
 
 from hsi_augment.config import ConfigError, StageConfig, param
 from hsi_augment.registry import register_stage
@@ -64,8 +66,6 @@ class AELopoConfig(TrainConfig):
     eval_every: int = param(1000, help="held-out evaluation every N steps (and at the end)")
     log_every: int = param(100, help="steps per history.csv row / metrics.jsonl train record")
     ckpt_every: int = param(1000, help="last.pt every N steps (also at every evaluation and the end)")
-    pool_dir: Optional[str] = param(None, help="generator pool dir (X_pool.npy, y/patient/row/capture_pool.npy, "
-                                               "codec.json); none = <out>/pool")
     folds: Tuple[int, ...] = param((0, 1), help="LOPO folds of prep/leakage/folds.json to fit, one fold-<k>/ "
                                                 "each (the plan selects on 2 folds)")
     batch_size: int = param(512, help="class- then patient-balanced training batch")
@@ -113,7 +113,7 @@ class AEFinalConfig(StageConfig):
 
 
 @register_stage("ae-lopo", config=AELopoConfig, group="fit-ae", dirname="gen/ae/lopo", order=70,
-                requires=("leakage",), purposes=("generator",), in_all=False,
+                requires=("leakage", "pool"), purposes=("generator",), in_all=False,
                 help="P7: unconditional spatial autoencoder (4x6x6 latent), one fit per LOPO fold")
 def run_lopo(ctx, cfg: AELopoConfig) -> Dict[str, Any]:
     from hsi_augment import latent_diffusion       # torch inside, so --help stays fast
@@ -121,7 +121,7 @@ def run_lopo(ctx, cfg: AELopoConfig) -> Dict[str, Any]:
 
 
 @register_stage("ae-final", config=AEFinalConfig, group="fit-ae", dirname="gen/ae/final", order=71,
-                requires=("ae-lopo",), purposes=("generator",), in_all=False,
+                requires=("ae-lopo", "pool"), purposes=("generator",), in_all=False,
                 help="P7: autoencoder refit on all pool rows with the LOPO settings")
 def run_final(ctx, cfg: AEFinalConfig) -> Dict[str, Any]:
     from hsi_augment import latent_diffusion
