@@ -12,8 +12,9 @@ latent scale; the loss (its SAM term has no 2.56 deg floor); overfitting one
 batch; and, through the stage API on the tiny build's pool, the fold layout,
 fold isolation (a held-out patient's rows never reach a training batch or the
 latent scale), the final refit's step budget, done.json / fingerprint /
-skip-if-done behaviour, a changed or foreign pool being refused, the access
-log (train only), and bitwise resume inside both stages.
+skip-if-done behaviour, the pool stage as a declared upstream (no finished
+pool: StageNotReady; a re-run pool: stale), a changed or foreign pool being
+refused, the access log (train only), and bitwise resume inside both stages.
 
 The denoiser, the sampler and the `fit-ldm` stages are in
 `test_hsi_augment_diffusion.py`; the shared helpers in
@@ -37,11 +38,12 @@ from hsi_augment.io import read_access_log, sha256_file
 from hsi_augment.models.autoencoder import (SAM_ANGLE_EPS, AELoss, SpatialAutoencoder, count_parameters,
                                             kl_to_standard_normal, latent_size, make_sam_loss)
 from hsi_augment.models.blocks import assert_no_batchnorm
-from hsi_augment.pool_io import load_pool, pool_fingerprint, write_pool
+from hsi_augment.pool_io import POOL_FILES, load_pool, pool_fingerprint, write_pool
 from hsi_augment.registry import load_builtin_stages
 from hsi_augment.splits import fold_masks, registry_policy_violations
-from hsi_augment.stage import DONE_NAME, StageError, StageNotReady, stage_status
+from hsi_augment.stage import DONE_NAME, StageError, StageNotReady, read_done, stage_status
 from hsi_augment.stages.fit_ae import AELopoConfig
+from hsi_augment.stages.pool import PoolConfig
 from hsi_augment.train_generative import BEST_NAME, HISTORY_NAME, LAST_NAME, load_checkpoint
 from tests.hsi_augment_fixtures import make_tiny_build
 from tests.hsi_augment_ldm_fixtures import (FOLD_SUMMARY_KEYS, TINY_AE, StepSpy, ae_final_cfg, ae_lopo_cfg,
@@ -66,7 +68,7 @@ def registry():
 
 @pytest.fixture(scope="module")
 def ran(tiny, registry, tmp_path_factory):
-    """leakage -> pool -> ae-lopo (every loss call recorded) -> ae-final."""
+    """tissue-mask -> leakage -> pool -> ae-lopo (every loss call recorded) -> ae-final."""
     out = prepare(tiny, registry, tmp_path_factory.mktemp("ae"))
     with pytest.MonkeyPatch.context() as mp:
         spy = StepSpy(mp, AELoss)
@@ -216,11 +218,13 @@ def test_registration_reads_train_only_and_stays_out_of_all(registry):
     for name in ("ae-lopo", "ae-final"):
         spec = registry.get(name)
         assert spec.group == "fit-ae" and spec.purposes == ("generator",) and not spec.reads_held_out()
-        assert not spec.in_all                   # until the pool stage (#16) is wired in
-        assert "pool" not in spec.requires
-    assert registry.get("ae-lopo").requires == ("leakage",) and registry.get("ae-final").requires == ("ae-lopo",)
+        assert not spec.in_all                   # a host GPU fit, its own command; `all` is the CPU prep chain
+    assert registry.get("ae-lopo").requires == ("leakage", "pool")
+    assert registry.get("ae-final").requires == ("ae-lopo", "pool")
     assert registry_policy_violations(registry) == []
     assert [s.name for s in registry.resolve(["fit-ae"])] == ["ae-lopo", "ae-final"]
+    in_all = [s.name for s in registry.resolve(["all"])]
+    assert "pool" in in_all and not {"ae-lopo", "ae-final"} & set(in_all)
 
 
 def test_lopo_writes_one_directory_per_fold(ran):
@@ -251,8 +255,10 @@ def test_lopo_writes_one_directory_per_fold(ran):
 def test_the_pool_fingerprint_is_recorded(ran):
     pool = ran.lopo.done["summary"]["pool"]
     assert pool["pool_sha256"] == pool_fingerprint(ran.out / "pool") == ran.pool.fingerprint()
-    assert pool["n"] == ran.pool.n and pool["pool_dir_setting"] is None
+    assert pool["n"] == ran.pool.n and pool["pool_dir"] == str(ran.out / "pool")
     assert ran.final.done["summary"]["pool"]["pool_sha256"] == pool["pool_sha256"]
+    pool_stage = read_done(ran.out / "pool")["fingerprint"]          # the pool stage's, chained in
+    assert ran.lopo.done["upstream"]["pool"] == ran.final.done["upstream"]["pool"] == pool_stage
     state = torch.load(ran.lopo_dir / "fold-0" / ld.AE_EXPORT_NAME, map_location="cpu", weights_only=True)
     assert state["meta"]["pool_sha256"] == pool["pool_sha256"]
 
@@ -299,7 +305,7 @@ def test_the_final_refit_uses_lopo_settings_and_the_median_best_step(ran):
     expect = AELopoConfig.from_dict(lopo["config"]).replace(max_steps=budget, warmup_steps=min(1, budget - 1),
                                                             early_stop_patience=None)
     assert s["train_config"] == expect.to_dict() and ckpt["config"] == expect.to_dict()
-    assert final["upstream"] == {"ae-lopo": lopo["fingerprint"]}
+    assert final["upstream"] == {"ae-lopo": lopo["fingerprint"], "pool": lopo["upstream"]["pool"]}
     for name in (BEST_NAME, LAST_NAME, HISTORY_NAME, ld.AE_EXPORT_NAME, ld.RECON_NAME):
         assert (ran.final_dir / name).is_file() and name in final["outputs"]
     recon = json.loads((ran.final_dir / ld.RECON_NAME).read_text())
@@ -337,7 +343,7 @@ def test_force_refits_and_reproduces_the_same_bytes(ran, registry, tiny, tmp_pat
     """Same seed, config and pool in another --out: the same weights."""
     out = prepare(tiny, registry, tmp_path / "again")
     r = run(registry, tiny, out, "ae-lopo", ae_lopo_cfg())
-    assert r.fingerprint == ran.lopo.done["fingerprint"]          # the pool is not in it (no pool stage yet) ...
+    assert r.fingerprint == ran.lopo.done["fingerprint"]          # the pool stage's fingerprint is too, but ...
     for k in (0, 1):
         assert_same_training(ran.lopo_dir / f"fold-{k}", out / "gen/ae/lopo" / f"fold-{k}")
     r2 = run(registry, tiny, out, "ae-lopo", ae_lopo_cfg(), force=True)
@@ -347,8 +353,10 @@ def test_force_refits_and_reproduces_the_same_bytes(ran, registry, tiny, tmp_pat
 
 
 def test_a_changed_pool_is_refused(tiny, registry, tmp_path, monkeypatch):
-    """... so the pool's sha256 guards it: ae-final refuses another pool, and
-    an interrupted ae-lopo will not resume a fold on one."""
+    """... the fingerprint does not see the pool's bytes (here rewritten in
+    place under the pool stage's done.json), so the pool's sha256 guards them:
+    ae-final refuses another pool, and an interrupted ae-lopo will not resume
+    a fold on one."""
     out = prepare(tiny, registry, tmp_path / "aug")
     spy = StepSpy(monkeypatch, AELoss)
     spy.crash = (2, 4)                                            # fold 1, after its step-4 checkpoint
@@ -369,19 +377,58 @@ def test_a_changed_pool_is_refused(tiny, registry, tmp_path, monkeypatch):
     assert not (out / "gen/ae/final" / DONE_NAME).exists()
 
 
-def test_a_missing_or_foreign_pool_is_a_stage_error(tiny, registry, tmp_path):
+def test_without_a_finished_pool_stage_ae_lopo_is_not_ready(tiny, registry, tmp_path):
     out = prepare(tiny, registry, tmp_path / "aug", pool=False)
-    with pytest.raises(StageError, match="no pool directory"):
+    with pytest.raises(StageNotReady, match="needs 'pool' done first"):
         run(registry, tiny, out, "ae-lopo", ae_lopo_cfg())
+    assert not (out / "gen/ae/lopo").exists()                      # refused before the stage started
+    status, why = stage_status(registry.get("ae-lopo"), ae_lopo_cfg(), opts(tiny, out), registry)
+    assert status == "blocked" and "'pool'" in why
+
+
+def test_a_vanished_or_foreign_pool_is_a_stage_error(tiny, registry, tmp_path):
+    """The pool stage is done, but its files were deleted or overwritten after it finished."""
+    out = prepare(tiny, registry, tmp_path / "aug")
+    pool = load_pool(out / "pool", mmap=False)
+    (out / "pool" / POOL_FILES["X"]).unlink()
+    with pytest.raises(StageError, match="X_pool.npy.*re-run the pool stage") as e:
+        run(registry, tiny, out, "ae-lopo", ae_lopo_cfg())
+    assert not isinstance(e.value, StageNotReady)
     assert not (out / "gen/ae/lopo" / DONE_NAME).exists()
-    d = tiny.data_dir
-    X = np.load(d / "X_train.npy")
-    codec = tiny_codec(X)
-    groups = np.load(d / "groups_train.npy")
-    write_pool(out / "pool", codec.encode_np(X).astype(np.float16), np.load(d / "y_train.npy"), groups[::-1],
-               np.arange(X.shape[0]), np.load(d / "captures_train.npy"), codec)
+    write_pool(out / "pool", pool.X, pool.y, pool.patient[::-1], pool.row, pool.capture, pool.codec)
     with pytest.raises(StageError, match="does not belong to the train split"):
         run(registry, tiny, out, "ae-lopo", ae_lopo_cfg())
+    assert not (out / "gen/ae/lopo" / DONE_NAME).exists()
+
+
+def test_a_rebuilt_pool_makes_both_stages_stale(tiny, registry, tmp_path):
+    """Re-running the pool stage with another config changes its fingerprint:
+    ae-lopo and ae-final are stale (not "already done") and re-run on the new
+    pool; ae-final alone refuses it until ae-lopo has re-run."""
+    out = prepare(tiny, registry, tmp_path / "aug")
+    lopo = run(registry, tiny, out, "ae-lopo", ae_lopo_cfg())
+    final = run(registry, tiny, out, "ae-final", ae_final_cfg())
+    old_sha = pool_fingerprint(out / "pool")
+    same = run(registry, tiny, out, "pool", PoolConfig(), force=True)           # --force, same config
+    assert same.status == "ran" and same.fingerprint == lopo.done["upstream"]["pool"]
+    assert pool_fingerprint(out / "pool") == old_sha                           # the same bytes, too
+    for name, cfg in (("ae-lopo", ae_lopo_cfg()), ("ae-final", ae_final_cfg())):
+        assert stage_status(registry.get(name), cfg, opts(tiny, out), registry)[0] == "done"
+
+    new = run(registry, tiny, out, "pool", PoolConfig(rows_per_class=60), force=True)   # binds: ~80 rows
+    assert new.fingerprint != lopo.done["upstream"]["pool"] and pool_fingerprint(out / "pool") != old_sha
+    for name, cfg in (("ae-lopo", ae_lopo_cfg()), ("ae-final", ae_final_cfg())):
+        status, why = stage_status(registry.get(name), cfg, opts(tiny, out), registry)
+        assert status == "stale" and "fingerprint changed" in why, name
+    with pytest.raises(StageError, match="not the one ae-lopo was trained on"):
+        run(registry, tiny, out, "ae-final", ae_final_cfg())
+    lopo2 = run(registry, tiny, out, "ae-lopo", ae_lopo_cfg())
+    assert lopo2.status == "ran" and lopo2.done["upstream"]["pool"] == new.fingerprint
+    assert lopo2.done["summary"]["pool"]["pool_sha256"] == pool_fingerprint(out / "pool")
+    assert lopo2.done["summary"]["pool"]["n"] < lopo.done["summary"]["pool"]["n"]
+    final2 = run(registry, tiny, out, "ae-final", ae_final_cfg())
+    assert final2.status == "ran" and final2.fingerprint != final.fingerprint
+    assert final2.done["upstream"] == {"ae-lopo": lopo2.fingerprint, "pool": new.fingerprint}
 
 
 def test_final_refuses_to_run_without_lopo(tiny, registry, tmp_path):

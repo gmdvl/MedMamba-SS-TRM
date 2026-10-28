@@ -33,11 +33,12 @@ latent scale, the diagnostics' headline numbers, the sampling sha).
 
 The pool
 --------
-`<out>/pool/` (or `--pool_dir`), in the contract of `hsi_augment/pool_io.py`
-(written by the pool stage, #16): `X_pool.npy` float16 NHWC (N, 11, 11, 32),
-ALREADY in the codec's log-z space, the y / patient / row / capture sidecars
-and `codec.json`. `pool_io.load_pool` opens and validates it (X memory-mapped);
-`_open_pool` adds the checks that need this build:
+The `pool` stage's directory (`<out>/pool/`, found with
+`ctx.upstream_dir("pool")`), in the contract of `hsi_augment/pool_io.py`:
+`X_pool.npy` float16 NHWC (N, 11, 11, 32), ALREADY in the codec's log-z
+space, the y / patient / row / capture sidecars and `codec.json`.
+`pool_io.load_pool` opens and validates it (X memory-mapped); `_open_pool`
+adds the checks that need this build:
 * `pool_io.check_against_train`: every pool row's class, patient and capture
   must equal the train split's at `row_pool`, so a pool of another build is
   refused. The sidecars are opened through the stage's SplitGuard with
@@ -45,14 +46,20 @@ and `codec.json`. `pool_io.load_pool` opens and validates it (X memory-mapped);
   and only train (generators never read val or test);
 * the classes, patch size and band count must be the build's.
 
-The stages do NOT declare `requires=("pool",)` (the pool stage is wired in
-when #16 lands), so the pool is not in their fingerprint. `Pool.fingerprint()`
-(sha256 over the six contract files, X included) stands in for it: it is
-recorded in every summary, fold marker, latent cache, batch source and
-export; ae-final and the LDM stages refuse a pool that is not the one their
-upstream was trained on, and a fold is only kept or resumed on an unchanged
-pool. Until then the stages are also left out of `all` (`in_all=False`):
-`all` has no stage that writes the pool.
+Every stage here declares `requires` on the pool stage, so without a
+finished pool it stops with StageNotReady, and the pool stage's fingerprint
+is chained into its own: re-running the pool with another config makes
+ae-lopo, ldm-lopo and the final refits stale. The fingerprint does not see
+the pool's bytes (a pool rewritten under the same config), so
+`Pool.fingerprint()` (sha256 over the six contract files, X included) guards
+them: it is recorded in every summary, fold marker, latent cache, batch
+source and export; ae-final and the LDM stages refuse a pool that is not the
+one their upstream was trained on, and a fold is only kept or resumed on an
+unchanged pool.
+
+The stages are not in `all` (`in_all=False`): their defaults are 30k- and
+150k-step fits (bf16 for ldm-lopo) for the host GPU (#26), run as their own
+commands (`fit-ae`, `fit-ldm`); `all` is the CPU prep chain.
 
 LOPO folds and resume
 ---------------------
@@ -126,8 +133,6 @@ if TYPE_CHECKING:  # pragma: no cover
 
 PathLike = Union[str, Path]
 
-DEFAULT_POOL_DIRNAME = "pool"
-
 FOLD_DONE_NAME = "fold_done.json"
 AE_EXPORT_NAME = "ae.pt"
 GENERATOR_NAME = "generator.pt"
@@ -145,20 +150,18 @@ MEDIAN_SAMPLE_ROWS = 1000       # rows behind the RBF median heuristic
 # the pool (contract: hsi_augment/pool_io.py)
 # ============================================================================
 
-def _pool_dir(ctx: "StageContext", setting: Optional[str]) -> Path:
-    return Path(setting) if setting else Path(ctx.out_root) / DEFAULT_POOL_DIRNAME
-
-
-def _open_pool(ctx: "StageContext", setting: Optional[str], *, expect_sha256: Optional[str] = None,
+def _open_pool(ctx: "StageContext", *, expect_sha256: Optional[str] = None,
                upstream: str = "") -> Tuple[Pool, Dict[str, Any]]:
-    """Load the pool, check it is THIS build's train rows (module docstring)
-    and fingerprint it. `expect_sha256`: the fingerprint `upstream` recorded;
-    any other pool is refused. Returns (pool, its record for the summaries)."""
-    d = _pool_dir(ctx, setting)
+    """Load the pool stage's output (a declared upstream, so the runner has
+    checked that it finished), check it is THIS build's train rows (module
+    docstring) and fingerprint it. `expect_sha256`: the fingerprint `upstream`
+    recorded; any other pool is refused. Returns (pool, its record for the
+    summaries)."""
+    d = ctx.upstream_dir("pool")
     try:
         pool = load_pool(d)
     except FileNotFoundError as e:
-        raise StageError(f"{e}. The pool stage (#16) writes it; or point --pool_dir at one") from e
+        raise StageError(f"{e}: the pool stage finished, but its files are gone; re-run the pool stage") from e
     except PoolError as e:
         raise StageError(str(e)) from e
     train = ctx.open_split("train", purpose="generator", kinds=("y", "groups", "captures"))
@@ -176,7 +179,7 @@ def _open_pool(ctx: "StageContext", setting: Optional[str], *, expect_sha256: Op
     if expect_sha256 is not None and sha != expect_sha256:
         raise StageError(f"the pool at {d} is not the one {upstream} was trained on (sha256 {sha[:12]} != "
                          f"{expect_sha256[:12]}); re-run {upstream} with --force")
-    record = {"pool_sha256": sha, "pool_dir_setting": setting, "train_rows": int(train.n), **pool.describe()}
+    record = {"pool_sha256": sha, "train_rows": int(train.n), **pool.describe()}
     ctx.log(f"pool {d}: {pool.n} rows {pool.patch}x{pool.patch}x{pool.n_bands}, rows per class "
             f"{record['rows_per_class']}, sha256 {sha[:12]}")
     return pool, record
@@ -748,7 +751,7 @@ def _select_folds(ctx: "StageContext", folds: Sequence[int]) -> List[Mapping[str
 
 
 def run_ae_lopo(ctx: "StageContext", cfg: Any) -> Dict[str, Any]:
-    pool, ident = _open_pool(ctx, cfg.pool_dir)
+    pool, ident = _open_pool(ctx)
     device = _device(cfg.device)
     class_names = list(ctx.adapter.class_names)
     results = []
@@ -768,8 +771,7 @@ def run_ae_final(ctx: "StageContext", cfg: Any) -> Dict[str, Any]:
     from hsi_augment.stages.fit_ae import AELopoConfig
     lopo = _upstream_done(ctx, "ae-lopo")
     lopo_cfg = AELopoConfig.from_dict(lopo["config"])
-    pool, ident = _open_pool(ctx, lopo_cfg.pool_dir, expect_sha256=lopo["summary"]["pool"]["pool_sha256"],
-                             upstream="ae-lopo")
+    pool, ident = _open_pool(ctx, expect_sha256=lopo["summary"]["pool"]["pool_sha256"], upstream="ae-lopo")
     steps = _final_steps(cfg.steps, lopo["summary"], lopo_cfg.max_steps, "ae-lopo")
     tcfg = _final_train_config(lopo_cfg, steps["steps"])
     device = _device(cfg.device)
@@ -783,11 +785,8 @@ def run_ae_final(ctx: "StageContext", cfg: Any) -> Dict[str, Any]:
 
 
 def run_ldm_lopo(ctx: "StageContext", cfg: Any) -> Dict[str, Any]:
-    from hsi_augment.stages.fit_ae import AELopoConfig
     ae_done = _upstream_done(ctx, "ae-lopo")
-    ae_cfg = AELopoConfig.from_dict(ae_done["config"])
-    pool, ident = _open_pool(ctx, ae_cfg.pool_dir, expect_sha256=ae_done["summary"]["pool"]["pool_sha256"],
-                             upstream="ae-lopo")
+    pool, ident = _open_pool(ctx, expect_sha256=ae_done["summary"]["pool"]["pool_sha256"], upstream="ae-lopo")
     device = _device(cfg.device)
     class_names = list(ctx.adapter.class_names)
     ae_folds = {int(f["fold"]["fold"]): f["fold"] for f in ae_done["summary"]["folds"]}
@@ -820,8 +819,7 @@ def run_ldm_final(ctx: "StageContext", cfg: Any) -> Dict[str, Any]:
     pool_shas = {ae_done["summary"]["pool"]["pool_sha256"], lopo["summary"]["pool"]["pool_sha256"]}
     if len(pool_shas) != 1:
         raise StageError("ae-final and ldm-lopo were trained on different pools; re-run them on one pool")
-    pool, ident = _open_pool(ctx, ae_done["summary"]["pool"].get("pool_dir_setting"),
-                             expect_sha256=pool_shas.pop(), upstream="ae-final")
+    pool, ident = _open_pool(ctx, expect_sha256=pool_shas.pop(), upstream="ae-final")
     steps = _final_steps(cfg.steps, lopo["summary"], lopo_cfg.max_steps, "ldm-lopo")
     tcfg = _final_train_config(lopo_cfg, steps["steps"])
     device = _device(cfg.device)

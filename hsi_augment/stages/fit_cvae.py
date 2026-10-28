@@ -22,14 +22,21 @@ overwrite each other and `--resume auto` continues the interrupted fit and
 re-uses the finished ones. The cell choice lives in the FINAL stage's config:
 changing the rule re-runs the cheap refit, not twenty LOPO fits.
 
-Inputs. The pool (`<out>/pool/`, contract in `hsi_augment/pool_io.py`, written
-by #16) is read from `--pool_dir` (default `<out>/pool`); the pool stage is
-not a registered upstream yet, so a missing pool is a StageError, and the
-pool's content sha256 is recorded and compared by the final stage. The folds
-come from the `leakage` stage (`requires`). Both stages declare the single
-purpose "generator": their SplitGuard refuses val and test, and the only
-access in the log is train's y / groups / captures, read to check that the
-pool belongs to this build.
+Inputs. The pool is the `pool` stage's directory (`<out>/pool/`, contract in
+`hsi_augment/pool_io.py`), found with `ctx.upstream_dir("pool")`: both stages
+declare `requires` on the pool stage, so without a finished pool they stop
+with StageNotReady before reading anything, and the pool stage's fingerprint
+is chained into theirs (re-running the pool with another config makes them
+stale). The fingerprint does not see the pool's bytes, so the pool's content
+sha256 is recorded too: a resumed fit refuses a pool that changed, and the
+final stage refuses a pool other than the one cvae-lopo trained on. The
+folds come from the `leakage` stage (`requires`). Both stages declare the
+single purpose "generator": their SplitGuard refuses val and test, and the
+only access in the log is train's y / groups / captures, read to check that
+the pool belongs to this build.
+
+Not in `all` (`in_all=False`): the defaults are 40k-step fits for the host
+GPU (#25), run as their own command (`fit-cvae`); `all` is the CPU prep chain.
 
 Importing this module imports torch (`TrainConfig` lives in
 `hsi_augment.train_generative`, and the configs subclass it); the fitting
@@ -112,7 +119,6 @@ class CVAELopoConfig(CVAETrainConfig):
     latent_dims: Tuple[int, ...] = param((32, 64), help="grid: latent dimension d")
     sam_ratios: Tuple[float, ...] = param((0.0, 0.1), help="grid: SAM term / reconstruction term at init "
                                                            "(lambda is calibrated per fit)")
-    pool_dir: Optional[str] = param(None, help="generator pool directory (none = <out>/pool)")
     pool_in_ram: bool = param(True, help="copy X_pool into RAM (about 3 GB) instead of reading the memmap")
     device: str = param("auto", choices=DEVICES, help="auto = cuda if available")
     tau_s: Tuple[float, ...] = param((0.8, 1.0), help="prior temperature candidates; the choice is LOPO "
@@ -156,10 +162,10 @@ class CVAEFinalConfig(StageConfig):
             raise ConfigError("prior_samples must be >= 0")
 
 
-# in_all=False until the pool stage (#16) is registered: `all` cannot produce the pool, so with these
-# stages in it `all` would always fail. Whoever adds requires=("pool",) (after #16) also drops in_all.
+# in_all=False: generator fits run as their own commands on the host GPU (#25); `all` is the CPU prep
+# chain. Both stages open the pool, so both require it.
 @register_stage("cvae-lopo", config=CVAELopoConfig, group="fit-cvae", dirname="gen/cvae/lopo", order=60,
-                requires=("leakage",), purposes=("generator",), in_all=False,
+                requires=("leakage", "pool"), purposes=("generator",), in_all=False,
                 help="P6: CVAE grid x LOPO folds, early-stopped on held-out patients; diagnostics")
 def run_lopo(ctx, cfg: CVAELopoConfig) -> Dict[str, Any]:
     from hsi_augment import fit_cvae
@@ -167,7 +173,7 @@ def run_lopo(ctx, cfg: CVAELopoConfig) -> Dict[str, Any]:
 
 
 @register_stage("cvae-final", config=CVAEFinalConfig, group="fit-cvae", dirname="gen/cvae/final", order=61,
-                requires=("cvae-lopo",), purposes=("generator",), in_all=False,
+                requires=("cvae-lopo", "pool"), purposes=("generator",), in_all=False,
                 help="P6: CVAE refit on all train patients, LOPO-chosen cell and step budget, EMA")
 def run_final(ctx, cfg: CVAEFinalConfig) -> Dict[str, Any]:
     from hsi_augment import fit_cvae

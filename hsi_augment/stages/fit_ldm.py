@@ -19,9 +19,12 @@ codec in one `weights_only` file, for `latent_diffusion.load_generator` and
 candidates (w in {1, 1.5, 2, 3}) are recorded, and the LOPO QC (#28) on the
 host (#26) picks one. w > 3 is refused.
 
-Both stages declare only the `generator` purpose (train rows only). The
-logic is in `hsi_augment/latent_diffusion.py`. Like `fit-ae`, not in `all`
-until the pool stage (#16) is wired in.
+Both stages require the `pool` stage (they read the pool through
+`ctx.upstream_dir("pool")`) and declare only the `generator` purpose (train
+rows only). The logic is in `hsi_augment/latent_diffusion.py`. Like `fit-ae`,
+not in `all` (`in_all=False`): the defaults are 150k-step bf16 fits for the
+host GPU (#26), run as their own command (`fit-ldm`); `all` is the CPU prep
+chain.
 
     python augment_pipeline.py fit-ldm --data_dir data/hsi_v9-trainsel/hsi \\
         --out data/hsi_v9-trainsel-aug
@@ -121,7 +124,7 @@ class LDMFinalConfig(StageConfig):
 
 
 @register_stage("ldm-lopo", config=LDMLopoConfig, group="fit-ldm", dirname="gen/ldm/lopo", order=80,
-                requires=("ae-lopo",), purposes=("generator",), in_all=False,
+                requires=("ae-lopo", "pool"), purposes=("generator",), in_all=False,
                 help="P7: class-conditional latent diffusion (v-pred, CFG), one fit per LOPO fold")
 def run_lopo(ctx, cfg: LDMLopoConfig) -> Dict[str, Any]:
     from hsi_augment import latent_diffusion
@@ -129,7 +132,7 @@ def run_lopo(ctx, cfg: LDMLopoConfig) -> Dict[str, Any]:
 
 
 @register_stage("ldm-final", config=LDMFinalConfig, group="fit-ldm", dirname="gen/ldm/final", order=81,
-                requires=("ae-final", "ldm-lopo"), purposes=("generator",), in_all=False,
+                requires=("ae-final", "ldm-lopo", "pool"), purposes=("generator",), in_all=False,
                 help="P7: latent diffusion refit on all pool rows with the LOPO settings")
 def run_final(ctx, cfg: LDMFinalConfig) -> Dict[str, Any]:
     from hsi_augment import latent_diffusion

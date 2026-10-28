@@ -787,7 +787,8 @@ def test_cli_config_file_precedence_list_and_errors(tiny, tmp_path, capsys):
     listing = capsys.readouterr().out
     assert "stale" in listing and "planned (not implemented yet)" in listing   # defaults != the done config
 
-    assert cli.main(["all", "--data_dir", str(tiny.data_dir), "--out", str(out)]) == 0   # nothing in 'all' yet
+    # 'all' is the CPU prep chain (through the pool); the generator fits are their own commands
+    assert cli.main(["all", "--data_dir", str(tiny.data_dir), "--out", str(out)]) == 0
     assert cli.main(["nope", "--data_dir", str(tiny.data_dir), "--out", str(out)]) == 2
     bad = tmp_path / "bad.json"
     bad.write_text(json.dumps({"stages": {"demo": {"chunk_rowz": 1}}}))
