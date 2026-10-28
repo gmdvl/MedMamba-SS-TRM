@@ -528,7 +528,7 @@ def test_selection_errors(tmp_path):
 
 def _guard_test_reads(monkeypatch, root: Path, opened: list):
     """open / np.load fail on any `test_*` / `*_test.npy` file under `root`
-    except heldout_eval's validation files."""
+    except heldout_eval's validation files (`heldout_v19/validation/test_*`)."""
     real_open, real_load = builtins.open, np.load
 
     def is_test(f) -> bool:
@@ -563,7 +563,8 @@ def test_test_columns_absent_without_reveal_flag(study, monkeypatch):
     assert not any(n.endswith("_test.png") for n in figs)
     assert not any(R._is_test_path(p) for p in opened)
     assert not any(k.endswith(("y_test.npy", "groups_test.npy", "test_report.json")) for k in doc["inputs_sha256"])
-    assert any(p.name == "test_predictions.npz" and "validation" in p.parts for p in opened)   # val is read
+    assert any(p.name == "test_predictions.npz" and p.parent.parts[-2:] == ("heldout_v19", "validation")
+               for p in opened)                                                                # val is read
 
 
 def test_test_columns_absent_without_selection(tmp_path, monkeypatch):
@@ -627,6 +628,28 @@ def test_a_code_path_pointed_at_a_test_file_fails_while_sealed(study, monkeypatc
                        capture_output=True, text=True, timeout=300)
     assert r.returncode == 1 and "test is sealed" in r.stderr, r.stdout + r.stderr
     assert not (study.root / "sealed").exists()               # nothing written
+
+
+def test_a_validation_directory_above_the_runs_does_not_unseal_test(tmp_path, monkeypatch):
+    """Only `heldout_v19/validation/` right above a file marks its `test_*`
+    name as val. An experiments root nested under a directory named
+    `validation` keeps every run's real test files sealed."""
+    st = make_study(tmp_path / "validation" / "study")
+    rd = next(st.exp.glob("*_v20-head-s7"))
+    assert "validation" in rd.parts
+    inp = R.Inputs({"experiments": st.exp}, reveal_test=False)
+    with pytest.raises(R.TestSealError):
+        inp.npz(rd / R.TEST_PRED)
+    with pytest.raises(R.TestSealError):
+        inp.json(rd / R.TEST_REPORT)
+    assert inp.npz(rd / R.VAL_FULL_PRED)["true_label"].shape == st.truth["val"][0].shape     # val stays readable
+    assert R._is_test_path(Path("validation/test_predictions.npz"))                         # no heldout_v19 above
+    assert R._is_test_path(Path("heldout_v19/validation/sub/test_predictions.npz"))         # not the parent
+    assert not R._is_test_path(Path("validation/exp/run/heldout_v19/validation/test_predictions.npz"))
+    # end to end: the val path pointed at the test file is still refused under the nested root
+    monkeypatch.setattr(R, "VAL_FULL_PRED", R.TEST_PRED)
+    with pytest.raises(R.TestSealError, match="test is sealed"):
+        R.build_report(_cfg(st, reveal_test=False))
 
 
 # ============================================================================

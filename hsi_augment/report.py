@@ -126,6 +126,8 @@ HEALTHY, DCIS = "healthy", "DCIS"
 TEST_PRED = "test_predictions.npz"
 TEST_REPORT = "test_report.json"
 VAL_FULL_PRED = "heldout_v19/validation/test_predictions.npz"
+# the only directories whose `test_*` files are val (see `_is_test_path`); fixed at import
+VAL_PRED_DIR_PARTS: Tuple[str, ...] = Path(VAL_FULL_PRED).parent.parts
 PER_PATIENT_JSON = "per_patient_metrics.json"
 TISSUE_STAGE_DIR = "report/tissue"
 TISSUE_JSON = "report_tissue.json"
@@ -289,12 +291,16 @@ class ReportConfig:
 # ============================================================================
 
 def _is_test_path(path: Path) -> bool:
-    """A file of the TEST split: `test_*` (or `*_test.npy`) unless it sits in a
-    `validation` directory (heldout_eval's val files reuse the evaluator's
-    `test_*` names)."""
-    name = path.name
-    if "validation" in path.parts[:-1]:
+    """A file of the TEST split: `test_*` (or `*_test.npy`), unless the
+    directories IMMEDIATELY above it are `VAL_PRED_DIR_PARTS`
+    (`heldout_v19/validation/`): `scripts/heldout_eval.py`'s val files reuse
+    the evaluator's `test_*` names. Only the file's own parent and grandparent
+    count, so a `validation` directory higher up (an experiments root nested
+    under one) never exempts a run's real test files."""
+    path = Path(path)
+    if path.parent.parts[-len(VAL_PRED_DIR_PARTS):] == VAL_PRED_DIR_PARTS:
         return False
+    name = path.name
     return name.startswith("test_") or bool(re.search(r"_test\.npy$", name))
 
 
