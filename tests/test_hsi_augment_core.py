@@ -787,7 +787,9 @@ def test_cli_config_file_precedence_list_and_errors(tiny, tmp_path, capsys):
 
     assert cli.main(["--list", "--data_dir", str(tiny.data_dir), "--out", str(out), "--seed", "7"]) == 0
     listing = capsys.readouterr().out
-    assert "stale" in listing and "planned (not implemented yet)" in listing   # defaults != the done config
+    assert "stale" in listing                                                  # defaults != the done config
+    # the planned line is printed only while a planned command is left (lopo-utility, #30, was the last)
+    assert ("planned (not implemented yet)" in listing) == bool(load_builtin_stages().planned_only())
 
     # 'all' is the CPU prep chain (through the pool); the generator fits are their own commands
     assert cli.main(["all", "--data_dir", str(tiny.data_dir), "--out", str(out)]) == 0
