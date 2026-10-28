@@ -228,7 +228,8 @@ def test_ledger_has_no_unknown_entries(ran):
     band = next(e for e in entries if e["quantity"] == splits.BAND_SELECTION)
     assert "6 train patients" in band["evidence"]
     assert ran.ledger["split_access"]["held_out_readers"] == {"discovery": ["structural"], "index": ["structural"],
-                                                              "leakage": ["structural"]}
+                                                              "leakage": ["structural"],
+                                                              "report-tissue": ["final_eval"]}
 
 
 def test_ledger_fits_on_train_only_except_classifier_selection(ran):
@@ -415,7 +416,7 @@ def test_load_folds(ran, tmp_path):
 def test_no_registered_stage_reads_test_before_phase_10(registry):
     spec = registry.get("leakage")
     assert (spec.group, spec.dirname, spec.purposes) == ("preprocess", STAGE_DIR, ("structural",))
-    assert splits.FINAL_EVAL_STAGES == frozenset()
+    assert splits.FINAL_EVAL_STAGES == frozenset({"report-tissue"})       # Phase 10 (#34)
     for s in registry.specs():
         assert "final_eval" not in s.purposes or s.name in splits.FINAL_EVAL_STAGES, s.name
     assert splits.registry_policy_violations(registry) == []
